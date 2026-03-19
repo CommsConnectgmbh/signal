@@ -6,7 +6,7 @@ export default function ImpressumPage() {
     <>
       <Navbar />
       <main className="bg-[#FFFFFF] pt-28 pb-32">
-        <article className="mx-auto max-w-3xl px-6 prose prose-invert prose-headings:text-[#0F172A] prose-headings:tracking-tight prose-p:text-[#475569] prose-p:leading-relaxed">
+        <article className="mx-auto max-w-3xl px-6 prose prose-headings:text-[#0F172A] prose-headings:tracking-tight prose-p:text-[#475569] prose-p:leading-relaxed">
           <h1 className="text-4xl md:text-5xl font-bold text-[#0F172A] mb-12">
             Impressum
           </h1>

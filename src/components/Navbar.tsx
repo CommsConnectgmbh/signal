@@ -204,7 +204,7 @@ export default function Navbar() {
           <li className="pt-4">
             <Link
               href="/kontaktanfrage"
-              className="block rounded-md bg-gradient-to-r from-[#D4A843] to-[#F59E0B] px-5 py-3 text-center text-sm font-semibold text-[#050A14] transition-all duration-200 hover:opacity-90"
+              className="block rounded-md bg-[#2563EB] px-5 py-3 text-center text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
               onClick={() => setMobileOpen(false)}
             >
               Jetzt anfragen
