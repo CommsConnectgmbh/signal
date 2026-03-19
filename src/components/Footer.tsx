@@ -1,82 +1,25 @@
 import Link from "next/link";
 
-const footerColumns = [
-  {
-    title: "Lösungen",
-    links: [
-      { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile" },
-      { label: "Mobilfunkkosten senken", href: "/mobilfunkkosten" },
-      { label: "5G Koffersystem", href: "/5g-koffer" },
-    ],
-  },
-  {
-    title: "Unternehmen",
-    links: [
-      { label: "Über uns", href: "/unternehmen" },
-      { label: "Kontakt", href: "/kontaktanfrage" },
-    ],
-  },
-  {
-    title: "Partner",
-    links: [
-      { label: "Partner werden", href: "/partner" },
-      { label: "Partner Login", href: "/login" },
-    ],
-  },
-  {
-    title: "Rechtliches",
-    links: [
-      { label: "Datenschutzerklärung", href: "/datenschutz" },
-      { label: "Impressum", href: "/impressum" },
-    ],
-  },
-];
-
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="bg-[#F8FAFC] border-t border-[#E2E8F0]">
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
-        {/* Top section */}
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-5">
-          {/* Logo + tagline */}
-          <div>
-            <Link href="/" className="inline-block">
-              <img src="/logo.png" alt="Smart Signals" className="h-10" />
-            </Link>
-            <p className="mt-4 text-sm text-[#94A3B8]">
-              Smarte B2B Lösungen für den Mittelstand
-            </p>
-          </div>
-
-          {/* Link columns */}
-          {footerColumns.map((column) => (
-            <div key={column.title}>
-              <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#0F172A]">
-                {column.title}
-              </h3>
-              <ul className="space-y-3">
-                {column.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-[#475569] transition-colors duration-200 hover:text-[#2563EB]"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <footer className="bg-[#F8FAFC] border-t border-[#E2E8F0] py-10 px-6">
+      <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-start gap-12">
+        <Link href="/" className="inline-block shrink-0">
+          <img src="/logo.png" alt="Smart Signals" className="h-10" />
+        </Link>
+        <div>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#0F172A]">Rechtsdokumente</h3>
+          <ul className="space-y-2">
+            <li><Link href="/datenschutz" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Datenschutzerklärung</Link></li>
+            <li><Link href="/impressum" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Impressum</Link></li>
+          </ul>
         </div>
-
-        {/* Divider + Copyright */}
-        <div className="mt-16 border-t border-[#E2E8F0] pt-8">
-          <p className="text-xs text-[#94A3B8]">
-            &copy; {currentYear} Smart Signals. Alle Rechte vorbehalten.
-          </p>
+        <div>
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#0F172A]">Unternehmen</h3>
+          <ul className="space-y-2">
+            <li><Link href="/unternehmen" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Über uns</Link></li>
+            <li><Link href="/karriere" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Karriere</Link></li>
+          </ul>
         </div>
       </div>
     </footer>
