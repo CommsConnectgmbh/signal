@@ -30,12 +30,12 @@ export default function FAQ({ items }: FAQProps) {
               onClick={() => toggle(index)}
               aria-expanded={isOpen}
             >
-              <span className="pr-4 text-lg font-semibold text-[#F1F5F9]">
+              <span className="pr-4 text-lg font-semibold text-[#0F172A]">
                 {item.question}
               </span>
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0A1628] transition-colors duration-200">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F0F9F0] transition-colors duration-200">
                 <svg
-                  className={`h-4 w-4 text-[#94A3B8] transition-transform duration-300 ${
+                  className={`h-4 w-4 text-[#475569] transition-transform duration-300 ${
                     isOpen ? "rotate-180" : ""
                   }`}
                   fill="none"
@@ -57,7 +57,7 @@ export default function FAQ({ items }: FAQProps) {
               }`}
             >
               <div className="overflow-hidden">
-                <p className="pb-6 text-base leading-relaxed text-[#94A3B8]">
+                <p className="pb-6 text-base leading-relaxed text-[#475569]">
                   {item.answer}
                 </p>
               </div>
