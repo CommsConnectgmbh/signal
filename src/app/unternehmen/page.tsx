@@ -70,17 +70,17 @@ export default function UnternehmenPage() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
               <div className="flex-1">
-                <h2 className="text-3xl font-bold tracking-tight text-[#F1F5F9] md:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tight text-[#0F172A] md:text-5xl">
                   Das Fundament hinter smarten Lösungen
                 </h2>
-                <p className="mt-8 text-lg leading-relaxed text-[#94A3B8]">
+                <p className="mt-8 text-lg leading-relaxed text-[#475569]">
                   Digitalisierung ist mehr als nur Software. Sie verändert, wie
                   Unternehmen arbeiten, wachsen und mit Kunden interagieren. Genau
                   hier setzt Smart Signals an: Wir helfen Unternehmen, Abläufe zu
                   hinterfragen, Prozesse zu digitalisieren und Kosten dauerhaft zu
                   senken.
                 </p>
-                <p className="mt-6 text-lg leading-relaxed text-[#94A3B8]">
+                <p className="mt-6 text-lg leading-relaxed text-[#475569]">
                   Wir glauben, dass jede Organisation – unabhängig von Größe oder
                   Branche – von smarter Digitalisierung profitieren kann.
                 </p>
@@ -101,10 +101,10 @@ export default function UnternehmenPage() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex flex-col items-center gap-12 lg:flex-row-reverse lg:gap-16">
               <div className="flex-1">
-                <h2 className="text-3xl font-bold tracking-tight text-[#F1F5F9] md:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tight text-[#0F172A] md:text-5xl">
                   Das Team hinter Smart Signals
                 </h2>
-                <p className="mt-8 text-lg leading-relaxed text-[#94A3B8]">
+                <p className="mt-8 text-lg leading-relaxed text-[#475569]">
                   Unser Team besteht aus Beratern, Entwicklern, Prozess- und
                   Organisationsexperten, die eines verbindet: die Leidenschaft für
                   intelligente, bezahlbare Digitalisierung.
@@ -126,10 +126,10 @@ export default function UnternehmenPage() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex flex-col items-center gap-16 lg:flex-row">
               <div className="w-full lg:w-1/3">
-                <h2 className="text-3xl font-bold tracking-tight text-[#F1F5F9] md:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tight text-[#0F172A] md:text-5xl">
                   Unsere Werte und Arbeitsweise
                 </h2>
-                <p className="mt-6 text-lg text-[#94A3B8]">
+                <p className="mt-6 text-lg text-[#475569]">
                   Vier Prinzipien, die unsere Arbeit leiten.
                 </p>
                 <img
@@ -143,15 +143,15 @@ export default function UnternehmenPage() {
                   {values.map((value) => (
                     <div
                       key={value.title}
-                      className="rounded-2xl border border-[#1E293B] bg-[#111D33] p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                      className="rounded-2xl border border-[#E2E8F0] bg-[#FFFFFF] p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                     >
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#D4A843]/10 text-[#D4A843]">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563EB]/10 text-[#2563EB]">
                         {value.icon}
                       </div>
-                      <h3 className="mt-6 text-lg font-semibold text-[#F1F5F9]">
+                      <h3 className="mt-6 text-lg font-semibold text-[#0F172A]">
                         {value.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-[#94A3B8]">
+                      <p className="mt-3 text-sm leading-relaxed text-[#475569]">
                         {value.text}
                       </p>
                     </div>
@@ -174,10 +174,10 @@ export default function UnternehmenPage() {
                 />
               </div>
               <div className="flex-1">
-                <h2 className="text-3xl font-bold tracking-tight text-[#F1F5F9] md:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tight text-[#0F172A] md:text-5xl">
                   Warum Smart Signals?
                 </h2>
-                <p className="mt-8 text-lg leading-relaxed text-[#94A3B8]">
+                <p className="mt-8 text-lg leading-relaxed text-[#475569]">
                   Wir machen Abläufe günstiger, Digitalisierung einfach und
                   skalierbar – damit Ihr Unternehmen heute und in Zukunft optimal
                   aufgestellt ist.
@@ -190,7 +190,7 @@ export default function UnternehmenPage() {
                   ].map((point) => (
                     <div key={point} className="flex items-start gap-3">
                       <svg
-                        className="mt-1 h-5 w-5 shrink-0 text-[#D4A843]"
+                        className="mt-1 h-5 w-5 shrink-0 text-[#2563EB]"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -200,7 +200,7 @@ export default function UnternehmenPage() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <span className="text-lg text-[#94A3B8]">{point}</span>
+                      <span className="text-lg text-[#475569]">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -228,7 +228,7 @@ export default function UnternehmenPage() {
             <div className="mt-10">
               <Link
                 href="/kontaktanfrage"
-                className="inline-block rounded-full bg-gradient-to-r from-[#D4A843] to-[#F59E0B] px-8 py-4 text-lg font-medium text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.97]"
+                className="inline-block rounded-full bg-[#2563EB] px-8 py-4 text-lg font-medium text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.97]"
               >
                 Kontakt aufnehmen
               </Link>

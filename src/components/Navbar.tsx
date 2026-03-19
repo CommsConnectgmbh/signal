@@ -24,11 +24,11 @@ export default function Navbar() {
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-[#1E293B] bg-[#050A14]/80 backdrop-blur-xl">
+    <nav className="fixed top-0 z-50 w-full border-b border-[#E2E8F0] bg-white/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Smart Signals" className="h-8 brightness-0 invert" />
+          <img src="/logo.png" alt="Smart Signals" className="h-8" />
         </Link>
 
         {/* Desktop nav */}
@@ -42,7 +42,7 @@ export default function Navbar() {
                 onMouseLeave={() => setDropdownOpen(false)}
               >
                 <button
-                  className="flex items-center gap-1 text-sm font-medium text-[#94A3B8] transition-colors duration-200 hover:text-white"
+                  className="flex items-center gap-1 text-sm font-medium text-[#475569] transition-colors duration-200 hover:text-[#0F172A]"
                   onClick={() => setDropdownOpen((prev) => !prev)}
                   aria-expanded={dropdownOpen}
                   aria-haspopup="true"
@@ -73,12 +73,12 @@ export default function Navbar() {
                       : "pointer-events-none -translate-y-1 opacity-0"
                   }`}
                 >
-                  <ul className="min-w-[220px] rounded-lg border border-[#1E293B] bg-[#0A1628] p-2 shadow-xl">
+                  <ul className="min-w-[220px] rounded-lg border border-[#E2E8F0] bg-white p-2 shadow-lg">
                     {link.dropdown.map((item) => (
                       <li key={item.href}>
                         <Link
                           href={item.href}
-                          className="block rounded-md px-4 py-2.5 text-sm text-[#94A3B8] transition-colors duration-150 hover:bg-[#1E293B]/50 hover:text-white"
+                          className="block rounded-md px-4 py-2.5 text-sm text-[#475569] transition-colors duration-150 hover:bg-[#F8FAFC] hover:text-[#0F172A]"
                         >
                           {item.label}
                         </Link>
@@ -91,7 +91,7 @@ export default function Navbar() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-sm font-medium text-[#94A3B8] transition-colors duration-200 hover:text-white"
+                  className="text-sm font-medium text-[#475569] transition-colors duration-200 hover:text-[#0F172A]"
                 >
                   {link.label}
                 </Link>
@@ -104,13 +104,13 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="/login"
-            className="hidden text-sm font-medium text-[#94A3B8] transition-colors hover:text-white md:inline-block"
+            className="hidden text-sm font-medium text-[#475569] transition-colors hover:text-[#0F172A] md:inline-block"
           >
             Partner Login
           </Link>
           <Link
             href="/kontaktanfrage"
-            className="hidden rounded-md bg-gradient-to-r from-[#D4A843] to-[#F59E0B] px-5 py-2 text-sm font-semibold text-[#050A14] transition-all duration-200 hover:opacity-90 hover:shadow-md md:inline-block"
+            className="hidden rounded-md bg-[#2563EB] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-md md:inline-block"
           >
             Jetzt anfragen
           </Link>
@@ -122,17 +122,17 @@ export default function Navbar() {
             aria-label="Menu"
           >
             <span
-              className={`absolute left-0 block h-0.5 w-6 bg-[#F1F5F9] transition-all duration-300 ${
+              className={`absolute left-0 block h-0.5 w-6 bg-[#0F172A] transition-all duration-300 ${
                 mobileOpen ? "top-3 rotate-45" : "top-1"
               }`}
             />
             <span
-              className={`absolute left-0 top-3 block h-0.5 w-6 bg-[#F1F5F9] transition-opacity duration-300 ${
+              className={`absolute left-0 top-3 block h-0.5 w-6 bg-[#0F172A] transition-opacity duration-300 ${
                 mobileOpen ? "opacity-0" : "opacity-100"
               }`}
             />
             <span
-              className={`absolute left-0 block h-0.5 w-6 bg-[#F1F5F9] transition-all duration-300 ${
+              className={`absolute left-0 block h-0.5 w-6 bg-[#0F172A] transition-all duration-300 ${
                 mobileOpen ? "top-3 -rotate-45" : "top-5"
               }`}
             />
@@ -142,7 +142,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden border-t border-[#1E293B] bg-[#050A14] transition-all duration-300 md:hidden ${
+        className={`overflow-hidden border-t border-[#E2E8F0] bg-white transition-all duration-300 md:hidden ${
           mobileOpen ? "max-h-screen pb-6" : "max-h-0 border-t-0"
         }`}
       >
@@ -151,7 +151,7 @@ export default function Navbar() {
             link.dropdown ? (
               <li key={link.label}>
                 <button
-                  className="flex w-full items-center justify-between py-3 text-base font-medium text-[#94A3B8] transition-colors duration-200 hover:text-white"
+                  className="flex w-full items-center justify-between py-3 text-base font-medium text-[#475569] transition-colors duration-200 hover:text-[#0F172A]"
                   onClick={() => setMobileDropdownOpen((prev) => !prev)}
                 >
                   {link.label}
@@ -180,7 +180,7 @@ export default function Navbar() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="block py-2.5 pl-4 text-sm text-[#64748B] transition-colors duration-150 hover:text-white"
+                        className="block py-2.5 pl-4 text-sm text-[#94A3B8] transition-colors duration-150 hover:text-[#0F172A]"
                         onClick={() => setMobileOpen(false)}
                       >
                         {item.label}
@@ -193,7 +193,7 @@ export default function Navbar() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="block py-3 text-base font-medium text-[#94A3B8] transition-colors duration-200 hover:text-white"
+                  className="block py-3 text-base font-medium text-[#475569] transition-colors duration-200 hover:text-[#0F172A]"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}
