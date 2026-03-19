@@ -1,0 +1,12 @@
+node_modules
+.next
+.env.local
+.vercel
+.firecrawl
+*.tsbuildinfo
+assets-original.png
+editorial-*.png
+mobile-*.png
+dark-*.png
+taxonomy-*.png
+screenshot-*.png
