@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const footerColumns = [
   {
-    title: "Leistungen",
+    title: "Lösungen",
     links: [
       { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile" },
       { label: "Mobilfunkkosten senken", href: "/mobilfunkkosten" },
@@ -13,8 +13,14 @@ const footerColumns = [
     title: "Unternehmen",
     links: [
       { label: "Über uns", href: "/unternehmen" },
-      { label: "Karriere", href: "/karriere" },
       { label: "Kontakt", href: "/kontaktanfrage" },
+    ],
+  },
+  {
+    title: "Partner",
+    links: [
+      { label: "Partner werden", href: "/partner" },
+      { label: "Partner Login", href: "/login" },
     ],
   },
   {
@@ -33,14 +39,14 @@ export default function Footer() {
     <footer className="bg-[#F8FAFC] border-t border-[#E2E8F0]">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
         {/* Top section */}
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-5">
           {/* Logo + tagline */}
           <div>
             <Link href="/" className="inline-block">
               <img src="/logo.png" alt="Smart Signals" className="h-10" />
             </Link>
             <p className="mt-4 text-sm text-[#94A3B8]">
-              B2B Vertriebsbusiness für den Mittelstand
+              Smarte B2B Lösungen für den Mittelstand
             </p>
           </div>
 

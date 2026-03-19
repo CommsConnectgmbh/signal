@@ -4,18 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Startseite", href: "/" },
   {
-    label: "Leistungen",
-    href: "/leistungen",
+    label: "Lösungen",
+    href: "/loesungen",
     dropdown: [
       { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile" },
-      { label: "Mobilfunkkosten", href: "/mobilfunkkosten" },
+      { label: "Mobilfunkkosten senken", href: "/mobilfunkkosten" },
       { label: "5G Koffersystem", href: "/5g-koffer" },
     ],
   },
-  { label: "Karriere", href: "/karriere" },
   { label: "Unternehmen", href: "/unternehmen" },
+  { label: "Partner werden", href: "/partner" },
+  { label: "Kontakt", href: "/kontaktanfrage" },
 ];
 
 export default function Navbar() {
@@ -112,7 +112,7 @@ export default function Navbar() {
             href="/kontaktanfrage"
             className="hidden rounded-md bg-[#2563EB] px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:shadow-md md:inline-block"
           >
-            Jetzt anfragen
+            Beratung anfragen
           </Link>
 
           {/* Hamburger */}
@@ -201,13 +201,22 @@ export default function Navbar() {
               </li>
             )
           )}
+          <li>
+            <Link
+              href="/login"
+              className="block py-3 text-base font-medium text-[#475569] transition-colors duration-200 hover:text-[#0F172A]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Partner Login
+            </Link>
+          </li>
           <li className="pt-4">
             <Link
               href="/kontaktanfrage"
               className="block rounded-md bg-[#2563EB] px-5 py-3 text-center text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
               onClick={() => setMobileOpen(false)}
             >
-              Jetzt anfragen
+              Beratung anfragen
             </Link>
           </li>
         </ul>
