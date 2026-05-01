@@ -41,10 +41,18 @@ export default function ImpressumPage() {
               <br />
               E-Mail:{" "}
               <a
-                href="mailto:kontakt@smart-signals.de"
+                href="mailto:info@smart-signals.de"
                 className="text-[#2563EB] hover:underline"
               >
-                kontakt@smart-signals.de
+                info@smart-signals.de
+              </a>
+              <br />
+              Support:{" "}
+              <a
+                href="mailto:info@smart-signals.de"
+                className="text-[#2563EB] hover:underline"
+              >
+                info@smart-signals.de
               </a>
             </p>
             <p>
