@@ -1,5 +1,17 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+// next/font/google self-hostet die Schriften zur Build-Zeit auf der eigenen Domain
+// (kein direkter Browser-Request an fonts.googleapis.com / fonts.gstatic.com).
+// DSGVO-Vorteil: keine IP-Übermittlung an Google USA, kein Cookie-Consent für
+// Schriftauslieferung erforderlich (vgl. LG München I 20.01.2022, Az. 3 O 17493/20).
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const SITE_URL = "https://smart-signals.de";
 
@@ -85,24 +97,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="de">
+    <html lang="de" className={inter.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
       </head>
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
