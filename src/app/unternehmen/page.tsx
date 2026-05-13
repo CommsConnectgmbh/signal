@@ -81,8 +81,8 @@ export default function UnternehmenPage() {
                   senken.
                 </p>
                 <p className="mt-6 text-lg leading-relaxed text-[#475569]">
-                  Wir glauben, dass jede Organisation – unabhängig von Größe oder
-                  Branche – von smarter Digitalisierung profitieren kann.
+                  Wir glauben, dass jede Organisation, unabhängig von Größe oder
+                  Branche, von smarter Digitalisierung profitieren kann.
                 </p>
               </div>
               <div className="flex-1">
@@ -179,7 +179,7 @@ export default function UnternehmenPage() {
                 </h2>
                 <p className="mt-8 text-lg leading-relaxed text-[#475569]">
                   Wir machen Abläufe günstiger, Digitalisierung einfach und
-                  skalierbar – damit Ihr Unternehmen heute und in Zukunft optimal
+                  skalierbar, damit Ihr Unternehmen heute und in Zukunft optimal
                   aufgestellt ist.
                 </p>
                 <div className="mt-8 space-y-4">

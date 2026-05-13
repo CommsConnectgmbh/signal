@@ -7,7 +7,7 @@ import Link from "next/link";
 const useCases = [
   {
     title: "Baustellen",
-    description: "Konnektivität auf der Baustelle – auch tief unten.",
+    description: "Konnektivität auf der Baustelle, auch tief unten.",
     tags: ["Plug & Play <60s", "500m WLAN", "IP67"],
   },
   {
@@ -32,13 +32,13 @@ const useCases = [
   },
   {
     title: "Ausfallsicherung",
-    description: "Festnetz weg – Betrieb läuft weiter.",
+    description: "Festnetz weg, Betrieb läuft weiter.",
     tags: ["In <60s online", "Kein IT nötig", "VPN-fähig"],
   },
 ];
 
 const highlights = [
-  { title: "Plug & Play", text: "Keine Installation, kein Techniker. Steckdose rein – sofort online." },
+  { title: "Plug & Play", text: "Keine Installation, kein Techniker. Steckdose rein, sofort online." },
   { title: "5G Ready", text: "Unterstützt alle führenden 5G-Netze für maximale Geschwindigkeit." },
   { title: "IP67 Schutz", text: "Wasser- und staubdicht für den Einsatz auf Baustellen und im Freien." },
   { title: "Dual-SIM", text: "Zwei SIM-Karten für automatisches Failover und maximale Verfügbarkeit." },
@@ -132,7 +132,7 @@ export default function KofferPage() {
         {/* CTA */}
         <section className="bg-[#F8FAFC] py-16 px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">In 60 Sekunden online – überall</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">In 60 Sekunden online, überall</h2>
             <p className="mt-4 text-[#475569]">Erfahren Sie, wie das 5G Koffersystem Ihre Anforderungen erfüllt.</p>
             <Link
               href="/kontaktanfrage"

@@ -42,7 +42,7 @@ export default function VorteilsRechner() {
             Wie viel spart Ihr Mitarbeiter?
           </h2>
           <p className="mt-4 text-lg text-[#475569]">
-            Einfach Gehalt und Steuerklasse einstellen – das Ergebnis sehen Sie
+            Einfach Gehalt und Steuerklasse einstellen: das Ergebnis sehen Sie
             sofort.
           </p>
         </div>

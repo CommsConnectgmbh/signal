@@ -7,7 +7,7 @@ import Link from "next/link";
 const highlights = [
   {
     title: "Gemeinsam stark",
-    text: "Aus hunderten werden tausende Nummern – und damit eine Verhandlungsposition, die einzelne Unternehmen nie erreichen.",
+    text: "Aus hunderten werden tausende Nummern, und damit eine Verhandlungsposition, die einzelne Unternehmen nie erreichen.",
   },
   {
     title: "Doppelte Vorteile",
@@ -19,7 +19,7 @@ const highlights = [
   },
   {
     title: "Spürbare Einsparungen",
-    text: "Deutlich geringere Mobilfunkkosten – messbar, nachvollziehbar und ab dem ersten Monat wirksam.",
+    text: "Deutlich geringere Mobilfunkkosten: messbar, nachvollziehbar und ab dem ersten Monat wirksam.",
   },
 ];
 
@@ -27,7 +27,7 @@ const steps = [
   {
     number: "01",
     title: "Analyse",
-    text: "Wir analysieren Ihre aktuellen Verträge und Kosten – kostenlos und unverbindlich.",
+    text: "Wir analysieren Ihre aktuellen Verträge und Kosten, kostenlos und unverbindlich.",
   },
   {
     number: "02",
@@ -37,7 +37,7 @@ const steps = [
   {
     number: "03",
     title: "Einsparung",
-    text: "Sie erhalten optimierte Verträge und sparen sofort – ohne Kündigung Ihrer alten Verträge.",
+    text: "Sie erhalten optimierte Verträge und sparen sofort, ohne Kündigung Ihrer alten Verträge.",
   },
 ];
 
@@ -127,8 +127,8 @@ export default function MobilfunkkostenPage() {
         {/* CTA */}
         <section className="bg-[#F8FAFC] py-16 px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">Bis zu 30 % sparen – sofort</h2>
-            <p className="mt-4 text-[#475569]">Lassen Sie uns Ihre aktuellen Mobilfunkkosten analysieren – kostenlos und unverbindlich.</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">Bis zu 30 % sparen, sofort</h2>
+            <p className="mt-4 text-[#475569]">Lassen Sie uns Ihre aktuellen Mobilfunkkosten analysieren, kostenlos und unverbindlich.</p>
             <Link
               href="/kontaktanfrage"
               className="mt-8 inline-flex items-center gap-2 bg-[#16A34A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#15803D] transition-colors"

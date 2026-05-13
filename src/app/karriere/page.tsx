@@ -67,7 +67,7 @@ const faqItems = [
   {
     question: "Muss ich Kunden selbst suchen?",
     answer:
-      "Du baust dein Netzwerk eigenständig auf – mit unserer Unterstützung.",
+      "Du baust dein Netzwerk eigenständig auf, mit unserer Unterstützung.",
   },
 ];
 
@@ -118,7 +118,7 @@ export default function KarrierePage() {
               Für wen ist das?
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-center text-lg text-[#94A3B8]">
-              Egal ob Neustart, Karrierewechsel oder neben dem Studium – hier ist
+              Egal ob Neustart, Karrierewechsel oder neben dem Studium: hier ist
               Platz für dich.
             </p>
             <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -158,7 +158,7 @@ export default function KarrierePage() {
                   Als Digital Solution Architekt berätst du Unternehmen rund um
                   digitale Lösungen. Du analysierst bestehende Arbeitsabläufe,
                   identifizierst Optimierungspotenziale und findest die passenden
-                  Lösungen – individuell und praxisnah.
+                  Lösungen, individuell und praxisnah.
                 </p>
 
                 <ul className="mt-8 space-y-4">
@@ -195,7 +195,7 @@ export default function KarrierePage() {
                       Karriere und Chancengleichheit
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-[#94A3B8]">
-                      Egal woher du kommst oder welchen Hintergrund du hast – bei
+                      Egal woher du kommst oder welchen Hintergrund du hast: bei
                       uns zählt dein Engagement.
                     </p>
                   </div>

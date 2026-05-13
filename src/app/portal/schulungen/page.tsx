@@ -349,7 +349,7 @@ export default function SchulungenPage() {
       <div className="mt-12 bg-[#0A1628] border border-[#1E293B] rounded-xl p-6 text-center">
         <p className="text-[#F1F5F9] font-semibold mb-2">Wöchentliches Live-Training</p>
         <p className="text-[#94A3B8] text-sm mb-4">
-          Jeden Mittwoch 18:00 Uhr — Live Sales Training mit Q&A. Zoom-Link wird per Email verschickt.
+          Jeden Mittwoch 18:00 Uhr. Live Sales Training mit Q&A. Zoom-Link wird per Email verschickt.
         </p>
         <span className="text-[#D4A843] text-sm font-medium">
           Nächstes Training: Mittwoch, 19. März 2026

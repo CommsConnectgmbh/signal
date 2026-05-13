@@ -73,7 +73,7 @@ export default function HomePage() {
                       <span className="text-[#0F172A] font-bold text-xl block">Mitarbeiter</span>
                       <span className="text-[#0F172A] font-bold text-xl block">Vorteilsprogramm</span>
                     </div>
-                    <p className="text-[#475569] text-sm mb-4">Mitarbeiterbenefits mit Steuervorteil – etwa für Produkte wie Handys</p>
+                    <p className="text-[#475569] text-sm mb-4">Mitarbeiterbenefits mit Steuervorteil, etwa für Produkte wie Handys</p>
                     <ul className="space-y-2 mb-6">
                       {["Arbeitgeber-Benefit", "Unternehmen zahlen 0 €", "Exklusive Konditionen für Ihre Mitarbeiter"].map((item) => (
                         <li key={item} className="flex items-center gap-2 text-sm text-[#475569]">

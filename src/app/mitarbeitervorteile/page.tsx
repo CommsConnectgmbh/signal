@@ -8,7 +8,7 @@ import Link from "next/link";
 const highlights = [
   {
     title: "Steuervorteil",
-    text: "Ihre Mitarbeiter profitieren sofort – steuerlich begünstigt über die Payroll.",
+    text: "Ihre Mitarbeiter profitieren sofort, steuerlich begünstigt über die Payroll.",
   },
   {
     title: "Familien inklusive",
@@ -33,7 +33,7 @@ const steps = [
   {
     number: "02",
     title: "Gehaltsabrechnung",
-    text: "Die monatliche Rate wird über die Gehaltsabrechnung abgewickelt – steuerlich begünstigt.",
+    text: "Die monatliche Rate wird über die Gehaltsabrechnung abgewickelt, steuerlich begünstigt.",
   },
   {
     number: "03",
@@ -56,7 +56,7 @@ export default function MitarbeiterVorteilePage() {
                 Mitarbeitervorteile für Ihr Unternehmen
               </h1>
               <p className="mt-4 text-lg text-[#475569] leading-relaxed">
-                Exklusive Benefits für Ihre Mitarbeiter und deren Familien – steuerlich begünstigt über die Gehaltsabrechnung. Ohne Kosten, ohne Aufwand.
+                Exklusive Benefits für Ihre Mitarbeiter und deren Familien, steuerlich begünstigt über die Gehaltsabrechnung. Ohne Kosten, ohne Aufwand.
               </p>
               <ul className="mt-6 space-y-2">
                 {["0 € Aufwand", "Auch für Familienmitglieder nutzbar", "Steuerlich begünstigt über die Lohnabrechnung"].map((item) => (
@@ -98,7 +98,7 @@ export default function MitarbeiterVorteilePage() {
                 <p className="text-xs font-semibold uppercase tracking-widest text-[#16A34A] mb-3">Die Lösung</p>
                 <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">Vorteile, die wirklich ankommen.</h2>
                 <p className="mt-4 text-[#475569] leading-relaxed">
-                  Mit Smart Signals erhalten Ihre Mitarbeiter exklusive Angebote – z. B. für Produkte wie Smartphones – steuerlich begünstigt über die Gehaltsabrechnung. Ohne Kosten für Arbeitgeber. Ein moderner Benefit, der nicht nur dem Mitarbeiter nutzt, sondern auch seiner Familie. Smart. Fair. Sofort einsetzbar.
+                  Mit Smart Signals erhalten Ihre Mitarbeiter exklusive Angebote, z. B. für Produkte wie Smartphones, steuerlich begünstigt über die Gehaltsabrechnung. Ohne Kosten für Arbeitgeber. Ein moderner Benefit, der nicht nur dem Mitarbeiter nutzt, sondern auch seiner Familie. Smart. Fair. Sofort einsetzbar.
                 </p>
               </div>
             </div>
