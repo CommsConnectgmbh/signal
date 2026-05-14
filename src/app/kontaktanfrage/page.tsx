@@ -82,7 +82,7 @@ export default function KontaktanfragePage() {
                     value="Herr"
                     checked={form.anrede === "Herr"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB]"
+                    className="w-4 h-4 text-[#2D7FF9] accent-[#2D7FF9]"
                   />
                   <span className="text-[#475569]">Herr</span>
                 </label>
@@ -93,7 +93,7 @@ export default function KontaktanfragePage() {
                     value="Frau"
                     checked={form.anrede === "Frau"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-[#2563EB] accent-[#2563EB]"
+                    className="w-4 h-4 text-[#2D7FF9] accent-[#2D7FF9]"
                   />
                   <span className="text-[#475569]">Frau</span>
                 </label>
@@ -114,7 +114,7 @@ export default function KontaktanfragePage() {
                   value={form.firmenname}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
                   placeholder="Ihre Firma"
                 />
               </div>
@@ -134,7 +134,7 @@ export default function KontaktanfragePage() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
                   placeholder="ihre@email.de"
                 />
               </div>
@@ -153,7 +153,7 @@ export default function KontaktanfragePage() {
                   name="telefon"
                   value={form.telefon}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
                   placeholder="+49 ..."
                 />
               </div>
@@ -172,7 +172,7 @@ export default function KontaktanfragePage() {
                   value={form.produkt}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition appearance-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition appearance-none"
                 >
                   <option value="">Wählen Sie eine Option</option>
                   <option value="mitarbeiter-benefits">
@@ -198,7 +198,7 @@ export default function KontaktanfragePage() {
                   name="mitarbeiteranzahl"
                   value={form.mitarbeiteranzahl}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition appearance-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition appearance-none"
                 >
                   <option value="">Wählen Sie eine Option</option>
                   <option value="0-50">0–50</option>
@@ -223,7 +223,7 @@ export default function KontaktanfragePage() {
                   value={form.beschreibung}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent transition resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition resize-none"
                   placeholder="Wie können wir Ihnen helfen?"
                 />
               </div>
@@ -231,7 +231,7 @@ export default function KontaktanfragePage() {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-4 bg-[#2563EB] hover:opacity-90 text-white font-semibold rounded-full transition-colors text-lg"
+                className="w-full py-4 bg-[#F08A3A] hover:bg-[#D97320] text-white font-semibold rounded-full transition-colors text-lg"
               >
                 Anfrage einreichen
               </button>

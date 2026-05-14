@@ -55,7 +55,7 @@ export default function VorteilsRechner() {
               <label className="text-sm font-medium text-[#0F172A]">
                 Monatliches Bruttogehalt
               </label>
-              <span className="text-lg font-semibold text-[#16A34A]">
+              <span className="text-lg font-semibold text-[#2D7FF9]">
                 {gehalt.toLocaleString("de-DE")} €
               </span>
             </div>
@@ -66,7 +66,7 @@ export default function VorteilsRechner() {
               step={100}
               value={gehalt}
               onChange={(e) => setGehalt(Number(e.target.value))}
-              className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0] accent-[#16A34A] [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#16A34A]"
+              className="mt-4 h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E2E8F0] accent-[#2D7FF9] [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#2D7FF9]"
             />
             <div className="mt-1 flex justify-between text-xs text-[#94A3B8]">
               <span>1.500 €</span>
@@ -86,7 +86,7 @@ export default function VorteilsRechner() {
                   onClick={() => setActiveKlasse(i)}
                   className={`rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200 ${
                     activeKlasse === i
-                      ? "bg-[#16A34A] text-white shadow-md"
+                      ? "bg-[#2D7FF9] text-white shadow-md"
                       : "border border-[#E2E8F0] text-[#475569] hover:bg-[#F8FAFC]"
                   }`}
                 >
@@ -127,7 +127,7 @@ export default function VorteilsRechner() {
               <p className="text-xs font-medium text-[#94A3B8]">
                 Ersparnis gg. Privatkauf
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#16A34A]">
+              <p className="mt-2 text-2xl font-bold text-[#2D7FF9]">
                 {results.ersparnis} €
               </p>
             </div>
