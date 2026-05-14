@@ -5,16 +5,29 @@
   --color-surface: #F8FAFC;
   --color-elevated: #FFFFFF;
   --color-border: #E2E8F0;
-  --color-blue: #2563EB;
-  --color-gold: #D4A843;
+
+  /* Brand color system (see DESIGN.md §2) */
+  --color-brand: #2D7FF9;        /* oklch(60% 0.16 230) */
+  --color-brand-hover: #1F66D6;  /* oklch(54% 0.16 230) */
+  --color-accent: #F08A3A;       /* oklch(72% 0.18 50)  */
+  --color-accent-hover: #D97320; /* oklch(64% 0.18 50)  */
+  --color-accent-soft: #FFF1E5;  /* oklch(96% 0.04 50)  */
+  --color-success: #16A34A;      /* semantic confirmation only */
+
+  /* Legacy tokens kept for backwards compatibility, do not use in new code */
+  --color-blue: #2D7FF9;
+  --color-gold: #2D7FF9;
+
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;
   --color-text-muted: #94A3B8;
-  /* Dark theme colors (for partner page) */
+
+  /* Dark theme colors (Karriere / Portal / Login) */
   --color-dark-base: #050A14;
   --color-dark-surface: #0A1628;
   --color-dark-elevated: #111D33;
   --color-dark-border: #1E293B;
+
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -27,7 +40,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::selection { background: #2563EB; color: white; }
+::selection { background: #2D7FF9; color: white; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

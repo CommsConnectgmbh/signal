@@ -92,7 +92,7 @@ export default function KarrierePage() {
                 <div className="mt-10">
                   <Link
                     href="/kontaktanfrage"
-                    className="inline-block rounded-full bg-gradient-to-r from-[#D4A843] to-[#F59E0B] px-8 py-4 text-lg font-medium text-white transition-all hover:opacity-90 hover:shadow-lg hover:shadow-[#D4A843]/25 active:scale-[0.97]"
+                    className="inline-block rounded-full bg-[#F08A3A] px-8 py-4 text-lg font-medium text-white transition-colors hover:bg-[#D97320] active:scale-[0.98]"
                   >
                     Jetzt bewerben
                   </Link>
@@ -127,7 +127,7 @@ export default function KarrierePage() {
                   key={group.title}
                   className="rounded-3xl border border-[#1E293B] bg-[#111D33] p-10 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                 >
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#D4A843]/10 text-[#D4A843]">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2D7FF9]/15 text-[#2D7FF9]">
                     {group.icon}
                   </div>
                   <h3 className="mt-6 text-xl font-semibold text-[#F1F5F9]">
@@ -148,7 +148,7 @@ export default function KarrierePage() {
             <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
               {/* Content */}
               <div className="flex-1">
-                <p className="text-xs font-semibold uppercase tracking-widest text-[#D4A843]">
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
                   Dein Job. Dein Business. Deine Freiheit.
                 </p>
                 <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#F1F5F9] md:text-4xl">
@@ -165,7 +165,7 @@ export default function KarrierePage() {
                   {keyPoints.map((point) => (
                     <li key={point} className="flex items-start gap-3">
                       <svg
-                        className="mt-1 h-5 w-5 shrink-0 text-[#D4A843]"
+                        className="mt-1 h-5 w-5 shrink-0 text-[#2D7FF9]"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -244,7 +244,7 @@ export default function KarrierePage() {
             <div className="mt-10">
               <Link
                 href="/kontaktanfrage"
-                className="inline-block rounded-full bg-gradient-to-r from-[#D4A843] to-[#F59E0B] px-8 py-4 text-lg font-medium text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.97]"
+                className="inline-block rounded-full bg-[#F08A3A] px-8 py-4 text-lg font-medium text-white transition-colors hover:bg-[#D97320] active:scale-[0.98]"
               >
                 Jetzt bewerben
               </Link>

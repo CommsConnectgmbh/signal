@@ -145,7 +145,7 @@ export default function UnternehmenPage() {
                       key={value.title}
                       className="rounded-2xl border border-[#E2E8F0] bg-[#FFFFFF] p-8 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                     >
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563EB]/10 text-[#2563EB]">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2D7FF9]/10 text-[#2D7FF9]">
                         {value.icon}
                       </div>
                       <h3 className="mt-6 text-lg font-semibold text-[#0F172A]">
@@ -190,7 +190,7 @@ export default function UnternehmenPage() {
                   ].map((point) => (
                     <div key={point} className="flex items-start gap-3">
                       <svg
-                        className="mt-1 h-5 w-5 shrink-0 text-[#2563EB]"
+                        className="mt-1 h-5 w-5 shrink-0 text-[#2D7FF9]"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -228,7 +228,7 @@ export default function UnternehmenPage() {
             <div className="mt-10">
               <Link
                 href="/kontaktanfrage"
-                className="inline-block rounded-full bg-[#2563EB] px-8 py-4 text-lg font-medium text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-[0.97]"
+                className="inline-block rounded-full bg-[#F08A3A] px-8 py-4 text-lg font-medium text-white transition-colors hover:bg-[#D97320] active:scale-[0.98]"
               >
                 Kontakt aufnehmen
               </Link>
