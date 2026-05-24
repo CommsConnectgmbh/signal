@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PricingSection from "@/components/PricingSection";
+import FAQSection from "@/components/FAQSection";
 
 export default function HomePage() {
   const [anrede, setAnrede] = useState<"herr" | "frau">("herr");
@@ -23,20 +25,41 @@ export default function HomePage() {
       <div className="min-h-screen bg-white text-[#0F172A] overflow-x-hidden">
 
         {/* HERO */}
-        <section className="flex items-center justify-center min-h-[60vh] px-4 sm:px-6 pt-32 pb-16 bg-white">
+        <section className="flex items-center justify-center min-h-[70vh] px-4 sm:px-6 pt-32 pb-20 bg-white">
           <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-[#2D7FF9]/20 bg-[#EFF6FF] text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[#2D7FF9] opacity-75 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2D7FF9]" />
+              </span>
+              Pre-Launch &middot; Smart Signals
+            </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-10 text-[#0F172A]"
+              transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08] mb-6 text-[#0F172A]"
             >
-              Mitarbeiter-Benefits & Mobilfunklösungen für den Mittelstand
+              Klare Signale aus Ihrem Telco-Stack.
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg sm:text-xl text-[#475569] leading-relaxed max-w-2xl mx-auto mb-10"
+            >
+              Smart Signals buendelt Mobilfunk, 5G-Konnektivitaet und Mitarbeiter-Benefits zu einem belastbaren B2B-Stack fuer den Mittelstand. Neutral, verhandelt, ausgelagert.
+            </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.45, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-3"
             >
               <Link
                 href="/kontaktanfrage"
@@ -45,7 +68,16 @@ export default function HomePage() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.77a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
                 </svg>
-                Jetzt unverbindlich anfragen
+                Waitlist beitreten
+              </Link>
+              <Link
+                href="#pricing"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+              >
+                Mehr erfahren
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </Link>
             </motion.div>
           </div>
@@ -138,8 +170,14 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* PRICING */}
+        <PricingSection />
+
+        {/* FAQ */}
+        <FAQSection />
+
         {/* KONTAKTFORMULAR */}
-        <section className="py-24 px-4 sm:px-6 bg-[#F8FAFC]">
+        <section className="py-24 px-4 sm:px-6 bg-white">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div className="flex items-center justify-center">
               <img src="/logo.png" alt="Smart Signals" className="max-w-[240px] w-full" />
