@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Startseite", href: "/" },
@@ -27,7 +28,7 @@ export default function Navbar() {
     <nav className="fixed top-0 z-50 w-full border-b border-[#E2E8F0] bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Smart Signals" className="h-8" />
+          <Image src="/logo.png" alt="Smart Signals" width={600} height={319} priority className="h-8 w-auto" />
         </Link>
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) =>
@@ -35,15 +36,15 @@ export default function Navbar() {
               <li key={link.label} className="relative"
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}>
-                <button
-                  className="flex items-center gap-1 text-sm font-medium text-[#475569] hover:text-[#0F172A]"
-                  onClick={() => setDropdownOpen((prev) => !prev)}>
+                <Link
+                  href={link.href}
+                  className="flex items-center gap-1 text-sm font-medium text-[#475569] hover:text-[#0F172A]">
                   {link.label}
                   <svg className={`h-4 w-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
-                </button>
+                </Link>
                 <div className={`absolute left-1/2 top-full pt-2 -translate-x-1/2 transition-all ${
                   dropdownOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
                   <ul className="min-w-[220px] rounded-lg border border-[#E2E8F0] bg-white p-2 shadow-lg">
@@ -87,14 +88,21 @@ export default function Navbar() {
           {navLinks.map((link) =>
             link.dropdown ? (
               <li key={link.label}>
-                <button className="flex w-full items-center justify-between py-3 text-base font-medium text-[#475569]"
-                  onClick={() => setMobileDropdownOpen((p) => !p)}>
-                  {link.label}
-                  <svg className={`h-4 w-4 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`}
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
+                <div className="flex w-full items-center justify-between py-3 text-base font-medium text-[#475569]">
+                  <Link href={link.href} onClick={() => setMobileOpen(false)} className="hover:text-[#0F172A]">
+                    {link.label}
+                  </Link>
+                  <button
+                    type="button"
+                    aria-label="Untermenü Leistungen öffnen"
+                    aria-expanded={mobileDropdownOpen}
+                    onClick={() => setMobileDropdownOpen((p) => !p)}>
+                    <svg className={`h-4 w-4 transition-transform ${mobileDropdownOpen ? "rotate-180" : ""}`}
+                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                </div>
                 <ul className={`overflow-hidden transition-all ${mobileDropdownOpen ? "max-h-48" : "max-h-0"}`}>
                   {link.dropdown.map((item) => (
                     <li key={item.href}>

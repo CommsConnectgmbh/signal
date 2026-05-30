@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PricingSection from "@/components/PricingSection";
@@ -13,10 +14,42 @@ export default function HomePage() {
   const [produkt, setProdukt] = useState("");
   const [mitarbeiter, setMitarbeiter] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError(null);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      anrede: anrede === "herr" ? "Herr" : "Frau",
+      vorname: fd.get("vorname"),
+      nachname: fd.get("nachname"),
+      firmenname: fd.get("firmenname"),
+      email: fd.get("email"),
+      telefon: fd.get("telefon"),
+      produkt,
+      mitarbeiteranzahl: mitarbeiter,
+      beschreibung: fd.get("beschreibung"),
+      _honey: fd.get("_honey"),
+    };
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("request failed");
+      setSubmitted(true);
+    } catch {
+      setError(
+        "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@smart-signals.de."
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -180,7 +213,7 @@ export default function HomePage() {
         <section className="py-24 px-4 sm:px-6 bg-white">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div className="flex items-center justify-center">
-              <img src="/logo.png" alt="Smart Signals" className="max-w-[240px] w-full" />
+              <Image src="/logo.png" alt="Smart Signals" width={600} height={319} className="max-w-[240px] w-full h-auto" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-[#0F172A] mb-6">Kontaktanfrage</h2>
@@ -191,9 +224,15 @@ export default function HomePage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="flex gap-4">
+                  {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
+                  <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden">
+                    <label htmlFor="company_website">Website</label>
+                    <input id="company_website" name="_honey" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
+                  <fieldset className="flex gap-4">
+                    <legend className="sr-only">Anrede</legend>
                     {(["herr", "frau"] as const).map((a) => (
-                      <button key={a} type="button" onClick={() => setAnrede(a)}
+                      <button key={a} type="button" onClick={() => setAnrede(a)} aria-pressed={anrede === a}
                         className={"flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-colors " + (anrede === a ? "border-[#2D7FF9] bg-[#EFF6FF] text-[#2D7FF9]" : "border-[#E2E8F0] text-[#475569]")}>
                         <span className={"w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 " + (anrede === a ? "border-[#2D7FF9]" : "border-[#94A3B8]")}>
                           {anrede === a && <span className="w-2 h-2 rounded-full bg-[#2D7FF9]" />}
@@ -201,26 +240,32 @@ export default function HomePage() {
                         {a === "herr" ? "Herr" : "Frau"}
                       </button>
                     ))}
-                  </div>
+                  </fieldset>
                   <div className="grid grid-cols-2 gap-3">
-                    <input required placeholder="Vorname" className="border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
-                    <input required placeholder="Nachname" className="border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    <div>
+                      <label htmlFor="vorname" className="sr-only">Vorname</label>
+                      <input id="vorname" name="vorname" type="text" autoComplete="given-name" required placeholder="Vorname" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    </div>
+                    <div>
+                      <label htmlFor="nachname" className="sr-only">Nachname</label>
+                      <input id="nachname" name="nachname" type="text" autoComplete="family-name" required placeholder="Nachname" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">Firmenname</label>
-                    <input required placeholder="Geben Sie Ihren offiziellen Firmennamen ein" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    <label htmlFor="firmenname" className="block text-sm font-medium text-[#0F172A] mb-1">Firmenname</label>
+                    <input id="firmenname" name="firmenname" type="text" autoComplete="organization" required placeholder="Geben Sie Ihren offiziellen Firmennamen ein" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">E-Mail-Adresse</label>
-                    <input required type="email" placeholder="beispiel@firma.de" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    <label htmlFor="email" className="block text-sm font-medium text-[#0F172A] mb-1">E-Mail-Adresse</label>
+                    <input id="email" name="email" required type="email" autoComplete="email" placeholder="beispiel@firma.de" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">Telefon</label>
-                    <input placeholder="Geben Sie Ihre Telefonnummer ein" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    <label htmlFor="telefon" className="block text-sm font-medium text-[#0F172A] mb-1">Telefon</label>
+                    <input id="telefon" name="telefon" type="tel" autoComplete="tel" placeholder="Geben Sie Ihre Telefonnummer ein" className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">Produktauswahl</label>
-                    <select value={produkt} onChange={(e) => setProdukt(e.target.value)}
+                    <label htmlFor="produkt" className="block text-sm font-medium text-[#0F172A] mb-1">Produktauswahl</label>
+                    <select id="produkt" name="produkt" value={produkt} onChange={(e) => setProdukt(e.target.value)}
                       className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm text-[#475569] focus:outline-none focus:border-[#2D7FF9] bg-white transition-colors">
                       <option value="" disabled>Wählen Sie eine Option</option>
                       <option>Mitarbeiter Benefits</option>
@@ -229,8 +274,8 @@ export default function HomePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">Mitarbeiteranzahl</label>
-                    <select value={mitarbeiter} onChange={(e) => setMitarbeiter(e.target.value)}
+                    <label htmlFor="mitarbeiteranzahl" className="block text-sm font-medium text-[#0F172A] mb-1">Mitarbeiteranzahl</label>
+                    <select id="mitarbeiteranzahl" name="mitarbeiteranzahl" value={mitarbeiter} onChange={(e) => setMitarbeiter(e.target.value)}
                       className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm text-[#475569] focus:outline-none focus:border-[#2D7FF9] bg-white transition-colors">
                       <option value="" disabled>Wählen Sie eine Option aus</option>
                       <option>0-50</option>
@@ -240,12 +285,15 @@ export default function HomePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-[#0F172A] mb-1">Beschreibung (optional)</label>
-                    <textarea rows={3} placeholder="Beschreiben Sie kurz das Thema Ihrer Anfrage"
+                    <label htmlFor="beschreibung" className="block text-sm font-medium text-[#0F172A] mb-1">Beschreibung (optional)</label>
+                    <textarea id="beschreibung" name="beschreibung" rows={3} placeholder="Beschreiben Sie kurz das Thema Ihrer Anfrage"
                       className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] resize-none transition-colors bg-white" />
                   </div>
-                  <button type="submit" className="w-full bg-[#F08A3A] text-white font-semibold py-3 rounded-lg text-sm hover:bg-[#D97320] transition-colors">
-                    Anfrage einreichen
+                  {error && (
+                    <p role="alert" className="text-sm text-[#DC2626]">{error}</p>
+                  )}
+                  <button type="submit" disabled={sending} className="w-full bg-[#F08A3A] text-white font-semibold py-3 rounded-lg text-sm hover:bg-[#D97320] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                    {sending ? "Wird gesendet …" : "Anfrage einreichen"}
                   </button>
                 </form>
               )}

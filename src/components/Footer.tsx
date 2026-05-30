@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="bg-[#F8FAFC] border-t border-[#E2E8F0] py-10 px-6">
       <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-start gap-12">
         <Link href="/" className="inline-block shrink-0">
-          <img src="/logo.png" alt="Smart Signals" className="h-10" />
+          <Image src="/logo.png" alt="Smart Signals" width={600} height={319} className="h-10 w-auto" />
         </Link>
         <div>
           <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#0F172A]">Rechtsdokumente</h3>
@@ -19,6 +20,7 @@ export default function Footer() {
           <ul className="space-y-2">
             <li><Link href="/unternehmen" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Über uns</Link></li>
             <li><Link href="/karriere" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Karriere</Link></li>
+            <li><Link href="/partner" className="text-sm text-[#475569] hover:text-[#16A34A] transition-colors">Partner-Login</Link></li>
           </ul>
         </div>
       </div>
