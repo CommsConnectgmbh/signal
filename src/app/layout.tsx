@@ -70,7 +70,7 @@ const orgSchema = {
       "@id": `${SITE_URL}/#organization`,
       name: "Smart Signals",
       url: SITE_URL,
-      logo: `${SITE_URL}/favicon.png`,
+      logo: `${SITE_URL}/logo.png`,
       description:
         "B2B-Brokerage für Konnektivität, Mobilität und Mitarbeiter-Benefits im deutschen Mittelstand.",
       areaServed: ["DE", "AT", "CH"],

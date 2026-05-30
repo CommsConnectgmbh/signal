@@ -14,7 +14,10 @@ export default function KontaktanfragePage() {
     mitarbeiteranzahl: "",
     beschreibung: "",
   });
+  const [honey, setHoney] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function handleChange(
     e: React.ChangeEvent<
@@ -24,9 +27,26 @@ export default function KontaktanfragePage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    if (sending) return;
+    setSending(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, _honey: honey }),
+      });
+      if (!res.ok) throw new Error("request failed");
+      setSubmitted(true);
+    } catch {
+      setError(
+        "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@smart-signals.de."
+      );
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -73,6 +93,19 @@ export default function KontaktanfragePage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot — für Menschen unsichtbar, Bots füllen es aus */}
+              <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden">
+                <label htmlFor="company_website">Website</label>
+                <input
+                  id="company_website"
+                  name="_honey"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honey}
+                  onChange={(e) => setHoney(e.target.value)}
+                />
+              </div>
               {/* Anrede */}
               <div className="flex gap-4">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -228,12 +261,19 @@ export default function KontaktanfragePage() {
                 />
               </div>
 
+              {error && (
+                <p role="alert" className="text-sm text-[#DC2626] text-center">
+                  {error}
+                </p>
+              )}
+
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-4 bg-[#F08A3A] hover:bg-[#D97320] text-white font-semibold rounded-full transition-colors text-lg"
+                disabled={sending}
+                className="w-full py-4 bg-[#F08A3A] hover:bg-[#D97320] text-white font-semibold rounded-full transition-colors text-lg disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                Anfrage einreichen
+                {sending ? "Wird gesendet …" : "Anfrage einreichen"}
               </button>
 
               <p className="text-xs text-[#94A3B8] text-center">
