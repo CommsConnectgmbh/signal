@@ -127,10 +127,10 @@ export default function ProduktePage() {
               </span>
               <h2 className="mt-3 text-2xl font-bold tracking-tight">Mitarbeitervorteile</h2>
               <p className="mt-3 text-[#475569] leading-relaxed max-w-2xl">
-                Neben der Software vermitteln wir Vorteilsprogramme für
-                Belegschaften. Was dabei möglich ist, hängt an Ihrer Größe und
-                Ihrer Lohnabrechnung, deshalb klären wir es im Gespräch statt
-                über eine Preisliste.
+                Neben der eigenen Software vermitteln wir ein Geräte-Benefit-
+                Programm für Belegschaften: Mitarbeitende mieten Technik über den
+                Arbeitgeber, für das Unternehmen kostenfrei. Anbieter ist
+                JobHandy, wir stellen nur den Kontakt her.
               </p>
               <Link
                 href="/mitarbeitervorteile"
