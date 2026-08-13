@@ -15,6 +15,18 @@
 export type ProduktStatus = "live" | "vorbereitung";
 export type ProduktSegment = "betrieb" | "privat";
 
+/**
+ * Stand des Partnerprogramms je Produkt.
+ * - "aktiv":   Programm läuft, Konditionen stehen als Anlage im Rahmenvertrag
+ * - "geplant": Programm soll kommen, ist aber noch nicht aufgelegt
+ * - "keins":   bewusst kein Partnerprogramm vorgesehen
+ *
+ * Wichtig für /partner: unter "Kommt dazu" dürfen nur "geplant"-Produkte
+ * stehen. Ein Produkt ohne vorgesehenes Programm dort zu listen, wäre ein
+ * Versprechen, das niemand einlösen will.
+ */
+export type PartnerprogrammStand = "aktiv" | "geplant" | "keins";
+
 export type Produkt = {
   slug: string;
   name: string;
@@ -31,8 +43,7 @@ export type Produkt = {
   /** Anzeigename der Domain, ohne Protokoll. */
   domain: string;
   status: ProduktStatus;
-  /** Läuft für dieses Produkt bereits ein Partnerprogramm? */
-  partnerprogramm: boolean;
+  partnerprogramm: PartnerprogrammStand;
   /** Auf der Startseite groß ausgespielt. */
   featured?: boolean;
 };
@@ -55,7 +66,7 @@ export const produkte: Produkt[] = [
     url: "https://belegify.app",
     domain: "belegify.app",
     status: "live",
-    partnerprogramm: true,
+    partnerprogramm: "aktiv",
     featured: true,
   },
   {
@@ -75,7 +86,7 @@ export const produkte: Produkt[] = [
     url: "https://obacht.app",
     domain: "obacht.app",
     status: "live",
-    partnerprogramm: true,
+    partnerprogramm: "aktiv",
     featured: true,
   },
   {
@@ -95,7 +106,7 @@ export const produkte: Produkt[] = [
     url: "https://talents.obacht.app",
     domain: "talents.obacht.app",
     status: "live",
-    partnerprogramm: false,
+    partnerprogramm: "geplant",
   },
   {
     slug: "conduit",
@@ -114,7 +125,7 @@ export const produkte: Produkt[] = [
     url: "https://tryconduit.de",
     domain: "tryconduit.de",
     status: "live",
-    partnerprogramm: false,
+    partnerprogramm: "geplant",
   },
   {
     slug: "simvi",
@@ -133,7 +144,7 @@ export const produkte: Produkt[] = [
     url: "https://simvi.de",
     domain: "simvi.de",
     status: "live",
-    partnerprogramm: false,
+    partnerprogramm: "geplant",
   },
   {
     slug: "swing-and-savor",
@@ -148,7 +159,7 @@ export const produkte: Produkt[] = [
     url: "https://swingandsavor.at",
     domain: "swingandsavor.at",
     status: "live",
-    partnerprogramm: false,
+    partnerprogramm: "geplant",
   },
   {
     slug: "dealbuddy",
@@ -162,8 +173,8 @@ export const produkte: Produkt[] = [
     punkte: ["Kein Geldeinsatz", "Nachvollziehbare Auswertung", "Für Gruppen gebaut"],
     url: "https://deal-buddy.app",
     domain: "deal-buddy.app",
-    status: "vorbereitung",
-    partnerprogramm: false,
+    status: "live",
+    partnerprogramm: "keins",
   },
 ];
 

@@ -101,8 +101,8 @@ export default function PartnerClient() {
     }
   };
 
-  const mitProgramm = produkte.filter((p) => p.partnerprogramm);
-  const inVorbereitung = produkte.filter((p) => !p.partnerprogramm);
+  const mitProgramm = produkte.filter((p) => p.partnerprogramm === "aktiv");
+  const inVorbereitung = produkte.filter((p) => p.partnerprogramm === "geplant");
 
   return (
     <>
