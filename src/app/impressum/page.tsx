@@ -56,7 +56,9 @@ export default function ImpressumPage() {
               </a>
             </p>
             <p>
-              Smart Signals ist ein Angebot der Comms Connect GmbH.
+              Smart Signals ist eine Marke der Comms Connect GmbH und keine
+              eigene Gesellschaft. Vertragspartner sämtlicher unter dieser Marke
+              angebotenen Leistungen ist die Comms Connect GmbH.
             </p>
 
             <h2 className="text-2xl font-bold text-[#0F172A] mt-12 mb-4">

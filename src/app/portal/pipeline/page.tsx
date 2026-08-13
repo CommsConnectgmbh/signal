@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase, type Deal } from "@/lib/supabase";
+import {
+  supabase,
+  DEAL_PRODUKTE,
+  DEAL_PRODUKT_LABELS,
+  type Deal,
+} from "@/lib/supabase";
 
 const columns: { key: Deal["status"]; label: string; color: string }[] = [
   { key: "lead", label: "Lead", color: "bg-gray-500" },
@@ -12,18 +17,16 @@ const columns: { key: Deal["status"]; label: string; color: string }[] = [
   { key: "verloren", label: "Verloren", color: "bg-red-500" },
 ];
 
-const productLabels: Record<string, string> = {
-  "5g-koffer": "5G-Koffer",
-  "company-phone": "Company Phone",
-  mobilfunk: "Mobilfunk",
-};
+// Anzeige-Labels inkl. der Telko-Bestandswerte, damit alte Deals nicht leer
+// dargestellt werden. Auswählbar sind nur die aktuellen Produkte.
+const productLabels = DEAL_PRODUKT_LABELS;
 
 const emptyForm = {
   company_name: "",
   contact_name: "",
   contact_email: "",
   contact_phone: "",
-  product: "mobilfunk" as Deal["product"],
+  product: "belegify" as Deal["product"],
   value_monthly: 0,
   value_onetime: 0,
   notes: "",
@@ -329,9 +332,11 @@ export default function PipelinePage() {
                   required
                   className={inputClasses}
                 >
-                  <option value="mobilfunk">Mobilfunk</option>
-                  <option value="5g-koffer">5G-Koffer</option>
-                  <option value="company-phone">Company Phone</option>
+                  {DEAL_PRODUKTE.map((p) => (
+                    <option key={p} value={p}>
+                      {DEAL_PRODUKT_LABELS[p]}
+                    </option>
+                  ))}
                 </select>
               </div>
 

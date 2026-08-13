@@ -6,36 +6,36 @@ type QA = { q: string; a: string };
 
 const faqs: QA[] = [
   {
-    q: "Was genau macht Smart Signals?",
-    a: "Smart Signals ist ein B2B-Brokerage fuer Konnektivitaet und Mitarbeiter-Benefits im deutschen Mittelstand. Wir verhandeln Mobilfunkkonditionen, setzen 5G-Konnektivitaet vor Ort um und bauen Smartphone-Benefit-Programme fuer Mitarbeiter. Neutral, gebuendelt, ausgelagert.",
+    q: "Was ist Smart Signals?",
+    a: "Smart Signals ist die Marke, unter der wir unsere eigenen Software-Produkte bündeln. Entwickelt und betrieben werden sie von der Comms Connect GmbH. Jedes Produkt hat eine eigene Seite, einen eigenen Vertrag und einen eigenen Preis.",
   },
   {
-    q: "Wann startet das neue Angebot?",
-    a: "Die bestehenden Module Mitarbeiter-Benefits, Mobilfunkkosten und 5G-Koffer sind heute verfuegbar. Erweiterungen wie das mandantenfaehige Enterprise-Portal werden im Quartalstakt ausgerollt. Den genauen Status nennen wir Ihnen im Erstgespraech.",
+    q: "Muss ich mehrere Produkte nehmen?",
+    a: "Nein. Sie buchen genau das Produkt, das Sie brauchen. Es gibt keine Grundgebühr für das Portfolio und keine Plattform, die Sie vorher kaufen müssten.",
   },
   {
-    q: "Wie ist das Pricing-Modell aufgebaut?",
-    a: "Wir arbeiten nicht mit pauschalen Abos. Starter-Projekte starten kostenfrei mit Bedarfsanalyse. Pro- und Enterprise-Pakete werden auf Basis Mitarbeiterzahl, Modul-Auswahl und vereinbarten SLAs kalkuliert. Sie bekommen vor Vertragsschluss eine klare Aufstellung.",
+    q: "Wo finde ich die Preise?",
+    a: "Auf der jeweiligen Produktseite. Wir führen die Preise bewusst nur an einer Stelle, damit sie überall aktuell sind.",
   },
   {
-    q: "Wie steht es um DSGVO und Datenschutz?",
-    a: "Alle Datenverarbeitungen liegen auf Servern in der EU. Wir schliessen mit jedem Kunden einen AV-Vertrag nach Art. 28 DSGVO. Mitarbeiterdaten fuer Benefit-Programme werden ausschliesslich pseudonymisiert an Carrier und Hersteller uebermittelt, sofern fuer die Vertragserfuellung erforderlich.",
+    q: "Wer ist mein Vertragspartner?",
+    a: "Die Comms Connect GmbH, Tal 30, 80331 München. Smart Signals ist die Produktmarke dieser Gesellschaft, keine eigene Firma. Rechnungen und Auftragsverarbeitungsverträge laufen entsprechend über die Comms Connect GmbH.",
   },
   {
-    q: "Gibt es eine On-Premise- oder Private-Cloud-Option?",
-    a: "Ja. Fuer Enterprise-Kunden mit besonderen Compliance-Anforderungen (Banken, Versicherungen, oeffentlicher Sektor) bieten wir eine Private-Cloud-Variante des Portals in einer dedizierten Tenant-Umgebung an. ISO 27001 und BSI C5 Type 2 sind in Vorbereitung.",
+    q: "Wie steht es um Datenschutz?",
+    a: "Die Produkte laufen auf Servern in der EU. Einen Auftragsverarbeitungsvertrag nach Art. 28 DSGVO stellen wir bereit. Details je Produkt stehen in dessen Datenschutzerklärung.",
   },
   {
-    q: "Welche Integrationen gibt es?",
-    a: "Standard-Konnektoren fuer DATEV (Lohnabrechnung), SAP SuccessFactors, Personio und Microsoft Entra ID. Carrier-seitig sind Telekom, Vodafone und O2 angebunden. Weitere Systeme werden im Rahmen von Enterprise-Projekten umgesetzt.",
+    q: "Wer macht den Support?",
+    a: "Der Support läuft direkt über das jeweilige Produkt, weil dort die Leute sitzen, die es gebaut haben. Wenn Sie nicht weiterkommen, erreichen Sie uns auch über das Kontaktformular auf dieser Seite.",
   },
   {
-    q: "Wie lange dauert der Rollout?",
-    a: "Ein Mobilfunk-Pooling-Wechsel dauert in der Regel zwei bis sechs Wochen, abhaengig von Carrier und Volumen. Mitarbeiter-Benefit-Programme sind innerhalb von acht Wochen produktiv. 5G-Koffer-Loesungen sind sofort einsetzbar.",
+    q: "Kann ich die Produkte weiterempfehlen?",
+    a: "Ja. Für Berater, Kanzleien und Vertriebspartner gibt es ein Partnerprogramm mit einem Rahmenvertrag für das gesamte Portfolio. Die Konditionen nennen wir nach der Anmeldung.",
   },
   {
-    q: "Wie wechsle ich von meinem aktuellen Anbieter?",
-    a: "Wir uebernehmen die Kuendigung beim Bestandsanbieter, koordinieren die Portierung und stellen den parallelen Betrieb sicher, bis der Wechsel abgeschlossen ist. Ihre Mitarbeiter erleben keinen Ausfall.",
+    q: "Was ist mit Mobilfunk und Telekommunikation?",
+    a: "Das ist das Geschäft der Comms Connect GmbH und läuft dort weiter, unter comms-connect.de. Smart Signals steht ausschließlich für die Software-Produkte.",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function FAQSection() {
             transition={{ duration: 0.45, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
             className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0F172A] mb-4"
           >
-            Haeufige Fragen
+            Häufige Fragen
           </motion.h2>
           <motion.p
             {...enter}

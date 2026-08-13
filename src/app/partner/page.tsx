@@ -1,9 +1,10 @@
 import PartnerClient from "@/components/PartnerClient";
 
 export const metadata = {
-  title: "Partner werden | Smart Signals",
+  title: "Partnerprogramm",
   description:
-    "Baue dein eigenes B2B Vertriebsbusiness mit Smart Signals. Skalierbare Produkte, klare Provision, System statt Chaos.",
+    "Ein Rahmenvertrag für das gesamte Smart-Signals-Portfolio: empfehlen statt verkaufen, Konditionen je Produkt als Anlage. Für Berater, Kanzleien und Vertriebspartner.",
+  alternates: { canonical: "https://smart-signals.de/partner" },
 };
 
 export default function PartnerPage() {

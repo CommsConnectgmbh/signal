@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { kontaktProduktOptionen } from "@/lib/produkte";
 
 export default function KontaktanfragePage() {
   const [form, setForm] = useState({
@@ -208,13 +209,11 @@ export default function KontaktanfragePage() {
                   className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition appearance-none"
                 >
                   <option value="">Wählen Sie eine Option</option>
-                  <option value="mitarbeiter-benefits">
-                    Mitarbeiter Benefits
-                  </option>
-                  <option value="mobilfunkkosten">
-                    Mobilfunkkosten senken
-                  </option>
-                  <option value="5g-koffer">5G Koffersystem</option>
+                  {kontaktProduktOptionen.map((o) => (
+                    <option key={o} value={o}>
+                      {o}
+                    </option>
+                  ))}
                 </select>
               </div>
 
