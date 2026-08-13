@@ -166,11 +166,14 @@ export const produkte: Produkt[] = [
     name: "DealBuddy",
     kategorie: "Freundeskreis",
     segment: "privat",
-    claim: "Wetten unter Freunden, ohne Einsatz.",
+    // Sprachregel aus /Volumes/Code/Vertrieb/README.md: DealBuddy verwendet nie
+    // die Wörter Wette, Einsatz, Quote oder Gewinn. Formulierungen deshalb an
+    // die freigegebene Flyer-Copy angeglichen.
+    claim: "Challenges und Tipprunden unter Freunden.",
     beschreibung:
-      "Private Wetten und Challenges im Freundeskreis anlegen und nachhalten. Kein Geldeinsatz, stattdessen ein Zuverlässigkeits-Score und Sammelkarten.",
-    zielgruppe: "Freundesgruppen",
-    punkte: ["Kein Geldeinsatz", "Nachvollziehbare Auswertung", "Für Gruppen gebaut"],
+      "Challenges und Tipprunden im Freundeskreis anlegen und nachhalten. Kein Geld im Spiel, stattdessen ein Zuverlässigkeits-Score und Sammelkarten.",
+    zielgruppe: "Freundeskreise, Vereine und Kollegen",
+    punkte: ["Kein Geld im Spiel", "Nachvollziehbare Auswertung", "Für Gruppen gebaut"],
     url: "https://deal-buddy.app",
     domain: "deal-buddy.app",
     status: "live",
