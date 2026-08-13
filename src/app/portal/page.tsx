@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase, type Deal, type Commission } from "@/lib/supabase";
+import {
+  supabase,
+  DEAL_PRODUKT_LABELS,
+  type Deal,
+  type Commission,
+} from "@/lib/supabase";
 
 const statusColors: Record<string, string> = {
   lead: "bg-gray-500/20 text-gray-400",
@@ -196,7 +201,7 @@ export default function DashboardPage() {
                       </td>
                       <td className="py-3">
                         <span className="text-[#94A3B8] text-xs bg-[#0A1628] px-2 py-1 rounded">
-                          {deal.product}
+                          {DEAL_PRODUKT_LABELS[deal.product] ?? deal.product}
                         </span>
                       </td>
                       <td className="py-3">

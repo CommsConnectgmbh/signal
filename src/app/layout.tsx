@@ -18,20 +18,20 @@ const SITE_URL = "https://smart-signals.de";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Smart Signals: Konnektivität, Mobilität & Mitarbeiter-Benefits für den Mittelstand",
+    default: "Smart Signals: Software für kleine und mittlere Betriebe",
     template: "%s · Smart Signals",
   },
   description:
-    "Skalierbare B2B-Lösungen für Mobilfunkkosten, 5G-Konnektivität und Mitarbeiter-Benefits. Smart Signals verbindet den Mittelstand mit modernen Arbeitswelten: neutral, gebündelt, ausgelagert.",
+    "Smart Signals bündelt die eigenen Software-Produkte der Comms Connect GmbH: Belegify für Belege, Obacht für Personaleinsatz, Obacht Talents für Personalvermittlung, Conduit für unterwegs.",
   keywords: [
-    "Mitarbeiter-Benefits Mittelstand",
-    "Mobilfunkkosten senken",
-    "5G Koffer",
-    "Firmen-Smartphone",
-    "B2B Mobilfunk",
-    "Mobilfunk Pooling",
-    "Diensthandy Benefit",
-    "Sachbezug Smartphone",
+    "Software für Handwerksbetriebe",
+    "Belegerfassung DATEV",
+    "Personaleinsatzplanung",
+    "Zeiterfassung Betrieb",
+    "Personalvermittlung Plattform",
+    "Belegify",
+    "Obacht",
+    "Smart Signals",
   ],
   alternates: { canonical: SITE_URL },
   openGraph: {
@@ -39,15 +39,15 @@ export const metadata: Metadata = {
     locale: "de_DE",
     url: SITE_URL,
     siteName: "Smart Signals",
-    title: "Smart Signals: Konnektivität, Mobilität & Mitarbeiter-Benefits",
+    title: "Smart Signals: Software für kleine und mittlere Betriebe",
     description:
-      "Skalierbare B2B-Lösungen für den Mittelstand. Mobilfunkkosten senken, 5G überall verfügbar, Smartphones als Mitarbeiter-Benefit, neutral und ausgelagert.",
+      "Belege, Personaleinsatz, Personalvermittlung und mehr. Sieben eigene Produkte aus einem Haus, jedes einzeln buchbar.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Signals: B2B Konnektivität & Benefits",
+    title: "Smart Signals: Software für kleine und mittlere Betriebe",
     description:
-      "Mobilfunkkosten senken, 5G überall, Smartphones als Benefit. Für den Mittelstand.",
+      "Belege, Personaleinsatz, Personalvermittlung und mehr. Sieben eigene Produkte, jedes einzeln buchbar.",
   },
   robots: {
     index: true,
@@ -72,7 +72,12 @@ const orgSchema = {
       url: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
       description:
-        "B2B-Brokerage für Konnektivität, Mobilität und Mitarbeiter-Benefits im deutschen Mittelstand.",
+        "Produktmarke der Comms Connect GmbH für eigene Software-Produkte: Belegerfassung, Personaleinsatz, Personalvermittlung und mehr.",
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Comms Connect GmbH",
+        url: "https://comms-connect.de",
+      },
       areaServed: ["DE", "AT", "CH"],
       contactPoint: {
         "@type": "ContactPoint",

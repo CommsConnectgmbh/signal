@@ -10,3 +10,11 @@ mobile-*.png
 dark-*.png
 taxonomy-*.png
 screenshot-*.png
+
+# Projektgebundene Secrets (DB-Passwort etc.) — nie ins Repo
+.local-secrets/
+
+# Vertragsunterlagen des Partnerprogramms. DIESES REPO IST PUBLIC, und die
+# Produkt-Anlagen enthalten Provisionssätze, die vertraulich sind (§ 17 des
+# Rahmenvertrags). Nicht committen, auch nicht "nur kurz".
+vertrieb/

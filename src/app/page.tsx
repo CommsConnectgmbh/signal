@@ -6,8 +6,37 @@ import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
+import {
+  kontaktProduktOptionen,
+  produkteBetrieb,
+  produktePrivat,
+} from "@/lib/produkte";
+
+const enter = {
+  initial: { opacity: 0, y: 8 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
+};
+
+const arbeitsweise = [
+  {
+    nummer: "01",
+    titel: "Selbst gebaut, nicht weiterverkauft",
+    text: "Jedes Produkt auf dieser Seite ist von uns entwickelt. Wenn etwas fehlt, entscheidet kein fremder Hersteller darüber, ob es kommt.",
+  },
+  {
+    nummer: "02",
+    titel: "Jedes Produkt steht für sich",
+    text: "Sie buchen genau das Produkt, das Sie brauchen, mit eigenem Vertrag und eigenem Preis. Es gibt keine Plattform, die Sie erst kaufen müssen.",
+  },
+  {
+    nummer: "03",
+    titel: "Ein Ansprechpartner für alles",
+    text: "Wer mehrere Produkte nutzt, hat trotzdem einen Ansprechpartner, eine Rechnungsstelle und einen Weg für Rückfragen.",
+  },
+];
 
 export default function HomePage() {
   const [anrede, setAnrede] = useState<"herr" | "frau">("herr");
@@ -66,11 +95,7 @@ export default function HomePage() {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-[#2D7FF9]/20 bg-[#EFF6FF] text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[#2D7FF9] opacity-75 motion-safe:animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#2D7FF9]" />
-              </span>
-              Pre-Launch &middot; Smart Signals
+              Softwarehaus für kleine Betriebe
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 8 }}
@@ -78,7 +103,7 @@ export default function HomePage() {
               transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08] mb-6 text-[#0F172A]"
             >
-              Klare Signale aus Ihrem Telco-Stack.
+              Software für Betriebe, die keine Zeit für Software haben.
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 8 }}
@@ -86,7 +111,9 @@ export default function HomePage() {
               transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="text-lg sm:text-xl text-[#475569] leading-relaxed max-w-2xl mx-auto mb-10"
             >
-              Smart Signals buendelt Mobilfunk, 5G-Konnektivitaet und Mitarbeiter-Benefits zu einem belastbaren B2B-Stack fuer den Mittelstand. Neutral, verhandelt, ausgelagert.
+              Unter Smart Signals bündeln wir die Produkte, die wir selbst
+              entwickeln: Buchhaltung, Personaleinsatz, Personalvermittlung und
+              mehr. Jedes läuft eigenständig, alle kommen aus einem Haus.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 8 }}
@@ -95,116 +122,199 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row items-center justify-center gap-3"
             >
               <Link
-                href="/kontaktanfrage"
+                href="/produkte"
                 className="inline-flex items-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.77a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-                </svg>
-                Waitlist beitreten
-              </Link>
-              <Link
-                href="#pricing"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
-              >
-                Mehr erfahren
+                Produkte ansehen
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
+              </Link>
+              <Link
+                href="/partner"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+              >
+                Partner werden
               </Link>
             </motion.div>
           </div>
         </section>
 
-        {/* PRODUKT-MOSAIK: 1 großes Featured-Card + 2 kleinere — bricht das 3er-Grid auf */}
-        <section className="py-20 px-4 sm:px-6 bg-white">
+        {/* PRODUKT-MOSAIK: zwei große Karten, der Rest als Liste daneben */}
+        <section className="py-24 md:py-28 px-4 sm:px-6 bg-[#F8FAFC]">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-6">
+            <motion.div {...enter} className="mb-12 max-w-2xl">
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+                Für Betriebe
+              </span>
+              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
+                Vier Produkte, die im Tagesgeschäft laufen
+              </h2>
+              <p className="mt-3 text-[#475569] leading-relaxed">
+                Jedes Produkt hat seine eigene Seite, seinen eigenen Vertrag und
+                seinen eigenen Preis. Sie können mit einem anfangen und die
+                anderen nie anfassen.
+              </p>
+            </motion.div>
 
-              {/* Featured Card (spans 2 cols, 2 rows on lg) */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="lg:col-span-2 lg:row-span-2 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <Link href="/mitarbeitervorteile" className="block h-full flex flex-col">
-                  <div className="aspect-[16/9] overflow-hidden bg-[#EFF6FF]">
-                    <img src="/images/familie-handys.jpg" alt="Mitarbeiter Vorteilsprogramm" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="p-8 flex-1 flex flex-col">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9] mb-3">Mitarbeiter-Benefits</span>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-[#0F172A] mb-3">
-                      Smartphones als Steuer-Benefit
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {produkteBetrieb.map((p, i) => (
+                <motion.a
+                  key={p.slug}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: Math.min(i, 4) * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className={
+                    "group flex flex-col rounded-2xl border border-[#E2E8F0] bg-white p-8 hover:shadow-md transition-shadow " +
+                    (p.featured ? "lg:col-span-2 lg:flex-row lg:items-start lg:gap-12" : "")
+                  }
+                >
+                  <div className={p.featured ? "lg:w-1/2" : ""}>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+                      {p.kategorie}
+                    </span>
+                    <h3 className={"mt-3 font-bold text-[#0F172A] " + (p.featured ? "text-2xl sm:text-3xl" : "text-lg")}>
+                      {p.name}
                     </h3>
-                    <p className="text-[#475569] mb-6 leading-relaxed">
-                      Smartphones, Tablets und Laptops für Ihre Mitarbeiter und deren Familien, steuerlich begünstigt über die Gehaltsabrechnung. Kein Aufwand für den Arbeitgeber.
+                    <p className="mt-2 text-[#0F172A] font-medium">{p.claim}</p>
+                    <p className="mt-3 text-sm text-[#475569] leading-relaxed">
+                      {p.beschreibung}
                     </p>
-                    <ul className="space-y-2 mb-8">
-                      {["Arbeitgeber-Benefit ohne Kosten", "Exklusive Konditionen für Ihre Mitarbeiter", "Auch für Familienmitglieder nutzbar"].map((item) => (
-                        <li key={item} className="flex items-center gap-2 text-sm text-[#475569]">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                          {item}
+                  </div>
+                  <div className={"mt-6 flex flex-col " + (p.featured ? "lg:mt-0 lg:w-1/2" : "flex-1")}>
+                    <ul className="space-y-2">
+                      {p.punkte.map((punkt) => (
+                        <li key={punkt} className="flex items-start gap-2 text-sm text-[#475569]">
+                          <svg className="mt-0.5 shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2D7FF9" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                          {punkt}
                         </li>
                       ))}
                     </ul>
-                    <span className="mt-auto inline-flex items-center gap-2 text-[#2D7FF9] font-semibold text-sm">
-                      Mehr erfahren
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <p className="mt-4 text-xs text-[#94A3B8]">{p.zielgruppe}</p>
+                    <span className="mt-auto pt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#2D7FF9]">
+                      {p.domain}
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
                     </span>
                   </div>
-                </Link>
-              </motion.div>
-
-              {/* Card 2 (top right) */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <Link href="/mobilfunkkosten" className="block h-full p-6">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9] mb-3 block">Procurement</span>
-                  <h3 className="text-xl font-bold text-[#0F172A] mb-2">
-                    Mobilfunkkosten senken
-                  </h3>
-                  <p className="text-sm text-[#475569] mb-4">
-                    Wir bündeln Ihr Mobilfunkvolumen mit dem unserer Kunden und erreichen Konditionen, die einzelne Unternehmen nicht verhandeln können.
-                  </p>
-                  <p className="text-2xl font-bold text-[#0F172A] mb-1">bis zu 30 %</p>
-                  <p className="text-xs text-[#94A3B8]">Einsparung gegenüber Ihrem aktuellen Vertrag</p>
-                </Link>
-              </motion.div>
-
-              {/* Card 3 (bottom right) */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <Link href="/5g-koffer" className="block h-full p-6">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9] mb-3 block">Konnektivität</span>
-                  <h3 className="text-xl font-bold text-[#0F172A] mb-2">
-                    5G Koffersystem
-                  </h3>
-                  <p className="text-sm text-[#475569] mb-4">
-                    Einstecken, starten, online. Für Baustellen, Events und als Ausfallsicherung.
-                  </p>
-                  <p className="text-2xl font-bold text-[#0F172A] mb-1">{"< 60 s"}</p>
-                  <p className="text-xs text-[#94A3B8]">vom Auspacken bis zur Verbindung</p>
-                </Link>
-              </motion.div>
-
+                </motion.a>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* PRICING */}
-        <PricingSection />
+        {/* ARBEITSWEISE: nummerierte Liste statt Karten-Grid */}
+        <section className="py-20 md:py-24 px-4 sm:px-6 bg-white">
+          <div className="max-w-4xl mx-auto">
+            <motion.h2 {...enter} className="text-2xl sm:text-3xl font-bold tracking-tight mb-12">
+              Wie wir arbeiten
+            </motion.h2>
+            <div className="divide-y divide-[#E2E8F0] border-y border-[#E2E8F0]">
+              {arbeitsweise.map((schritt, i) => (
+                <motion.div
+                  key={schritt.nummer}
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
+                >
+                  <span className="text-3xl font-bold text-[#2D7FF9] tabular-nums shrink-0 w-16">
+                    {schritt.nummer}
+                  </span>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-semibold text-[#0F172A] mb-2">
+                      {schritt.titel}
+                    </h3>
+                    <p className="text-[#475569] leading-relaxed">{schritt.text}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* PRIVAT */}
+        <section className="py-20 md:py-24 px-4 sm:px-6 bg-[#F8FAFC]">
+          <div className="max-w-6xl mx-auto">
+            <motion.div {...enter} className="mb-10 max-w-2xl">
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+                Für Privat
+              </span>
+              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
+                Auch außerhalb des Betriebs
+              </h2>
+            </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {produktePrivat.map((p, i) => (
+                <motion.a
+                  key={p.slug}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="rounded-2xl border border-[#E2E8F0] bg-white p-6 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+                      {p.kategorie}
+                    </span>
+                    {p.status === "vorbereitung" && (
+                      <span className="rounded-full bg-[#FFF1E5] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#D97320]">
+                        In Vorbereitung
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-lg font-bold text-[#0F172A]">{p.name}</h3>
+                  <p className="mt-2 text-sm text-[#475569] leading-relaxed">{p.claim}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2D7FF9]">
+                    {p.domain}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </span>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* PARTNER-BAND */}
+        <section className="py-24 px-4 sm:px-6 bg-[#0F172A]">
+          <motion.div {...enter} className="max-w-4xl mx-auto text-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+              Partnerprogramm
+            </span>
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              Sie beraten Betriebe. Wir liefern die Software.
+            </h2>
+            <p className="mt-4 text-[#94A3B8] leading-relaxed max-w-2xl mx-auto">
+              Ein Rahmenvertrag für das gesamte Portfolio statt eines Vertrags
+              je Produkt. Sie empfehlen, wir schließen ab und rechnen ab.
+            </p>
+            <Link
+              href="/partner"
+              className="mt-8 inline-flex items-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
+            >
+              Zum Partnerprogramm
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </Link>
+          </motion.div>
+        </section>
 
         {/* FAQ */}
         <FAQSection />
@@ -268,9 +378,9 @@ export default function HomePage() {
                     <select id="produkt" name="produkt" value={produkt} onChange={(e) => setProdukt(e.target.value)}
                       className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm text-[#475569] focus:outline-none focus:border-[#2D7FF9] bg-white transition-colors">
                       <option value="" disabled>Wählen Sie eine Option</option>
-                      <option>Mitarbeiter Benefits</option>
-                      <option>Mobilfunkkosten senken</option>
-                      <option>5G Koffersystem</option>
+                      {kontaktProduktOptionen.map((o) => (
+                        <option key={o}>{o}</option>
+                      ))}
                     </select>
                   </div>
                   <div>
@@ -278,10 +388,10 @@ export default function HomePage() {
                     <select id="mitarbeiteranzahl" name="mitarbeiteranzahl" value={mitarbeiter} onChange={(e) => setMitarbeiter(e.target.value)}
                       className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm text-[#475569] focus:outline-none focus:border-[#2D7FF9] bg-white transition-colors">
                       <option value="" disabled>Wählen Sie eine Option aus</option>
-                      <option>0-50</option>
-                      <option>50-100</option>
-                      <option>100-500</option>
-                      <option>500+</option>
+                      <option>1-10</option>
+                      <option>10-50</option>
+                      <option>50-250</option>
+                      <option>250+</option>
                     </select>
                   </div>
                   <div>
