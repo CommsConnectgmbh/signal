@@ -20,6 +20,18 @@ const enter = {
   transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
 };
 
+const produkteLive = [...produkteBetrieb, ...produktePrivat].filter(
+  (p) => p.status === "live"
+);
+
+// Bewusst nur Zahlen, die aus produkte.ts folgen. Keine Kunden- oder
+// Zeitersparnis-Behauptungen, die wir nicht belegen koennen.
+const heroFakten = [
+  { wert: String(produkteLive.length), label: "Produkte live" },
+  { wert: String(produkteBetrieb.length), label: "davon für Betriebe" },
+  { wert: "0", label: "davon zugekauft" },
+];
+
 const arbeitsweise = [
   {
     nummer: "01",
@@ -86,57 +98,98 @@ export default function HomePage() {
       <Navbar />
       <div className="min-h-screen bg-white text-text-primary overflow-x-hidden">
 
-        {/* HERO */}
-        <section className="flex items-center justify-center min-h-[70vh] px-4 sm:px-6 pt-32 pb-20 bg-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand/20 bg-brand-soft text-xs font-semibold uppercase tracking-widest text-brand"
-            >
-              Softwarehaus für kleine Betriebe
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08] mb-6 text-text-primary"
-            >
-              Software für Betriebe, die keine Zeit für Software haben.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto mb-10"
-            >
-              Unter Smart Signals bündeln wir die Produkte, die wir selbst
-              entwickeln: Buchhaltung, Personaleinsatz, Personalvermittlung und
-              mehr. Jedes läuft eigenständig, alle kommen aus einem Haus.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-3"
-            >
-              <Link
-                href="/produkte"
-                className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
+        {/* HERO: Split statt zentriertem Textblock. Rechts ein echter
+            Produkt-Screenshot, damit die Seite zeigt, was sie verkauft. */}
+        <section className="px-4 sm:px-6 pt-32 pb-20 md:pt-40 md:pb-28 bg-white">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-14 lg:gap-16 items-center">
+
+            <div>
+              <div
+                className="ss-rise inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand/20 bg-brand-soft text-xs font-semibold uppercase tracking-widest text-brand"
               >
-                Produkte ansehen
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </Link>
-              <Link
-                href="/partner"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
+                Softwarehaus für kleine Betriebe
+              </div>
+              <h1
+                style={{ animationDelay: "50ms" }}
+                className="ss-rise text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08] mb-6 text-text-primary"
               >
-                Partner werden
-              </Link>
-            </motion.div>
+                Software für Betriebe, die keine Zeit für Software haben.
+              </h1>
+              <p
+                style={{ animationDelay: "100ms" }}
+                className="ss-rise text-lg sm:text-xl text-text-secondary leading-relaxed max-w-xl mb-10"
+              >
+                Unter Smart Signals bündeln wir die Produkte, die wir selbst
+                entwickeln: Buchhaltung, Personaleinsatz, Personalvermittlung und
+                mehr. Jedes läuft eigenständig, alle kommen aus einem Haus.
+              </p>
+              <div
+                style={{ animationDelay: "160ms" }}
+                className="ss-rise flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+              >
+                <Link
+                  href="/produkte"
+                  className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
+                >
+                  Produkte ansehen
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </Link>
+                <Link
+                  href="/partner"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
+                >
+                  Partner werden
+                </Link>
+              </div>
+
+              <dl
+                style={{ animationDelay: "220ms" }}
+                className="ss-rise mt-12 grid grid-cols-3 gap-6 max-w-md border-t border-border pt-6"
+              >
+                {heroFakten.map((f) => (
+                  <div key={f.label}>
+                    <dt className="text-2xl font-bold tracking-tight text-text-primary">
+                      {f.wert}
+                    </dt>
+                    <dd className="mt-1 text-xs text-text-secondary leading-snug">
+                      {f.label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <div
+              style={{ animationDelay: "200ms" }}
+              className="ss-rise lg:justify-self-end w-full max-w-md"
+            >
+              <div className="relative overflow-hidden rounded-3xl border border-border bg-surface px-6 pt-8 sm:px-10 sm:pt-10">
+                <div className="flex items-center gap-2 mb-7">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                  <span className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
+                    Belegify · Buchhaltung
+                  </span>
+                </div>
+                {/* Screenshot laeuft unten aus dem Rahmen, statt beschnitten zu wirken */}
+                <div className="mx-auto -mb-12 w-[236px] sm:w-[268px] rounded-t-[2.25rem] border border-b-0 border-border bg-white p-2 pb-0 shadow-lg">
+                  <div className="relative overflow-hidden rounded-t-[1.75rem] aspect-[9/17]">
+                    <Image
+                      src="/images/belegify-belege.png"
+                      alt="Belegify: Belegübersicht mit Kategorien wie Bewirtung, Reise und Tanken"
+                      fill
+                      priority
+                      sizes="(min-width: 640px) 268px, 236px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-xs text-text-muted">
+                Eins von {produkteLive.length} Produkten. Jedes läuft für sich.
+              </p>
+            </div>
           </div>
         </section>
 

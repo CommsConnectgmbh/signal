@@ -32,6 +32,19 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+/* Entry-Animation fuer den Hero. Bewusst CSS statt Framer Motion: Framer
+   rendert serverseitig opacity:0 und macht das LCP-Element bis zur Hydration
+   unsichtbar. CSS laeuft ab dem ersten Paint, auch ohne JS.
+   prefers-reduced-motion wird vom Block unten abgefangen: animation-duration
+   0.01ms plus fill-mode both landet sofort auf dem Endzustand. */
+@keyframes ss-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.ss-rise {
+  animation: ss-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-sans);
