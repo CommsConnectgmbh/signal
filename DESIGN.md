@@ -10,6 +10,10 @@
 
 Smart Signals ist die Dachmarke fuer die Software, die Comms Connect selbst entwickelt. Kein Reseller-Portfolio: jedes Produkt ist eigenentwickelt, einzeln buchbar und hat einen eigenen Vertrag.
 
+**Die Startseite verkauft aber nicht die Produkte, sondern das Vertriebspartnerprogramm.** Sie ist das Aushaengeschild fuer Freelancer und Berater, die die Produkte vermitteln wollen. Die Produkte treten dort als Sortiment auf, nicht als Angebot. Betriebe als Endkunden werden auf `/produkte`, `/kontaktanfrage` und den Produktseiten selbst bedient.
+
+**Keine Provisionszahlen im oeffentlichen Bereich.** Saetze, Laufzeiten und Zuordnungsfenster stehen im Rahmenvertrag und dessen Anlagen (`vertrieb/`). Oeffentliche Angaben verwaessern den Produktpreis und verhandeln gegen uns selbst. Das gilt auch fuer Beispielrechnungen und Spannen.
+
 **Produkte fuer Betriebe:** Belegify (Buchhaltung), Obacht (Personaleinsatz), Obacht Talents (Personalvermittlung), Conduit (Arbeiten von unterwegs).
 **Produkte fuer Privat:** Simvi (Familie), Swing & Savor (Golf), DealBuddy (Freundeskreis).
 
@@ -180,8 +184,9 @@ Smart Signals hat sieben Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem
 
 ## 8. Voice & Copy
 
-- **Sie-Form** auf: `/`, `/produkte`, `/mitarbeitervorteile`, `/5g-koffer`, `/unternehmen`, `/kontaktanfrage`, `/impressum`, `/datenschutz`.
-- **Du-Form** auf: `/partner`, `/portal/*`, `/login` (alles intern oder Recruiting-Kontext).
+- **Sie-Form** auf: `/produkte`, `/mitarbeitervorteile`, `/unternehmen`, `/kontaktanfrage`, `/impressum`, `/datenschutz` (alles Endkunden-Kontext).
+- **Du-Form** auf: `/` (Partnergewinnung), `/portal/*`, `/login` (intern oder Recruiting-Kontext).
+- Die Startseite ist damit die einzige Marketing-Seite in der Du-Form. Das ist Absicht, nicht Schlamperei: sie spricht Vertriebspartner an, nicht Kunden.
 - Keine Em-Dashes (`—`), keine En-Dashes (`–`) als Satzersatz. Ausnahme: numerische Bereiche (`0–50`, `100–500`).
 - Keine zwei Anredeformen in derselben Page oder Komponente.
 - Stimme: nüchtern, sachlich, kompetent. Keine Superlative, keine Floskeln („Sie werden begeistert sein"). Keine Emojis im Copy.

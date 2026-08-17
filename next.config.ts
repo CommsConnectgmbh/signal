@@ -20,6 +20,14 @@ const nextConfig: NextConfig = {
         destination: "https://comms-connect.de",
         permanent: true,
       },
+      // Das Partnerprogramm ist seit 2026-08-17 die Startseite selbst:
+      // Smart Signals ist das Vertriebs-Aushängeschild für Freelancer, die die
+      // Produkte vermitteln. Eine eigene /partner-Seite waere Doppelinhalt.
+      {
+        source: "/partner",
+        destination: "/",
+        permanent: true,
+      },
       // Die alte Leistungsübersicht ist die neue Produktübersicht.
       {
         source: "/leistungen",

@@ -15,7 +15,6 @@ const navLinks = [
       { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile", extern: false },
     ],
   },
-  { label: "Partner", href: "/partner" },
   { label: "Unternehmen", href: "/unternehmen" },
 ];
 
@@ -80,9 +79,9 @@ export default function Navbar() {
           )}
         </ul>
         <div className="flex items-center gap-4">
-          <Link href="/kontaktanfrage"
+          <Link href="/#anmeldung"
             className="hidden items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-hover md:inline-flex">
-            Kontakt aufnehmen
+            Partner werden
           </Link>
           <button className="relative h-6 w-6 md:hidden" onClick={() => setMobileOpen((p) => !p)}
             aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"} aria-expanded={mobileOpen}>
@@ -139,9 +138,9 @@ export default function Navbar() {
             )
           )}
           <li className="pt-2">
-            <Link href="/kontaktanfrage" onClick={() => setMobileOpen(false)}
+            <Link href="/#anmeldung" onClick={() => setMobileOpen(false)}
               className="block rounded-full bg-accent px-5 py-2.5 text-center text-sm font-semibold text-white">
-              Kontakt aufnehmen
+              Partner werden
             </Link>
           </li>
         </ul>

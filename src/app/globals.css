@@ -7,9 +7,7 @@
 @source not "../../DESIGN.md";
 
 @theme {
-  --color-base: #FFFFFF;
   --color-surface: #F8FAFC;
-  --color-elevated: #FFFFFF;
   --color-border: #E2E8F0;
 
   /* Brand color system (see DESIGN.md §2).
@@ -73,6 +71,14 @@
 }
 [data-reveal] .ss-reveal[data-shown] {
   animation: ss-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Bewusst NICHT in @theme: Tailwind erzeugt daraus Farb-Utilities, und
+   --color-base hat die Schriftgroessen-Utility text-base ueberschrieben.
+   Als Utility werden beide nirgends gebraucht. */
+:root {
+  --color-base: #FFFFFF;
+  --color-elevated: #FFFFFF;
 }
 
 html { scroll-behavior: smooth; }

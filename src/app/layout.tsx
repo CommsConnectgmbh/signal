@@ -18,17 +18,17 @@ const SITE_URL = "https://smart-signals.de";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Smart Signals: Software für kleine und mittlere Betriebe",
+    default: "Smart Signals: Software empfehlen statt selbst bauen",
     template: "%s · Smart Signals",
   },
   description:
-    "Smart Signals bündelt die eigenen Software-Produkte der Comms Connect GmbH: Belegify für Belege, Obacht für Personaleinsatz, Obacht Talents für Personalvermittlung, Conduit für unterwegs.",
+    "Partnerprogramm für Freelancer und Berater: sieben eigene Software-Produkte, ein Rahmenvertrag. Du empfiehlst, wir schließen ab, rechnen ab und machen den Support. Kein Invest, keine Abnahmepflicht.",
   keywords: [
-    "Software für Handwerksbetriebe",
-    "Belegerfassung DATEV",
-    "Personaleinsatzplanung",
-    "Zeiterfassung Betrieb",
-    "Personalvermittlung Plattform",
+    "Software als Vertriebspartner verkaufen",
+    "SaaS Vertriebspartner werden",
+    "Empfehlungsprogramm Software",
+    "Freelancer Vertrieb Software",
+    "Tippgeber Software Provision",
     "Belegify",
     "Obacht",
     "Smart Signals",
@@ -39,15 +39,15 @@ export const metadata: Metadata = {
     locale: "de_DE",
     url: SITE_URL,
     siteName: "Smart Signals",
-    title: "Smart Signals: Software für kleine und mittlere Betriebe",
+    title: "Smart Signals: Software empfehlen statt selbst bauen",
     description:
-      "Belege, Personaleinsatz, Personalvermittlung und mehr. Sieben eigene Produkte aus einem Haus, jedes einzeln buchbar.",
+      "Sieben eigene Software-Produkte, ein Rahmenvertrag. Du empfiehlst, wir schließen ab und rechnen ab.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Signals: Software für kleine und mittlere Betriebe",
+    title: "Smart Signals: Software empfehlen statt selbst bauen",
     description:
-      "Belege, Personaleinsatz, Personalvermittlung und mehr. Sieben eigene Produkte, jedes einzeln buchbar.",
+      "Sieben eigene Software-Produkte, ein Rahmenvertrag. Du empfiehlst, wir schließen ab und rechnen ab.",
   },
   robots: {
     index: true,

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FadeInSection from "@/components/FadeInSection";
+import FAQSection from "@/components/FAQSection";
 import { produkte, produkteBetrieb, produktePrivat } from "@/lib/produkte";
 
 export const metadata = {
@@ -198,6 +199,8 @@ export default function ProduktePage() {
             </Link>
           </div>
         </section>
+
+        <FAQSection />
 
       </main>
       <Footer />

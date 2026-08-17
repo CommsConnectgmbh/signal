@@ -40,7 +40,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/produkte" className="text-sm text-text-secondary hover:text-brand transition-colors">Alle Produkte</Link></li>
               <li><Link href="/unternehmen" className="text-sm text-text-secondary hover:text-brand transition-colors">Über uns</Link></li>
-              <li><Link href="/partner" className="text-sm text-text-secondary hover:text-brand transition-colors">Partnerprogramm</Link></li>
+              <li><Link href="/#anmeldung" className="text-sm text-text-secondary hover:text-brand transition-colors">Partner werden</Link></li>
               <li><Link href="/kontaktanfrage" className="text-sm text-text-secondary hover:text-brand transition-colors">Kontakt</Link></li>
             </ul>
           </div>

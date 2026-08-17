@@ -3,7 +3,7 @@ import { produkte, produkteBetrieb } from "@/lib/produkte";
 
 export const runtime = "edge";
 export const alt =
-  "Smart Signals: Software für Betriebe, die keine Zeit für Software haben";
+  "Smart Signals Partnerprogramm: sieben eigene Software-Produkte, ein Rahmenvertrag";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -76,7 +76,7 @@ export default async function OG() {
             }}
           >
             <div style={{ width: 10, height: 10, borderRadius: 5, background: "#16A34A" }} />
-            {live} Produkte live
+            {live} Produkte im Sortiment
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export default async function OG() {
               display: "flex",
             }}
           >
-            Software für Betriebe, die keine Zeit für Software haben.
+            Verkauf Software, die es schon gibt.
           </div>
           <div
             style={{
@@ -104,8 +104,8 @@ export default async function OG() {
               display: "flex",
             }}
           >
-            Buchhaltung, Personaleinsatz, Personalvermittlung. Selbst entwickelt,
-            einzeln buchbar, ein Ansprechpartner.
+            Partnerprogramm für Freelancer und Berater. Du empfiehlst, wir
+            schließen ab, rechnen ab und machen den Support.
           </div>
         </div>
 
