@@ -50,7 +50,7 @@ export default function PartnerAnmeldung() {
 
   if (submitted) {
     return (
-      <div className="mt-8 rounded-2xl border border-accent/30 bg-accent-soft p-8 text-center">
+      <div className="rounded-2xl border border-accent/30 bg-accent-soft p-8 text-center">
         <p className="text-lg font-semibold text-accent-hover">Danke, angekommen.</p>
         <p className="mt-2 text-sm text-text-secondary">
           Wir melden uns mit dem Rahmenvertrag und den Konditionen bei dir.
@@ -60,7 +60,7 @@ export default function PartnerAnmeldung() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div
         aria-hidden="true"
         className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden"

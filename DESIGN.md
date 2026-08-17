@@ -24,7 +24,7 @@ Daraus folgt:
 - **Vertrauen vor Verspieltheit.** Solides Blau als Anker, niemals Gold-Gradienten oder grelle Heros.
 - **Eine Stimme, ein Look.** Konsistent, auch wenn jede Produktseite einen eigenen Rhythmus hat.
 - **B2B-Sie.** Auf allen kundenseitigen Routen. Karriere und Partner-Recruiting dürfen Du nutzen.
-- **Substanz statt Schmuck.** Keine Gradient-Texte, keine identischen Karten-Grids, keine Glass-Effekte als Deko.
+- **Substanz statt Schmuck, aber nicht schmucklos.** Keine Gradient-Texte, keine identischen Karten-Grids, keine Glass-Effekte als Deko. Eine klar abgegrenzte Dekor-Ebene ist erlaubt und geregelt, siehe §10.
 
 ---
 
@@ -202,3 +202,36 @@ Smart Signals hat sieben Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem
 - **Mehr als zwei Schriftfamilien.** Eine Familie pro Page reicht.
 - **Animationen ohne Reduced-Motion-Fallback.** WCAG 2.3.3 ist MANDATORY.
 - **Drei-Farben-Schreierei:** Blau + Grün + Gold + Türkis auf einer Site. Eine Marke, zwei Farben.
+
+---
+
+## 10. Dekor-Ebene
+
+Stand 2026-08-17. Die Startseite ist das Vertriebs-Aushaengeschild und darf
+handwerklich auffallen. Damit daraus keine Beliebigkeit wird, gilt:
+
+**Erlaubt sind genau diese vier Bausteine** (alle in `globals.css`, alle reines
+CSS, kein zusaetzliches Paket):
+
+| Klasse | Wirkung | Regel |
+|---|---|---|
+| `.ss-grid` | Raster aus `--border`-Linien, weich ausmaskiert | Nur als Sektions-Hintergrund, nie hinter Fliesstext ohne eigene Flaeche |
+| `.ss-glow` | Weicher Markenschimmer, langsam driftend | Maximal zwei pro Seite. Farbe immer via `color-mix` an `--brand` gekoppelt |
+| `.ss-marquee` | Endlos-Laufband | Nur fuer Inhalte, die auch statisch lesbar waeren. Container braucht `overflow-hidden` |
+| `.ss-card` | Hover: 3px anheben, Rand zur Markenfarbe, weicher Schatten | Nur auf Karten, nie auf Textbloecken |
+
+**Pflichten für jedes Dekor-Element:**
+
+- `aria-hidden` und `pointer-events-none`. Dekor traegt keine Information und
+  faengt keine Klicks.
+- Kein eigener Farbwert. Alles leitet sich ueber `color-mix` aus den Tokens ab,
+  sonst laeuft die Dekor-Ebene bei einer Farbaenderung weg.
+- Keine Abhaengigkeit von JS. Faellt das Skript aus, fehlt hoechstens der
+  Schmuck, nie der Inhalt.
+- `prefers-reduced-motion` wird vom globalen Block in `globals.css` abgefangen.
+  Neue Animationen muessen damit funktionieren, nicht daran vorbei.
+
+**Weiterhin verboten:** Verlaufs-Buttons, Gradient-Text, Glassmorphism als
+Default-Navbar, farbige Schatten ausserhalb des CTA-Hovers, 3D- und
+Shader-Spielereien. Der Kaeufer ist ein Vertriebspartner, der Konditionen
+pruefen will, kein Publikum fuer eine Demo.

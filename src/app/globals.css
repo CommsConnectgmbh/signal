@@ -81,6 +81,80 @@
   --color-elevated: #FFFFFF;
 }
 
+/* ---------------------------------------------------------------------------
+   Dekor-Ebene. Alles reines CSS: kein zusaetzliches Paket, keine Abhaengigkeit
+   von JS, und der globale prefers-reduced-motion-Block unten greift automatisch.
+   Alle Flaechen sind aria-hidden und pointer-events-none, sie tragen keine
+   Information und fangen keine Klicks.
+   --------------------------------------------------------------------------- */
+
+/* Raster mit weicher Maske. Gibt dem Hero Tiefe, ohne eine Farbe einzufuehren:
+   die Linien sind der Border-Token. */
+.ss-grid {
+  background-image:
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 65% 55% at 50% 0%, #000 35%, transparent 100%);
+  opacity: 0.55;
+}
+
+/* Weicher Markenschimmer. color-mix haelt ihn an --brand gekoppelt, damit er
+   bei einer Farbaenderung nicht zurueckbleibt. */
+.ss-glow {
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-brand) 22%, transparent) 0%,
+    transparent 68%
+  );
+  animation: ss-drift 18s ease-in-out infinite alternate;
+}
+@keyframes ss-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); opacity: 0.75; }
+  to   { transform: translate3d(-24px, 18px, 0) scale(1.08); opacity: 1; }
+}
+
+/* Laufband. Der Inhalt steht doppelt im Markup, deshalb -50%. */
+@keyframes ss-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ss-marquee {
+  animation: ss-marquee 38s linear infinite;
+  will-change: transform;
+}
+.ss-marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Karten heben sich beim Hover leicht an und nehmen die Markenfarbe in den
+   Rand. Kein Glas, kein Verlauf, nur Tiefe. */
+.ss-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .ss-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--color-brand) 35%, var(--color-border));
+    box-shadow: 0 12px 28px -12px color-mix(in oklab, var(--color-brand) 30%, transparent);
+  }
+}
+
+/* Primaerer CTA bekommt beim Hover einen Hof in der Accent-Farbe. Die Flaeche
+   bleibt Vollton, DESIGN.md verbietet Verlaufs-Buttons. */
+.ss-cta {
+  transition: background-color 0.2s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+@media (hover: hover) {
+  .ss-cta:hover {
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-accent) 18%, transparent);
+  }
+}
+
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-sans);

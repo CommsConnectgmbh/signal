@@ -20,18 +20,20 @@ const argumente = [
   {
     titel: "Ein Vertrag für das ganze Portfolio",
     text: "Du unterschreibst einmal, nicht je Produkt. Kommt ein Produkt dazu, kommt eine Anlage dazu. Du unterschreibst nicht neu.",
+    gross: true,
   },
   {
-    titel: "Kein Lager, kein Invest, keine Abnahme",
-    text: "Die Teilnahme kostet nichts. Es gibt keine Startgebühr, keinen Mindestumsatz und keine Pflicht, ein Produkt selbst zu kaufen.",
+    titel: "Kein Lager, kein Invest",
+    text: "Die Teilnahme kostet nichts. Keine Startgebühr, kein Mindestumsatz, keine Pflicht, ein Produkt selbst zu kaufen.",
+  },
+  {
+    titel: "Support ist nicht dein Problem",
+    text: "Fragen zum Produkt beantworten wir. Du verlierst keine Zeit mit Einrichtung oder Störungen.",
   },
   {
     titel: "Du empfiehlst, wir schließen ab",
     text: "Du stellst den Kontakt her. Vertrag, Rechnung und Inkasso laufen über uns. Du musst nichts verkaufen und nichts kassieren.",
-  },
-  {
-    titel: "Support ist nicht dein Problem",
-    text: "Fragen zum Produkt beantworten wir. Du verlierst keine Zeit mit Einrichtung, Störungen oder Rückfragen nach dem Abschluss.",
+    gross: true,
   },
 ];
 
@@ -108,12 +110,22 @@ const faqs = [
   },
 ];
 
-function Check() {
+function Check({ className = "text-accent" }: { className?: string }) {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="shrink-0 text-accent">
+      strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
+      className={`shrink-0 ${className}`}>
       <polyline points="20 6 9 17 4 12" />
     </svg>
+  );
+}
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-widest text-brand">
+      <span aria-hidden className="h-px w-6 bg-brand/40" />
+      {children}
+    </span>
   );
 }
 
@@ -127,10 +139,17 @@ export default function HomePage() {
       <main className="bg-white text-text-primary overflow-x-hidden">
 
         {/* HERO */}
-        <section className="px-4 sm:px-6 pt-32 pb-20 md:pt-40 md:pb-28">
-          <div className="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-14 lg:gap-16 items-center">
+        <section className="relative overflow-hidden px-4 sm:px-6 pt-32 pb-20 md:pt-40 md:pb-28">
+          <div aria-hidden className="ss-grid pointer-events-none absolute inset-0" />
+          <div
+            aria-hidden
+            className="ss-glow pointer-events-none absolute -top-32 -right-24 h-[560px] w-[560px] rounded-full"
+          />
+
+          <div className="relative mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-14 lg:gap-16 items-center">
             <div>
-              <div className="ss-rise inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand/20 bg-brand-soft text-xs font-semibold uppercase tracking-widest text-brand">
+              <div className="ss-rise inline-flex items-center gap-2 mb-6 rounded-full border border-brand/25 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand shadow-sm">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
                 Partnerprogramm
               </div>
               <h1
@@ -153,7 +172,7 @@ export default function HomePage() {
               >
                 <a
                   href="#anmeldung"
-                  className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
+                  className="ss-cta inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover"
                 >
                   Partner werden
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -162,7 +181,7 @@ export default function HomePage() {
                 </a>
                 <a
                   href="#sortiment"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border bg-white hover:border-brand hover:text-brand transition-colors"
                 >
                   Sortiment ansehen
                 </a>
@@ -192,12 +211,12 @@ export default function HomePage() {
               style={{ animationDelay: "200ms" }}
               className="ss-rise lg:justify-self-end w-full max-w-md"
             >
-              <div className="rounded-3xl border border-border bg-surface p-6 sm:p-8">
+              <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.35)]">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
                     Dein Sortiment
                   </span>
-                  <span className="rounded-full border border-border bg-white px-2.5 py-1 text-xs font-semibold text-brand">
+                  <span className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs font-semibold text-brand">
                     {imProgramm.length} sofort vermittelbar
                   </span>
                 </div>
@@ -236,14 +255,30 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* LAUFBAND: das Sortiment in Bewegung, statt einer Logo-Wand mit
+            fremden Marken, die wir nicht haben. */}
+        <div className="ss-marquee-mask border-y border-border bg-surface py-5 overflow-hidden">
+          <div className="ss-marquee flex w-max">
+            {[0, 1].map((durchlauf) => (
+              <div key={durchlauf} aria-hidden={durchlauf === 1} className="flex items-center gap-10 pr-10">
+                {produkte.map((p) => (
+                  <span key={p.slug} className="flex items-center gap-2.5 whitespace-nowrap">
+                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-brand/40" />
+                    <span className="text-sm font-semibold">{p.name}</span>
+                    <span className="text-sm text-text-secondary">{p.kategorie}</span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* WARUM */}
-        <section className="px-4 sm:px-6 py-24 md:py-28 bg-surface">
+        <section className="px-4 sm:px-6 py-24 md:py-28">
           <div className="mx-auto max-w-6xl">
             <div className="ss-reveal mb-12 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand">
-                Warum mit uns
-              </span>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
+              <Eyebrow>Warum mit uns</Eyebrow>
+              <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
                 Du bringst die Kunden. Den Rest haben wir.
               </h2>
               <p className="mt-3 text-text-secondary leading-relaxed">
@@ -251,15 +286,26 @@ export default function HomePage() {
                 entscheidet kein fremder Hersteller darüber, ob es kommt.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {argumente.map((a, i) => (
                 <div
                   key={a.titel}
                   style={{ animationDelay: `${i * 70}ms` }}
-                  className="ss-reveal rounded-2xl border border-border bg-white p-8"
+                  className={
+                    "ss-reveal ss-card rounded-2xl border border-border bg-white p-8 " +
+                    (a.gross ? "md:col-span-2" : "")
+                  }
                 >
-                  <h3 className="text-base sm:text-lg font-semibold">{a.titel}</h3>
-                  <p className="mt-2 text-text-secondary leading-relaxed">{a.text}</p>
+                  <h3
+                    className={
+                      a.gross
+                        ? "text-xl sm:text-2xl font-bold tracking-tight"
+                        : "text-base sm:text-lg font-semibold"
+                    }
+                  >
+                    {a.titel}
+                  </h3>
+                  <p className="mt-3 text-text-secondary leading-relaxed">{a.text}</p>
                 </div>
               ))}
             </div>
@@ -267,13 +313,11 @@ export default function HomePage() {
         </section>
 
         {/* SORTIMENT */}
-        <section id="sortiment" className="px-4 sm:px-6 py-24 md:py-28 scroll-mt-24">
+        <section id="sortiment" className="px-4 sm:px-6 py-24 md:py-28 bg-surface scroll-mt-24">
           <div className="mx-auto max-w-6xl">
             <div className="ss-reveal mb-12 max-w-2xl">
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand">
-                Das Sortiment
-              </span>
-              <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
+              <Eyebrow>Das Sortiment</Eyebrow>
+              <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
                 Was du empfehlen kannst
               </h2>
               <p className="mt-3 text-text-secondary leading-relaxed">
@@ -287,7 +331,7 @@ export default function HomePage() {
                 <div
                   key={p.slug}
                   style={{ animationDelay: `${Math.min(i, 4) * 70}ms` }}
-                  className="ss-reveal flex flex-col rounded-2xl border border-border bg-white p-8"
+                  className="ss-reveal ss-card flex flex-col rounded-2xl border border-border bg-white p-8"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -302,6 +346,14 @@ export default function HomePage() {
                   </div>
                   <p className="mt-3 font-semibold">{p.claim}</p>
                   <p className="mt-2 text-text-secondary leading-relaxed">{p.beschreibung}</p>
+                  <ul className="mt-5 space-y-2">
+                    {p.punkte.map((punkt) => (
+                      <li key={punkt} className="flex items-start gap-2.5 text-sm text-text-secondary">
+                        <Check />
+                        {punkt}
+                      </li>
+                    ))}
+                  </ul>
                   <dl className="mt-6 border-t border-border pt-4">
                     <dt className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
                       Für wen
@@ -325,7 +377,7 @@ export default function HomePage() {
             </div>
 
             {inVorbereitung.length > 0 && (
-              <div className="ss-reveal mt-10 rounded-2xl border border-border bg-surface p-8">
+              <div className="ss-reveal mt-10 rounded-2xl border border-dashed border-border bg-white p-8">
                 <h3 className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
                   Kommt dazu
                 </h3>
@@ -341,17 +393,20 @@ export default function HomePage() {
         </section>
 
         {/* ABLAUF */}
-        <section className="px-4 sm:px-6 py-20 md:py-24 bg-surface">
+        <section className="px-4 sm:px-6 py-24 md:py-28">
           <div className="mx-auto max-w-4xl">
-            <h2 className="ss-reveal text-2xl sm:text-3xl font-bold tracking-tight mb-12">
-              So läuft es ab
-            </h2>
+            <div className="ss-reveal mb-12">
+              <Eyebrow>Ablauf</Eyebrow>
+              <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
+                So läuft es ab
+              </h2>
+            </div>
             <div className="divide-y divide-border border-y border-border">
               {ablauf.map((schritt, i) => (
                 <div
                   key={schritt.nummer}
                   style={{ animationDelay: `${i * 70}ms` }}
-                  className="ss-reveal flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
+                  className="ss-reveal group flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
                 >
                   <span className="text-3xl font-bold text-brand tabular-nums shrink-0 w-16">
                     {schritt.nummer}
@@ -367,8 +422,12 @@ export default function HomePage() {
         </section>
 
         {/* KLARTEXT */}
-        <section className="px-4 sm:px-6 py-24 bg-text-primary">
-          <div className="mx-auto max-w-4xl">
+        <section className="relative overflow-hidden px-4 sm:px-6 py-24 bg-text-primary">
+          <div
+            aria-hidden
+            className="ss-glow pointer-events-none absolute -bottom-40 -left-32 h-[520px] w-[520px] rounded-full opacity-40"
+          />
+          <div className="relative mx-auto max-w-4xl">
             <h2 className="ss-reveal text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Damit es keine Missverständnisse gibt
             </h2>
@@ -379,7 +438,10 @@ export default function HomePage() {
                   style={{ animationDelay: `${Math.min(i, 4) * 60}ms` }}
                   className="ss-reveal rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
-                  <h3 className="text-base font-semibold text-white">{k.titel}</h3>
+                  <h3 className="flex items-start gap-2.5 text-base font-semibold text-white">
+                    <Check className="mt-1 text-brand-on-dark" />
+                    {k.titel}
+                  </h3>
                   <p className="mt-2 text-sm text-text-muted-on-dark leading-relaxed">{k.text}</p>
                 </div>
               ))}
@@ -390,20 +452,17 @@ export default function HomePage() {
         {/* FAQ */}
         <section id="faq" className="px-4 sm:px-6 py-24 md:py-28 bg-surface">
           <div className="mx-auto max-w-3xl">
-            <div className="ss-reveal text-center mb-12">
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand inline-block mb-3">
-                Antworten
-              </span>
+            <div className="ss-reveal mb-12 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Was Partner uns fragen
               </h2>
             </div>
-            <div className="divide-y divide-border border-y border-border bg-white rounded-2xl px-6">
+            <div className="divide-y divide-border rounded-2xl border border-border bg-white px-6">
               {faqs.map((item) => (
                 <details key={item.q} className="group py-5 [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-center justify-between gap-4 text-base font-semibold">
                     {item.q}
-                    <svg className="h-5 w-5 shrink-0 text-text-secondary transition-transform group-open:rotate-45"
+                    <svg className="h-5 w-5 shrink-0 text-text-secondary transition-transform duration-200 group-open:rotate-45"
                       viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
                       <line x1="12" y1="5" x2="12" y2="19" />
                       <line x1="5" y1="12" x2="19" y2="12" />
@@ -417,9 +476,11 @@ export default function HomePage() {
         </section>
 
         {/* ANMELDUNG */}
-        <section id="anmeldung" className="px-4 sm:px-6 py-24 md:py-32 scroll-mt-24">
-          <div className="mx-auto max-w-2xl">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <section id="anmeldung" className="relative overflow-hidden px-4 sm:px-6 py-24 md:py-32 scroll-mt-24">
+          <div aria-hidden className="ss-grid pointer-events-none absolute inset-0" />
+          <div className="relative mx-auto max-w-2xl">
+            <Eyebrow>Anmeldung</Eyebrow>
+            <h2 className="mt-4 text-2xl sm:text-3xl font-bold tracking-tight">
               Als Partner anmelden
             </h2>
             <p className="mt-3 text-text-secondary leading-relaxed">
@@ -427,7 +488,9 @@ export default function HomePage() {
               Teilnahme steht Unternehmern offen, Verbraucher können nicht
               teilnehmen.
             </p>
-            <PartnerAnmeldung />
+            <div className="rounded-3xl border border-border bg-white p-6 sm:p-8 mt-8 shadow-[0_24px_60px_-30px_rgba(15,23,42,0.3)]">
+              <PartnerAnmeldung />
+            </div>
             <p className="mt-8 text-sm text-text-secondary">
               Schon Partner?{" "}
               <Link href="/login" className="font-semibold text-brand hover:text-brand-hover transition-colors">
