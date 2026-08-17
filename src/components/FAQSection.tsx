@@ -48,42 +48,42 @@ const enter = {
 
 export default function FAQSection() {
   return (
-    <section id="faq" className="py-24 md:py-28 px-4 sm:px-6 bg-[#F8FAFC]">
+    <section id="faq" className="py-24 md:py-28 px-4 sm:px-6 bg-surface">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <motion.span
             {...enter}
-            className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9] inline-block mb-3"
+            className="text-xs font-semibold uppercase tracking-widest text-brand inline-block mb-3"
           >
             Antworten
           </motion.span>
           <motion.h2
             {...enter}
             transition={{ duration: 0.45, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0F172A] mb-4"
+            className="text-3xl sm:text-4xl font-bold tracking-tight text-text-primary mb-4"
           >
             Häufige Fragen
           </motion.h2>
           <motion.p
             {...enter}
             transition={{ duration: 0.45, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg text-[#475569] leading-relaxed"
+            className="text-lg text-text-secondary leading-relaxed"
           >
             Wenn Ihre Frage hier nicht beantwortet wird, schreiben Sie uns. Wir antworten in der Regel innerhalb eines Werktags.
           </motion.p>
         </div>
 
-        <div className="divide-y divide-[#E2E8F0] border-y border-[#E2E8F0] bg-white rounded-2xl px-6">
+        <div className="divide-y divide-border border-y border-border bg-white rounded-2xl px-6">
           {faqs.map((item, idx) => (
             <details
               key={idx}
               className="group py-5 [&_summary::-webkit-details-marker]:hidden"
             >
               <summary className="flex cursor-pointer items-center justify-between gap-4 list-none">
-                <span className="text-base sm:text-lg font-semibold text-[#0F172A] pr-4">
+                <span className="text-base sm:text-lg font-semibold text-text-primary pr-4">
                   {item.q}
                 </span>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E2E8F0] text-[#475569] transition-colors group-open:bg-[#2D7FF9] group-open:border-[#2D7FF9] group-open:text-white">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-text-secondary transition-colors group-open:bg-brand group-open:border-brand group-open:text-white">
                   <svg
                     className="h-4 w-4 transition-transform duration-300 group-open:rotate-180"
                     fill="none"
@@ -99,7 +99,7 @@ export default function FAQSection() {
                   </svg>
                 </span>
               </summary>
-              <p className="mt-4 text-base leading-relaxed text-[#475569]">
+              <p className="mt-4 text-base leading-relaxed text-text-secondary">
                 {item.a}
               </p>
             </details>

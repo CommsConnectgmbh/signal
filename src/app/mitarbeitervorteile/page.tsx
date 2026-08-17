@@ -55,29 +55,29 @@ export default function MitarbeiterVorteilePage() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-[#0F172A]">
+      <main className="bg-white text-text-primary">
 
         {/* HERO */}
         <section className="px-4 sm:px-6 pt-32 pb-20 md:pt-40">
           <div className="mx-auto max-w-4xl">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand">
               Mitarbeitervorteile
             </span>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08]">
               Technik als Benefit, ohne Kosten für den Betrieb
             </h1>
-            <p className="mt-6 text-lg text-[#475569] leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl">
               Mitarbeitende mieten Smartphones, Tablets oder Laptops über den
               Arbeitgeber und zahlen die Rate über die Gehaltsabrechnung. Für das
               Unternehmen entstehen keine Anschaffungskosten.
             </p>
-            <p className="mt-4 text-lg text-[#475569] leading-relaxed max-w-2xl">
+            <p className="mt-4 text-lg text-text-secondary leading-relaxed max-w-2xl">
               Dieses Programm betreiben wir nicht selbst. Anbieter ist{" "}
               <a
                 href={JOBHANDY_URL}
                 target="_blank"
                 rel="noopener"
-                className="text-[#2D7FF9] hover:text-[#1F66D6] underline underline-offset-2"
+                className="text-brand hover:text-brand-hover underline underline-offset-2"
               >
                 JobHandy
               </a>
@@ -88,7 +88,7 @@ export default function MitarbeiterVorteilePage() {
                 href={JOBHANDY_URL}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex items-center justify-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
               >
                 Zu JobHandy
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -98,7 +98,7 @@ export default function MitarbeiterVorteilePage() {
               </a>
               <Link
                 href="/kontaktanfrage"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Über uns Kontakt herstellen
               </Link>
@@ -107,22 +107,22 @@ export default function MitarbeiterVorteilePage() {
         </section>
 
         {/* WOFÜR DAS GUT IST */}
-        <section className="px-4 sm:px-6 py-20 md:py-24 bg-[#F8FAFC]">
+        <section className="px-4 sm:px-6 py-20 md:py-24 bg-surface">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-10">
               Wofür das gut ist
             </h2>
-            <div className="divide-y divide-[#E2E8F0] border-y border-[#E2E8F0]">
+            <div className="divide-y divide-border border-y border-border">
               {punkte.map((p) => (
                 <div key={p.titel} className="py-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-[#0F172A]">
+                  <h3 className="text-base sm:text-lg font-semibold text-text-primary">
                     {p.titel}
                   </h3>
-                  <p className="mt-2 text-[#475569] leading-relaxed">{p.text}</p>
+                  <p className="mt-2 text-text-secondary leading-relaxed">{p.text}</p>
                 </div>
               ))}
             </div>
-            <p className="mt-8 text-sm text-[#94A3B8] leading-relaxed">
+            <p className="mt-8 text-sm text-text-muted leading-relaxed">
               Welche Geräte, Laufzeiten und Konditionen möglich sind und wie das
               steuerlich in Ihrem Fall zu bewerten ist, sagt Ihnen JobHandy
               verbindlich. Wir nennen hier bewusst keine Zahlen zu einem Angebot,
@@ -140,12 +140,12 @@ export default function MitarbeiterVorteilePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {schritte.map((s) => (
                 <div key={s.nummer} className="flex gap-4">
-                  <span className="shrink-0 text-2xl font-bold text-[#2D7FF9] tabular-nums">
+                  <span className="shrink-0 text-2xl font-bold text-brand tabular-nums">
                     {s.nummer}
                   </span>
                   <div>
-                    <h3 className="font-semibold text-[#0F172A]">{s.titel}</h3>
-                    <p className="mt-1 text-sm text-[#475569] leading-relaxed">{s.text}</p>
+                    <h3 className="font-semibold text-text-primary">{s.titel}</h3>
+                    <p className="mt-1 text-sm text-text-secondary leading-relaxed">{s.text}</p>
                   </div>
                 </div>
               ))}
@@ -156,11 +156,11 @@ export default function MitarbeiterVorteilePage() {
         {/* TRANSPARENZ */}
         <section className="px-4 sm:px-6 pb-24">
           <div className="mx-auto max-w-4xl">
-            <div className="rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-8">
-              <h2 className="text-lg font-semibold text-[#0F172A]">
+            <div className="rounded-2xl border border-border bg-surface p-8">
+              <h2 className="text-lg font-semibold text-text-primary">
                 Wer hier welche Rolle hat
               </h2>
-              <p className="mt-3 text-[#475569] leading-relaxed">
+              <p className="mt-3 text-text-secondary leading-relaxed">
                 Ihr Vertragspartner für das Geräte-Programm ist JobHandy, nicht
                 die Comms Connect GmbH. Wir vermitteln den Kontakt und erhalten
                 dafür keine Vergütung. Was Sie über unsere Software-Produkte
@@ -168,7 +168,7 @@ export default function MitarbeiterVorteilePage() {
               </p>
               <Link
                 href="/produkte"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2D7FF9] hover:text-[#1F66D6] transition-colors"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:text-brand-hover transition-colors"
               >
                 Zu unseren eigenen Produkten
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
@@ -180,12 +180,12 @@ export default function MitarbeiterVorteilePage() {
         </section>
 
         {/* CTA */}
-        <section className="px-4 sm:px-6 py-32 md:py-40 bg-[#F8FAFC]">
+        <section className="px-4 sm:px-6 py-32 md:py-40 bg-surface">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Interesse an dem Programm?
             </h2>
-            <p className="mt-4 text-[#475569] leading-relaxed">
+            <p className="mt-4 text-text-secondary leading-relaxed">
               Gehen Sie direkt zu JobHandy oder schreiben Sie uns, dann stellen
               wir den Kontakt her.
             </p>
@@ -194,13 +194,13 @@ export default function MitarbeiterVorteilePage() {
                 href={JOBHANDY_URL}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex items-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
               >
                 Zu JobHandy
               </a>
               <Link
                 href="/kontaktanfrage"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Kontakt aufnehmen
               </Link>

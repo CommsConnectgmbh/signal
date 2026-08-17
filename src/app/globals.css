@@ -12,11 +12,12 @@
   --color-accent: #F08A3A;       /* oklch(72% 0.18 50)  */
   --color-accent-hover: #D97320; /* oklch(64% 0.18 50)  */
   --color-accent-soft: #FFF1E5;  /* oklch(96% 0.04 50)  */
+  --color-brand-soft: #EFF6FF;   /* Soft-Background fuer Brand (Badges, Icon-Flaechen) */
   --color-success: #16A34A;      /* semantic confirmation only */
+  --color-danger: #DC2626;       /* semantic error only (Formular-Fehler) */
 
-  /* Legacy tokens kept for backwards compatibility, do not use in new code */
+  /* Legacy token, nur noch im Portal in Verwendung, nicht in neuem Code nutzen */
   --color-blue: #2D7FF9;
-  --color-gold: #2D7FF9;
 
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;

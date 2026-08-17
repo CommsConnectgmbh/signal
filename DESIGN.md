@@ -1,14 +1,19 @@
 # Smart Signals · Design Foundation
 
-**Stand:** 2026-05-14
+**Stand:** 2026-08-17
 **Maintainer:** Rainer Roloff (Comms Connect GmbH)
-**Scope:** Marketing-Pages, Produkt-Pages, Karriere, Kontaktanfrage. Portal- und Login-Bereiche folgen einem eigenen Dark-Theme (siehe `src/app/portal`, `src/app/login`).
+**Scope:** Die oeffentlichen Marketing-Pages (`/`, `/produkte`, `/partner`, `/unternehmen`, `/mitarbeitervorteile`, `/5g-koffer`, `/kontaktanfrage`) plus Legal-Pages. Portal- und Login-Bereiche folgen einem eigenen Dark-Theme (siehe `src/app/portal`, `src/app/login`) und sind hier ausdruecklich **nicht** geregelt.
 
 ---
 
 ## 1. Strategy
 
-Smart Signals ist B2B-Mittelstand: Konnektivität, Mobilfunkkosten, Mitarbeiter-Benefits, 5G-Konnektivität. Käufer sind Einkäufer, IT-Leiter, HR-Verantwortliche. Sie kaufen Vertrauen, klare Konditionen und schnelle Umsetzung, nicht Spielereien.
+Smart Signals ist die Dachmarke fuer die Software, die Comms Connect selbst entwickelt. Kein Reseller-Portfolio: jedes Produkt ist eigenentwickelt, einzeln buchbar und hat einen eigenen Vertrag.
+
+**Produkte fuer Betriebe:** Belegify (Buchhaltung), Obacht (Personaleinsatz), Obacht Talents (Personalvermittlung), Conduit (Arbeiten von unterwegs).
+**Produkte fuer Privat:** Simvi (Familie), Swing & Savor (Golf), DealBuddy (Freundeskreis).
+
+Kaeufer der Betriebs-Produkte sind Inhaber und Geschaeftsfuehrer kleiner Betriebe, nicht IT-Abteilungen. Sie haben keine Zeit fuer Software-Evaluierung und kaufen Vertrauen, klare Preise und schnelle Umsetzung. Die Privat-Produkte laufen ueber dieselbe Marke, aber mit eigener Ansprache.
 
 Daraus folgt:
 
@@ -38,7 +43,32 @@ Vorher waren fünf Primärfarben im Spiel: Blau `#2563EB` (Token), Grün `#16A34
 | `--base` | `#FFFFFF` | Hauptbackground |
 | `--border` | `#E2E8F0` | Karten, Inputs, Trennlinien |
 
-**Karriere-Page:** behält dunklen Background (`#050A14`, `#0A1628`, `#111D33`), tauscht aber Gold-Akzente gegen `--brand`. Keine Gradient-Buttons mehr.
+**Dark-Bereiche:** Portal und Login nutzen `--color-dark-*` plus einen eigenen Gold-Akzent (`#D4A843`). Das ist ein bewusst abgesetztes Vertriebspartner-Theme und faellt nicht unter die Zwei-Farben-Regel der Marketing-Pages.
+
+### Token-Verwendung (verbindlich)
+
+Farben werden **ausschliesslich** ueber die Tailwind-Utilities der Tokens gesetzt, nie als Arbitrary-Value:
+
+| Statt | Schreiben |
+|---|---|
+| `text-[#0F172A]` | `text-text-primary` |
+| `text-[#475569]` | `text-text-secondary` |
+| `text-[#94A3B8]` | `text-text-muted` |
+| `text-[#2D7FF9]` | `text-brand` |
+| `hover:text-[#1F66D6]` | `hover:text-brand-hover` |
+| `bg-[#EFF6FF]` | `bg-brand-soft` |
+| `bg-[#F08A3A]` | `bg-accent` |
+| `hover:bg-[#D97320]` | `hover:bg-accent-hover` |
+| `bg-[#FFF1E5]` | `bg-accent-soft` |
+| `bg-[#F8FAFC]` | `bg-surface` |
+| `border-[#E2E8F0]` | `border-border` |
+| `text-[#DC2626]` | `text-danger` |
+| `text-[#16A34A]` | `text-success` |
+
+**Dokumentierte Ausnahmen** (dort ist Hex technisch notwendig, nicht Nachlaessigkeit):
+- `src/app/opengraph-image.tsx` - rendert via Satori/`ImageResponse` ausserhalb des CSS-Kontexts, kennt keine Custom Properties.
+- `src/app/layout.tsx` - `viewport.themeColor` muss ein Literal im Meta-Tag sein.
+- `src/app/portal/*`, `src/app/login` - eigenes Theme, noch nicht tokenisiert.
 
 **Verboten:**
 - Drittfarben außerhalb der Tokens (z. B. Türkis, Gold).
@@ -127,7 +157,7 @@ Keine `shadow-2xl` Drop-Shadows. Keine farbigen Shadows (`shadow-[#16A34A]/20`),
 
 ## 7. Layout Variety (Anti-Card-Grid-Monotonie)
 
-Smart Signals hat fünf Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem, Lösung, Features, CTA). Sechs identische 4-Card-Grids waren der vorherige Status quo. Künftig wird Layout-Vielfalt erzwungen:
+Smart Signals hat sieben Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem, Lösung, Features, CTA). Sechs identische 4-Card-Grids waren der vorherige Status quo. Künftig wird Layout-Vielfalt erzwungen:
 
 **Layout-Patterns (mindestens drei pro Repo verwendet):**
 
@@ -145,8 +175,8 @@ Smart Signals hat fünf Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem,
 
 ## 8. Voice & Copy
 
-- **Sie-Form** auf: `/`, `/mitarbeitervorteile`, `/mobilfunkkosten`, `/5g-koffer`, `/unternehmen`, `/kontaktanfrage`, `/impressum`, `/datenschutz`.
-- **Du-Form** auf: `/karriere`, `/partner`, `/portal/*`, `/login` (alles intern oder Recruiting-Kontext).
+- **Sie-Form** auf: `/`, `/produkte`, `/mitarbeitervorteile`, `/5g-koffer`, `/unternehmen`, `/kontaktanfrage`, `/impressum`, `/datenschutz`.
+- **Du-Form** auf: `/partner`, `/portal/*`, `/login` (alles intern oder Recruiting-Kontext).
 - Keine Em-Dashes (`—`), keine En-Dashes (`–`) als Satzersatz. Ausnahme: numerische Bereiche (`0–50`, `100–500`).
 - Keine zwei Anredeformen in derselben Page oder Komponente.
 - Stimme: nüchtern, sachlich, kompetent. Keine Superlative, keine Floskeln („Sie werden begeistert sein"). Keine Emojis im Copy.
@@ -158,7 +188,7 @@ Smart Signals hat fünf Marketing-Pages mit jeweils ähnlicher Aufgabe (Problem,
 - **Identische Card-Grids in jeder Sektion.** Mindestens ein Layout-Bruch pro Page (siehe §7).
 - **Glassmorphism als Default-Navbar.** Solid `bg-white` plus `border-b`.
 - **Gradient-Text auf Headlines.** `text-transparent bg-clip-text` → verboten.
-- **Pure-Hex statt OKLCH-Token.** Direktes `bg-[#16A34A]` ohne Tokenisierung. Erlaubt nur in Legal-Pages (Datenschutz, Impressum) als Übergang.
+- **Pure-Hex statt Token.** Direktes `bg-[#16A34A]` statt `bg-success`. Die Marketing-Pages sind seit 2026-08-17 vollstaendig tokenisiert (381 Hex-Werte migriert); neue Arbitrary-Color-Values sind ein Regelbruch, nicht ein Uebergang. Ausnahmen siehe §2.
 - **Mehr als zwei Schriftfamilien.** Eine Familie pro Page reicht.
 - **Animationen ohne Reduced-Motion-Fallback.** WCAG 2.3.3 ist MANDATORY.
 - **Drei-Farben-Schreierei:** Blau + Grün + Gold + Türkis auf einer Site. Eine Marke, zwei Farben.

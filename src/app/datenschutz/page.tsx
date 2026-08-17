@@ -5,13 +5,13 @@ export default function DatenschutzPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FFFFFF] pt-28 pb-32">
+      <main className="bg-white pt-28 pb-32">
         <article className="mx-auto max-w-3xl px-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#0F172A] tracking-tight mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary tracking-tight mb-12">
             Datenschutzerklärung
           </h1>
 
-          <div className="space-y-8 text-[#475569] leading-relaxed [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-[#0F172A] [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-[#0F172A] [&_h3]:mt-8 [&_h3]:mb-3 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-[#0F172A] [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_a]:text-[#2563EB] [&_a]:hover:underline">
+          <div className="space-y-8 text-text-secondary leading-relaxed [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-text-primary [&_h2]:mt-12 [&_h2]:mb-4 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-text-primary [&_h3]:mt-8 [&_h3]:mb-3 [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-text-primary [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2 [&_a]:text-brand [&_a]:hover:underline">
 
             <h2>1. Datenschutz auf einen Blick</h2>
 
@@ -63,7 +63,7 @@ export default function DatenschutzPage() {
             <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
 
             <h3>Widerspruchsrecht gegen die Datenerhebung (Art. 21 DSGVO)</h3>
-            <p className="uppercase text-sm font-semibold text-[#0F172A]">Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen.</p>
+            <p className="uppercase text-sm font-semibold text-text-primary">Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen.</p>
 
             <h3>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h3>
             <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu.</p>

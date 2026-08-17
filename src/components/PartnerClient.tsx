@@ -107,18 +107,18 @@ export default function PartnerClient() {
   return (
     <>
       <Navbar />
-      <main className="bg-white text-[#0F172A]">
+      <main className="bg-white text-text-primary">
 
         {/* HERO */}
         <section className="px-4 sm:px-6 pt-32 pb-20 md:pt-40">
           <div className="mx-auto max-w-4xl">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand">
               Partnerprogramm
             </span>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08]">
               Ein Vertrag für das ganze Portfolio
             </h1>
-            <p className="mt-6 text-lg text-[#475569] leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl">
               Du berätst Betriebe, Kanzleien oder Vereine und weißt, wo es hakt.
               Wir haben die Software dafür. Du empfiehlst, wir schließen ab und
               rechnen ab. Statt eines Vertrags je Produkt unterschreibst du
@@ -127,13 +127,13 @@ export default function PartnerClient() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
                 href="#anmeldung"
-                className="inline-flex items-center justify-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
               >
                 Als Partner anmelden
               </a>
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Partner-Login
               </Link>
@@ -142,19 +142,19 @@ export default function PartnerClient() {
         </section>
 
         {/* PRODUKTE IM PROGRAMM */}
-        <section className="px-4 sm:px-6 py-20 md:py-24 bg-[#F8FAFC]">
+        <section className="px-4 sm:px-6 py-20 md:py-24 bg-surface">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Was du empfehlen kannst
             </h2>
-            <p className="mt-3 text-[#475569] leading-relaxed max-w-2xl">
+            <p className="mt-3 text-text-secondary leading-relaxed max-w-2xl">
               Die Konditionen unterscheiden sich je Produkt, weil sich die
               Produkte unterscheiden. Sie stehen als Anlage im Rahmenvertrag und
               nennen wir dir nach der Anmeldung.
             </p>
 
             <div className="mt-10">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-text-muted">
                 Programm läuft
               </h3>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -165,26 +165,26 @@ export default function PartnerClient() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-2xl border border-[#E2E8F0] bg-white p-6"
+                    className="rounded-2xl border border-border bg-white p-6"
                   >
                     <div className="flex items-center justify-between gap-3">
-                      <h4 className="text-lg font-bold text-[#0F172A]">{p.name}</h4>
-                      <span className="rounded-full bg-[#EFF6FF] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#2D7FF9]">
+                      <h4 className="text-lg font-bold text-text-primary">{p.name}</h4>
+                      <span className="rounded-full bg-brand-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-brand">
                         Aktiv
                       </span>
                     </div>
-                    <p className="mt-2 text-sm text-[#475569] leading-relaxed">{p.claim}</p>
-                    <p className="mt-3 text-xs text-[#94A3B8]">{p.zielgruppe}</p>
+                    <p className="mt-2 text-sm text-text-secondary leading-relaxed">{p.claim}</p>
+                    <p className="mt-3 text-xs text-text-muted">{p.zielgruppe}</p>
                   </motion.div>
                 ))}
               </div>
             </div>
 
             <div className="mt-10">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">
+              <h3 className="text-xs font-semibold uppercase tracking-widest text-text-muted">
                 Kommt dazu
               </h3>
-              <p className="mt-3 text-sm text-[#475569] leading-relaxed">
+              <p className="mt-3 text-sm text-text-secondary leading-relaxed">
                 {inVorbereitung.map((p) => p.name).join(", ")}. Für diese
                 Produkte gibt es noch kein laufendes Programm. Sobald eines
                 startet, kommt es als Anlage zu deinem bestehenden Vertrag dazu.
@@ -199,7 +199,7 @@ export default function PartnerClient() {
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-10">
               So läuft es ab
             </h2>
-            <div className="divide-y divide-[#E2E8F0] border-y border-[#E2E8F0]">
+            <div className="divide-y divide-border border-y border-border">
               {ablauf.map((schritt, i) => (
                 <motion.div
                   key={schritt.nummer}
@@ -209,14 +209,14 @@ export default function PartnerClient() {
                   transition={{ duration: 0.45, delay: Math.min(i, 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
                   className="flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
                 >
-                  <span className="text-3xl font-bold text-[#2D7FF9] tabular-nums shrink-0 w-16">
+                  <span className="text-3xl font-bold text-brand tabular-nums shrink-0 w-16">
                     {schritt.nummer}
                   </span>
                   <div>
-                    <h3 className="text-base sm:text-lg font-semibold text-[#0F172A] mb-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-text-primary mb-2">
                       {schritt.titel}
                     </h3>
-                    <p className="text-[#475569] leading-relaxed">{schritt.text}</p>
+                    <p className="text-text-secondary leading-relaxed">{schritt.text}</p>
                   </div>
                 </motion.div>
               ))}
@@ -225,7 +225,7 @@ export default function PartnerClient() {
         </section>
 
         {/* KLARSTELLUNGEN */}
-        <section className="px-4 sm:px-6 py-24 bg-[#0F172A]">
+        <section className="px-4 sm:px-6 py-24 bg-text-primary">
           <div className="mx-auto max-w-4xl">
             <motion.h2 {...enter} className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Damit es keine Missverständnisse gibt
@@ -241,7 +241,7 @@ export default function PartnerClient() {
                   className="rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
                   <h3 className="text-base font-semibold text-white">{k.titel}</h3>
-                  <p className="mt-2 text-sm text-[#94A3B8] leading-relaxed">{k.text}</p>
+                  <p className="mt-2 text-sm text-text-muted leading-relaxed">{k.text}</p>
                 </motion.div>
               ))}
             </div>
@@ -254,16 +254,16 @@ export default function PartnerClient() {
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Als Partner anmelden
             </h2>
-            <p className="mt-3 text-[#475569] leading-relaxed">
+            <p className="mt-3 text-text-secondary leading-relaxed">
               Wir melden uns mit dem Rahmenvertrag und den Konditionen. Die
               Teilnahme steht Unternehmern offen, Verbraucher können nicht
               teilnehmen.
             </p>
 
             {submitted ? (
-              <div className="mt-8 rounded-2xl border border-[#F08A3A]/30 bg-[#FFF1E5] p-8 text-center">
-                <p className="text-lg font-semibold text-[#D97320]">Danke, angekommen.</p>
-                <p className="mt-2 text-sm text-[#475569]">
+              <div className="mt-8 rounded-2xl border border-accent/30 bg-accent-soft p-8 text-center">
+                <p className="text-lg font-semibold text-accent-hover">Danke, angekommen.</p>
+                <p className="mt-2 text-sm text-text-secondary">
                   Wir melden uns mit den Unterlagen bei dir.
                 </p>
               </div>
@@ -277,46 +277,46 @@ export default function PartnerClient() {
                   <div>
                     <label htmlFor="vorname" className="sr-only">Vorname</label>
                     <input id="vorname" name="vorname" type="text" autoComplete="given-name" required placeholder="Vorname"
-                      className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                      className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand transition-colors bg-white" />
                   </div>
                   <div>
                     <label htmlFor="nachname" className="sr-only">Nachname</label>
                     <input id="nachname" name="nachname" type="text" autoComplete="family-name" required placeholder="Nachname"
-                      className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                      className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand transition-colors bg-white" />
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="firmenname" className="block text-sm font-medium text-[#0F172A] mb-1">Firma</label>
+                  <label htmlFor="firmenname" className="block text-sm font-medium text-text-primary mb-1">Firma</label>
                   <input id="firmenname" name="firmenname" type="text" autoComplete="organization" required placeholder="Name deiner Firma"
-                    className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand transition-colors bg-white" />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-[#0F172A] mb-1">E-Mail-Adresse</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-1">E-Mail-Adresse</label>
                   <input id="email" name="email" type="email" autoComplete="email" required placeholder="du@firma.de"
-                    className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand transition-colors bg-white" />
                 </div>
                 <div>
-                  <label htmlFor="telefon" className="block text-sm font-medium text-[#0F172A] mb-1">Telefon (optional)</label>
+                  <label htmlFor="telefon" className="block text-sm font-medium text-text-primary mb-1">Telefon (optional)</label>
                   <input id="telefon" name="telefon" type="tel" autoComplete="tel" placeholder="Für Rückfragen"
-                    className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] transition-colors bg-white" />
+                    className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand transition-colors bg-white" />
                 </div>
                 <div>
-                  <label htmlFor="beschreibung" className="block text-sm font-medium text-[#0F172A] mb-1">
+                  <label htmlFor="beschreibung" className="block text-sm font-medium text-text-primary mb-1">
                     Mit wem arbeitest du?
                   </label>
                   <textarea id="beschreibung" name="beschreibung" rows={3}
                     placeholder="Branche, Kundenkreis, welche Produkte dich interessieren"
-                    className="w-full border border-[#E2E8F0] rounded-lg px-4 py-2.5 text-sm placeholder-[#94A3B8] focus:outline-none focus:border-[#2D7FF9] resize-none transition-colors bg-white" />
+                    className="w-full border border-border rounded-lg px-4 py-2.5 text-sm placeholder-text-muted focus:outline-none focus:border-brand resize-none transition-colors bg-white" />
                 </div>
-                {error && <p role="alert" className="text-sm text-[#DC2626]">{error}</p>}
+                {error && <p role="alert" className="text-sm text-danger">{error}</p>}
                 <button type="submit" disabled={sending}
-                  className="w-full bg-[#F08A3A] text-white font-semibold py-3 rounded-lg text-sm hover:bg-[#D97320] transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                  className="w-full bg-accent text-white font-semibold py-3 rounded-lg text-sm hover:bg-accent-hover transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
                   {sending ? "Wird gesendet …" : "Anmeldung absenden"}
                 </button>
-                <p className="text-xs text-[#94A3B8] leading-relaxed">
+                <p className="text-xs text-text-muted leading-relaxed">
                   Wir verwenden deine Angaben, um dir den Rahmenvertrag und die
                   Konditionen zu schicken. Näheres in der{" "}
-                  <Link href="/datenschutz" className="underline underline-offset-2 hover:text-[#2D7FF9]">
+                  <Link href="/datenschutz" className="underline underline-offset-2 hover:text-brand">
                     Datenschutzerklärung
                   </Link>
                   .

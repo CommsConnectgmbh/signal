@@ -53,13 +53,13 @@ export default function KontaktanfragePage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FFFFFF] pt-28 pb-32">
+      <main className="bg-white pt-28 pb-32">
         {/* Hero */}
         <section className="max-w-4xl mx-auto px-6 text-center mb-16">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#0F172A] mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary mb-6">
             Kontaktanfrage
           </h1>
-          <p className="text-lg md:text-xl text-[#475569] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
             Wir freuen uns auf Ihre Anfrage. Füllen Sie das Formular aus und wir
             melden uns schnellstmöglich bei Ihnen.
           </p>
@@ -84,10 +84,10 @@ export default function KontaktanfragePage() {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-[#0F172A] mb-4">
+              <h2 className="text-3xl font-bold text-text-primary mb-4">
                 Vielen Dank!
               </h2>
-              <p className="text-lg text-[#475569]">
+              <p className="text-lg text-text-secondary">
                 Ihre Anfrage wurde erfolgreich übermittelt. Wir melden uns in
                 Kürze bei Ihnen.
               </p>
@@ -116,9 +116,9 @@ export default function KontaktanfragePage() {
                     value="Herr"
                     checked={form.anrede === "Herr"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-[#2D7FF9] accent-[#2D7FF9]"
+                    className="w-4 h-4 text-brand accent-brand"
                   />
-                  <span className="text-[#475569]">Herr</span>
+                  <span className="text-text-secondary">Herr</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -127,9 +127,9 @@ export default function KontaktanfragePage() {
                     value="Frau"
                     checked={form.anrede === "Frau"}
                     onChange={handleChange}
-                    className="w-4 h-4 text-[#2D7FF9] accent-[#2D7FF9]"
+                    className="w-4 h-4 text-brand accent-brand"
                   />
-                  <span className="text-[#475569]">Frau</span>
+                  <span className="text-text-secondary">Frau</span>
                 </label>
               </div>
 
@@ -137,7 +137,7 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="firmenname"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   Firmenname
                 </label>
@@ -148,7 +148,7 @@ export default function KontaktanfragePage() {
                   value={form.firmenname}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition"
                   placeholder="Ihre Firma"
                 />
               </div>
@@ -157,7 +157,7 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   E-Mail-Adresse
                 </label>
@@ -168,7 +168,7 @@ export default function KontaktanfragePage() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition"
                   placeholder="ihre@email.de"
                 />
               </div>
@@ -177,7 +177,7 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="telefon"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   Telefon
                 </label>
@@ -187,7 +187,7 @@ export default function KontaktanfragePage() {
                   name="telefon"
                   value={form.telefon}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition"
                   placeholder="+49 ..."
                 />
               </div>
@@ -196,7 +196,7 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="produkt"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   Produktauswahl
                 </label>
@@ -206,7 +206,7 @@ export default function KontaktanfragePage() {
                   value={form.produkt}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition appearance-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition appearance-none"
                 >
                   <option value="">Wählen Sie eine Option</option>
                   {kontaktProduktOptionen.map((o) => (
@@ -221,7 +221,7 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="mitarbeiteranzahl"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   Mitarbeiteranzahl
                 </label>
@@ -230,7 +230,7 @@ export default function KontaktanfragePage() {
                   name="mitarbeiteranzahl"
                   value={form.mitarbeiteranzahl}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition appearance-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition appearance-none"
                 >
                   <option value="">Wählen Sie eine Option</option>
                   <option value="0-50">0–50</option>
@@ -244,10 +244,10 @@ export default function KontaktanfragePage() {
               <div>
                 <label
                   htmlFor="beschreibung"
-                  className="block text-sm font-medium text-[#0F172A] mb-2"
+                  className="block text-sm font-medium text-text-primary mb-2"
                 >
                   Beschreibung{" "}
-                  <span className="text-[#94A3B8] font-normal">(optional)</span>
+                  <span className="text-text-muted font-normal">(optional)</span>
                 </label>
                 <textarea
                   id="beschreibung"
@@ -255,13 +255,13 @@ export default function KontaktanfragePage() {
                   value={form.beschreibung}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-[#0F172A] placeholder-[#94A3B8] focus:outline-none focus:ring-2 focus:ring-[#2D7FF9] focus:border-transparent transition resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition resize-none"
                   placeholder="Wie können wir Ihnen helfen?"
                 />
               </div>
 
               {error && (
-                <p role="alert" className="text-sm text-[#DC2626] text-center">
+                <p role="alert" className="text-sm text-danger text-center">
                   {error}
                 </p>
               )}
@@ -270,12 +270,12 @@ export default function KontaktanfragePage() {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-4 bg-[#F08A3A] hover:bg-[#D97320] text-white font-semibold rounded-full transition-colors text-lg disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors text-lg disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {sending ? "Wird gesendet …" : "Anfrage einreichen"}
               </button>
 
-              <p className="text-xs text-[#94A3B8] text-center">
+              <p className="text-xs text-text-muted text-center">
                 Mit dem Absenden stimmen Sie unserer Datenschutzerklärung zu.
               </p>
             </form>

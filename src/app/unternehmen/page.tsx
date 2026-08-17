@@ -34,18 +34,18 @@ export default function UnternehmenPage() {
     <>
       <Navbar />
 
-      <main className="bg-white text-[#0F172A]">
+      <main className="bg-white text-text-primary">
 
         {/* HERO */}
         <section className="px-4 sm:px-6 pt-32 pb-20 md:pt-40">
           <div className="mx-auto max-w-4xl">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#2D7FF9]">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand">
               Unternehmen
             </span>
             <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08]">
               Ein Softwarehaus, kein Wiederverkäufer
             </h1>
-            <p className="mt-6 text-lg text-[#475569] leading-relaxed max-w-2xl">
+            <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl">
               Smart Signals ist die Marke, unter der die Comms Connect GmbH ihre
               eigenen Software-Produkte führt. Was hier steht, haben wir gebaut,
               betreiben wir selbst und verantworten wir auch.
@@ -54,12 +54,12 @@ export default function UnternehmenPage() {
         </section>
 
         {/* MARKE UND RECHTSTRÄGER */}
-        <section className="px-4 sm:px-6 py-20 md:py-24 bg-[#F8FAFC]">
+        <section className="px-4 sm:px-6 py-20 md:py-24 bg-surface">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Marke und Rechtsträger
             </h2>
-            <div className="mt-8 space-y-5 text-[#475569] leading-relaxed">
+            <div className="mt-8 space-y-5 text-text-secondary leading-relaxed">
               <p>
                 Betreiber und Vertragspartner aller hier gelisteten Angebote ist
                 die Comms Connect GmbH mit Sitz in München. Smart Signals ist die
@@ -77,7 +77,7 @@ export default function UnternehmenPage() {
                   href="https://comms-connect.de"
                   target="_blank"
                   rel="noopener"
-                  className="text-[#2D7FF9] hover:text-[#1F66D6] underline underline-offset-2"
+                  className="text-brand hover:text-brand-hover underline underline-offset-2"
                 >
                   comms-connect.de
                 </a>{" "}
@@ -85,18 +85,18 @@ export default function UnternehmenPage() {
               </p>
             </div>
 
-            <dl className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-[#E2E8F0] pt-8">
+            <dl className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-border pt-8">
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">Betreiber</dt>
-                <dd className="mt-2 text-sm text-[#0F172A]">Comms Connect GmbH, München</dd>
+                <dt className="text-xs font-semibold uppercase tracking-widest text-text-muted">Betreiber</dt>
+                <dd className="mt-2 text-sm text-text-primary">Comms Connect GmbH, München</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">Produkte</dt>
-                <dd className="mt-2 text-sm text-[#0F172A]">{produkte.length} eigene Anwendungen</dd>
+                <dt className="text-xs font-semibold uppercase tracking-widest text-text-muted">Produkte</dt>
+                <dd className="mt-2 text-sm text-text-primary">{produkte.length} eigene Anwendungen</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-widest text-[#94A3B8]">Betrieb</dt>
-                <dd className="mt-2 text-sm text-[#0F172A]">Server in der EU</dd>
+                <dt className="text-xs font-semibold uppercase tracking-widest text-text-muted">Betrieb</dt>
+                <dd className="mt-2 text-sm text-text-primary">Server in der EU</dd>
               </div>
             </dl>
           </div>
@@ -108,13 +108,13 @@ export default function UnternehmenPage() {
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-10">
               Wonach wir entscheiden
             </h2>
-            <div className="divide-y divide-[#E2E8F0] border-y border-[#E2E8F0]">
+            <div className="divide-y divide-border border-y border-border">
               {grundsaetze.map((g) => (
                 <div key={g.titel} className="py-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-[#0F172A]">
+                  <h3 className="text-base sm:text-lg font-semibold text-text-primary">
                     {g.titel}
                   </h3>
-                  <p className="mt-2 text-[#475569] leading-relaxed">{g.text}</p>
+                  <p className="mt-2 text-text-secondary leading-relaxed">{g.text}</p>
                 </div>
               ))}
             </div>
@@ -122,7 +122,7 @@ export default function UnternehmenPage() {
         </section>
 
         {/* CTA */}
-        <section className="px-4 sm:px-6 py-32 md:py-40 bg-[#F8FAFC]">
+        <section className="px-4 sm:px-6 py-32 md:py-40 bg-surface">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Sehen Sie sich an, was wir gebaut haben
@@ -130,13 +130,13 @@ export default function UnternehmenPage() {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/produkte"
-                className="inline-flex items-center gap-2 bg-[#F08A3A] text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-[#D97320] transition-colors"
+                className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
               >
                 Produkte ansehen
               </Link>
               <Link
                 href="/kontaktanfrage"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-[#0F172A] border border-[#E2E8F0] hover:border-[#2D7FF9] hover:text-[#2D7FF9] transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Kontakt aufnehmen
               </Link>

@@ -5,14 +5,14 @@ export default function ImpressumPage() {
   return (
     <>
       <Navbar />
-      <main className="bg-[#FFFFFF] pt-28 pb-32">
-        <article className="mx-auto max-w-3xl px-6 prose prose-headings:text-[#0F172A] prose-headings:tracking-tight prose-p:text-[#475569] prose-p:leading-relaxed">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#0F172A] mb-12">
+      <main className="bg-white pt-28 pb-32">
+        <article className="mx-auto max-w-3xl px-6 prose prose-headings:text-text-primary prose-headings:tracking-tight prose-p:text-text-secondary prose-p:leading-relaxed">
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-12">
             Impressum
           </h1>
 
-          <div className="space-y-6 text-[#475569] leading-relaxed">
-            <p className="text-lg font-semibold text-[#0F172A]">
+          <div className="space-y-6 text-text-secondary leading-relaxed">
+            <p className="text-lg font-semibold text-text-primary">
               Comms Connect GmbH
             </p>
             <p>
@@ -26,14 +26,14 @@ export default function ImpressumPage() {
               Registergericht: Amtsgericht München
             </p>
             <p>
-              <strong className="text-[#0F172A]">
+              <strong className="text-text-primary">
                 Vertretungsberechtigter Geschäftsführer:
               </strong>
               <br />
               Rainer Roloff
             </p>
 
-            <h2 className="text-2xl font-bold text-[#0F172A] mt-12 mb-4">
+            <h2 className="text-2xl font-bold text-text-primary mt-12 mb-4">
               Kontakt
             </h2>
             <p>
@@ -42,7 +42,7 @@ export default function ImpressumPage() {
               E-Mail:{" "}
               <a
                 href="mailto:info@smart-signals.de"
-                className="text-[#2563EB] hover:underline"
+                className="text-brand hover:underline"
               >
                 info@smart-signals.de
               </a>
@@ -50,7 +50,7 @@ export default function ImpressumPage() {
               Support:{" "}
               <a
                 href="mailto:info@smart-signals.de"
-                className="text-[#2563EB] hover:underline"
+                className="text-brand hover:underline"
               >
                 info@smart-signals.de
               </a>
@@ -61,7 +61,7 @@ export default function ImpressumPage() {
               angebotenen Leistungen ist die Comms Connect GmbH.
             </p>
 
-            <h2 className="text-2xl font-bold text-[#0F172A] mt-12 mb-4">
+            <h2 className="text-2xl font-bold text-text-primary mt-12 mb-4">
               Umsatzsteuer-ID
             </h2>
             <p>
@@ -71,7 +71,7 @@ export default function ImpressumPage() {
               DE451966748
             </p>
 
-            <h2 className="text-2xl font-bold text-[#0F172A] mt-12 mb-4">
+            <h2 className="text-2xl font-bold text-text-primary mt-12 mb-4">
               Verbraucherstreitbeilegung / Universalschlichtungsstelle
             </h2>
             <p>
