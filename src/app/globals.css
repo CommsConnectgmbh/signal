@@ -6,13 +6,19 @@
   --color-elevated: #FFFFFF;
   --color-border: #E2E8F0;
 
-  /* Brand color system (see DESIGN.md §2) */
-  --color-brand: #2D7FF9;        /* oklch(60% 0.16 230) */
-  --color-brand-hover: #1F66D6;  /* oklch(54% 0.16 230) */
-  --color-accent: #F08A3A;       /* oklch(72% 0.18 50)  */
-  --color-accent-hover: #D97320; /* oklch(64% 0.18 50)  */
-  --color-accent-soft: #FFF1E5;  /* oklch(96% 0.04 50)  */
-  --color-brand-soft: #EFF6FF;   /* Soft-Background fuer Brand (Badges, Icon-Flaechen) */
+  /* Brand color system (see DESIGN.md §2).
+     Direkt aus public/logo.png gemessen: Petrolblau #186088 und Gruen #409848.
+     Vorher lief die Seite auf einem Azurblau und einem Orange, die im Logo
+     nirgends vorkommen. Beide verfehlten zudem WCAG AA: #2D7FF9 kam auf Weiss
+     nur auf 3.81:1, weisser Text auf dem Orange #F08A3A auf 2.50:1. */
+  --color-brand: #186088;        /* Logo-Blau, 6.85:1 auf Weiss */
+  --color-brand-hover: #134B6A;  /* Hover, 9.37:1 */
+  --color-brand-on-dark: #80A8BE; /* Logo-Blau ist auf #0F172A nur 2.61:1, diese
+                                     Aufhellung kommt dort auf 7.02:1 */
+  --color-brand-soft: #EDF2F5;   /* weiche Flaechen (Badges, Icon-Flaechen) */
+  --color-accent: #36813D;       /* Logo-Gruen, abgedunkelt: weisser Text 4.81:1 */
+  --color-accent-hover: #2D6A32; /* Hover, 6.52:1 */
+  --color-accent-soft: #ECF5ED;  /* weiche Flaechen */
   --color-success: #16A34A;      /* semantic confirmation only */
   --color-danger: #DC2626;       /* semantic error only (Formular-Fehler) */
 
@@ -21,7 +27,11 @@
 
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;
-  --color-text-muted: #94A3B8;
+  /* #94A3B8 kam auf Weiss nur auf 2.56:1. Auf dunklem Grund ist derselbe Ton
+     dagegen richtig (6.96:1), deshalb zwei Tokens statt eines Kompromisses:
+     kein einziger Wert erreicht auf Weiss, #F8FAFC und #0F172A zugleich 4.5:1. */
+  --color-text-muted: #64748B;         /* 4.76:1 auf Weiss, 4.55:1 auf --surface */
+  --color-text-muted-on-dark: #94A3B8; /* 6.96:1 auf #0F172A */
 
   /* Dark theme colors (Karriere / Portal / Login) */
   --color-dark-base: #050A14;

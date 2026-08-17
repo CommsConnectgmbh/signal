@@ -330,13 +330,13 @@ export default function HomePage() {
         {/* PARTNER-BAND */}
         <section className="py-24 px-4 sm:px-6 bg-text-primary">
           <div className="ss-reveal max-w-4xl mx-auto text-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-on-dark">
               Partnerprogramm
             </span>
             <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Sie beraten Betriebe. Wir liefern die Software.
             </h2>
-            <p className="mt-4 text-text-muted leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-4 text-text-muted-on-dark leading-relaxed max-w-2xl mx-auto">
               Ein Rahmenvertrag für das gesamte Portfolio statt eines Vertrags
               je Produkt. Sie empfehlen, wir schließen ab und rechnen ab.
             </p>

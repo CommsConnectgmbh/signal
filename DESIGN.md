@@ -26,19 +26,24 @@ Daraus folgt:
 
 ## 2. Color System
 
-Vorher waren fünf Primärfarben im Spiel: Blau `#2563EB` (Token), Grün `#16A34A` (Buttons), Gold `#D4A843` (Karriere), Blau `#2563EB` (Kontaktformular), Türkis `#00C896` (AnimatedText). Das wurde auf zwei Farben konsolidiert.
+Zwei Farben, und beide kommen aus dem Logo (`public/logo.png`): Petrolblau `#186088` und Grün `#409848`.
+
+Bis 2026-08-17 lief die Seite auf einem Azurblau `#2D7FF9` und einem Orange `#F08A3A`. Beide kamen im Logo nicht vor, und beide verfehlten WCAG AA: das Blau erreichte als Text auf Weiß nur 3.81:1, weißer Text auf dem Orange nur 2.50:1. Die Werte unten sind gemessen, nicht geschätzt.
 
 | Token | OKLCH | Hex (Fallback) | Verwendung |
 |---|---|---|---|
-| `--brand` | `oklch(60% 0.16 230)` | `#2D7FF9` | Primäre Marken-Identität, Headlines-Akzente, Links, Eyebrows, Active-States, Icon-Backgrounds |
-| `--brand-hover` | `oklch(54% 0.16 230)` | `#1F66D6` | Hover für Brand-Elemente |
-| `--accent` | `oklch(72% 0.18 50)` | `#F08A3A` | Primärer Call-to-Action, Submit-Buttons, Pill-CTAs |
-| `--accent-hover` | `oklch(64% 0.18 50)` | `#D97320` | Hover für Accent-CTAs |
-| `--accent-soft` | `oklch(96% 0.04 50)` | `#FFF1E5` | Soft-Backgrounds (Tags, Success-States, Form-Selected) |
+| `--brand` | | `#186088` | Logo-Blau. Marken-Identität, Links, Eyebrows, Active-States. 6.85:1 auf Weiß |
+| `--brand-hover` | | `#134B6A` | Hover für Brand-Elemente |
+| `--brand-on-dark` | | `#80A8BE` | Nur auf dunklem Grund. `--brand` kommt auf `#0F172A` nur auf 2.61:1, diese Variante auf 7.02:1 |
+| `--brand-soft` | | `#EDF2F5` | Soft-Backgrounds (Badges, Icon-Flächen) |
+| `--accent` | | `#36813D` | Logo-Grün, abgedunkelt. Primärer Call-to-Action. Weißer Text darauf 4.81:1 |
+| `--accent-hover` | | `#2D6A32` | Hover für Accent-CTAs |
+| `--accent-soft` | | `#ECF5ED` | Soft-Backgrounds (Tags, Form-Selected) |
 | `--success` | `oklch(64% 0.15 150)` | `#16A34A` | Reserviert für semantische Bestätigungen (Submit-Erfolgsmeldung). Nicht als Brand verwenden. |
 | `--text-primary` | `oklch(20% 0.03 250)` | `#0F172A` | Headlines, Body-Text |
 | `--text-secondary` | `oklch(48% 0.02 250)` | `#475569` | Lead-Text, Beschreibungen |
-| `--text-muted` | `oklch(70% 0.02 250)` | `#94A3B8` | Placeholders, Captions |
+| `--text-muted` | | `#64748B` | Placeholders, Captions. 4.76:1 auf Weiß |
+| `--text-muted-on-dark` | | `#94A3B8` | Dieselbe Rolle auf dunklem Grund, dort 6.96:1 |
 | `--surface` | `#F8FAFC` | Subtile Section-Backgrounds (gerade Sektionen) |
 | `--base` | `#FFFFFF` | Hauptbackground |
 | `--border` | `#E2E8F0` | Karten, Inputs, Trennlinien |

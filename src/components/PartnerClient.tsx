@@ -224,7 +224,7 @@ export default function PartnerClient() {
                   className="ss-reveal rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
                   <h3 className="text-base font-semibold text-white">{k.titel}</h3>
-                  <p className="mt-2 text-sm text-text-muted leading-relaxed">{k.text}</p>
+                  <p className="mt-2 text-sm text-text-muted-on-dark leading-relaxed">{k.text}</p>
                 </div>
               ))}
             </div>

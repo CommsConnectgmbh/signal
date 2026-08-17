@@ -9,7 +9,7 @@ export const contentType = "image/png";
 
 // Hex statt Design-Token: Satori rendert ausserhalb des CSS-Kontexts und kennt
 // keine Custom Properties (siehe DESIGN.md Paragraph 2, dokumentierte Ausnahme).
-const BRAND = "#2D7FF9";
+const BRAND = "#186088";
 const TEXT = "#0F172A";
 const MUTED = "#475569";
 const BORDER = "#E2E8F0";
@@ -68,7 +68,7 @@ export default async function OG() {
               gap: 10,
               padding: "10px 18px",
               borderRadius: 999,
-              background: "#EFF6FF",
+              background: "#EDF2F5",
               boxShadow: `inset 0 0 0 1px ${BORDER}`,
               color: BRAND,
               fontSize: 18,
