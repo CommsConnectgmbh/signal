@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* DESIGN.md dokumentiert in einer Tabelle die alten Arbitrary-Values
+   (bg-[#F08A3A] und so weiter). Tailwind v4 scannt auch Markdown und baut
+   daraus echte Utilities, die im ausgelieferten CSS landen. Die Doku soll
+   nichts erzeugen. */
+@source not "../../DESIGN.md";
+
 @theme {
   --color-base: #FFFFFF;
   --color-surface: #F8FAFC;
