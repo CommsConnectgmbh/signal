@@ -96,6 +96,34 @@ const orgSchema = {
   ],
 };
 
+// Bewusst ein Inline-Skript im <head> statt einer Komponente: es muss vor dem
+// ersten Paint laufen, sonst blitzt der fertige Inhalt kurz auf, bevor er sich
+// versteckt. Und es versteckt nur, wenn es auch wieder einblenden kann.
+const REVEAL_SCRIPT = `
+(function () {
+  var d = document, r = d.documentElement;
+  if (!("IntersectionObserver" in window)) return;
+  try {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  } catch (e) { return; }
+  r.setAttribute("data-reveal", "");
+  function init() {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          entries[i].target.setAttribute("data-shown", "");
+          io.unobserve(entries[i].target);
+        }
+      }
+    }, { rootMargin: "0px 0px -5% 0px", threshold: 0.05 });
+    var els = d.querySelectorAll(".ss-reveal");
+    for (var i = 0; i < els.length; i++) io.observe(els[i]);
+  }
+  if (d.readyState === "loading") d.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -108,6 +136,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
+        {/* Laeuft vor dem ersten Paint. Setzt den Verborgen-Zustand nur,
+            wenn er ihn auch wieder aufloesen kann. */}
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -12,13 +11,6 @@ import {
   produkteBetrieb,
   produktePrivat,
 } from "@/lib/produkte";
-
-const enter = {
-  initial: { opacity: 0, y: 8 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
-};
 
 const produkteLive = [...produkteBetrieb, ...produktePrivat].filter(
   (p) => p.status === "live"
@@ -196,7 +188,7 @@ export default function HomePage() {
         {/* PRODUKT-MOSAIK: zwei große Karten, der Rest als Liste daneben */}
         <section className="py-24 md:py-28 px-4 sm:px-6 bg-surface">
           <div className="max-w-6xl mx-auto">
-            <motion.div {...enter} className="mb-12 max-w-2xl">
+            <div className="ss-reveal mb-12 max-w-2xl">
               <span className="text-xs font-semibold uppercase tracking-widest text-brand">
                 Für Betriebe
               </span>
@@ -208,21 +200,18 @@ export default function HomePage() {
                 seinen eigenen Preis. Sie können mit einem anfangen und die
                 anderen nie anfassen.
               </p>
-            </motion.div>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {produkteBetrieb.map((p, i) => (
-                <motion.a
+                <a
                   key={p.slug}
                   href={p.url}
                   target="_blank"
                   rel="noopener"
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.45, delay: Math.min(i, 4) * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ animationDelay: `${Math.min(i, 4) * 70}ms` }}
                   className={
-                    "group flex flex-col rounded-2xl border border-border bg-white p-8 hover:shadow-md transition-shadow " +
+                    "ss-reveal group flex flex-col rounded-2xl border border-border bg-white p-8 hover:shadow-md transition-shadow " +
                     (p.featured ? "lg:col-span-2 lg:flex-row lg:items-start lg:gap-12" : "")
                   }
                 >
@@ -258,7 +247,7 @@ export default function HomePage() {
                       </svg>
                     </span>
                   </div>
-                </motion.a>
+                </a>
               ))}
             </div>
           </div>
@@ -267,18 +256,15 @@ export default function HomePage() {
         {/* ARBEITSWEISE: nummerierte Liste statt Karten-Grid */}
         <section className="py-20 md:py-24 px-4 sm:px-6 bg-white">
           <div className="max-w-4xl mx-auto">
-            <motion.h2 {...enter} className="text-2xl sm:text-3xl font-bold tracking-tight mb-12">
+            <h2 className="ss-reveal text-2xl sm:text-3xl font-bold tracking-tight mb-12">
               Wie wir arbeiten
-            </motion.h2>
+            </h2>
             <div className="divide-y divide-border border-y border-border">
               {arbeitsweise.map((schritt, i) => (
-                <motion.div
+                <div
                   key={schritt.nummer}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                  className="ss-reveal flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
                 >
                   <span className="text-3xl font-bold text-brand tabular-nums shrink-0 w-16">
                     {schritt.nummer}
@@ -289,7 +275,7 @@ export default function HomePage() {
                     </h3>
                     <p className="text-text-secondary leading-relaxed">{schritt.text}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -298,26 +284,23 @@ export default function HomePage() {
         {/* PRIVAT */}
         <section className="py-20 md:py-24 px-4 sm:px-6 bg-surface">
           <div className="max-w-6xl mx-auto">
-            <motion.div {...enter} className="mb-10 max-w-2xl">
+            <div className="ss-reveal mb-10 max-w-2xl">
               <span className="text-xs font-semibold uppercase tracking-widest text-brand">
                 Für Privat
               </span>
               <h2 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
                 Auch außerhalb des Betriebs
               </h2>
-            </motion.div>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {produktePrivat.map((p, i) => (
-                <motion.a
+                <a
                   key={p.slug}
                   href={p.url}
                   target="_blank"
                   rel="noopener"
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-2xl border border-border bg-white p-6 hover:shadow-md transition-shadow"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                  className="ss-reveal rounded-2xl border border-border bg-white p-6 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xs font-semibold uppercase tracking-widest text-brand">
@@ -338,7 +321,7 @@ export default function HomePage() {
                       <polyline points="7 7 17 7 17 17" />
                     </svg>
                   </span>
-                </motion.a>
+                </a>
               ))}
             </div>
           </div>
@@ -346,7 +329,7 @@ export default function HomePage() {
 
         {/* PARTNER-BAND */}
         <section className="py-24 px-4 sm:px-6 bg-text-primary">
-          <motion.div {...enter} className="max-w-4xl mx-auto text-center">
+          <div className="ss-reveal max-w-4xl mx-auto text-center">
             <span className="text-xs font-semibold uppercase tracking-widest text-brand">
               Partnerprogramm
             </span>
@@ -366,7 +349,7 @@ export default function HomePage() {
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </Link>
-          </motion.div>
+          </div>
         </section>
 
         {/* FAQ */}

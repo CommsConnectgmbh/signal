@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { produkte } from "@/lib/produkte";
@@ -11,13 +10,6 @@ import { produkte } from "@/lib/produkte";
 // Zuordnungsfenster stehen im Rahmenvertrag und in dessen Produkt-Anlagen
 // (siehe vertrieb/), nicht öffentlich: öffentliche Provisionsangaben verwässern
 // den Produktpreis und verhandeln gegen uns selbst.
-
-const enter = {
-  initial: { opacity: 0, y: 8 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
-};
 
 const ablauf = [
   {
@@ -159,13 +151,10 @@ export default function PartnerClient() {
               </h3>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {mitProgramm.map((p, i) => (
-                  <motion.div
+                  <div
                     key={p.slug}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.45, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] }}
-                    className="rounded-2xl border border-border bg-white p-6"
+                    style={{ animationDelay: `${i * 70}ms` }}
+                    className="ss-reveal rounded-2xl border border-border bg-white p-6"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <h4 className="text-lg font-bold text-text-primary">{p.name}</h4>
@@ -175,7 +164,7 @@ export default function PartnerClient() {
                     </div>
                     <p className="mt-2 text-sm text-text-secondary leading-relaxed">{p.claim}</p>
                     <p className="mt-3 text-xs text-text-muted">{p.zielgruppe}</p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -201,13 +190,10 @@ export default function PartnerClient() {
             </h2>
             <div className="divide-y divide-border border-y border-border">
               {ablauf.map((schritt, i) => (
-                <motion.div
+                <div
                   key={schritt.nummer}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.45, delay: Math.min(i, 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
+                  style={{ animationDelay: `${Math.min(i, 4) * 60}ms` }}
+                  className="ss-reveal flex flex-col sm:flex-row gap-4 sm:gap-10 py-8"
                 >
                   <span className="text-3xl font-bold text-brand tabular-nums shrink-0 w-16">
                     {schritt.nummer}
@@ -218,7 +204,7 @@ export default function PartnerClient() {
                     </h3>
                     <p className="text-text-secondary leading-relaxed">{schritt.text}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -227,22 +213,19 @@ export default function PartnerClient() {
         {/* KLARSTELLUNGEN */}
         <section className="px-4 sm:px-6 py-24 bg-text-primary">
           <div className="mx-auto max-w-4xl">
-            <motion.h2 {...enter} className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h2 className="ss-reveal text-2xl sm:text-3xl font-bold tracking-tight text-white">
               Damit es keine Missverständnisse gibt
-            </motion.h2>
+            </h2>
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {klarstellungen.map((k, i) => (
-                <motion.div
+                <div
                   key={k.titel}
-                  initial={{ opacity: 0, y: 8 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.45, delay: Math.min(i, 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-6"
+                  style={{ animationDelay: `${Math.min(i, 4) * 60}ms` }}
+                  className="ss-reveal rounded-2xl border border-white/10 bg-white/5 p-6"
                 >
                   <h3 className="text-base font-semibold text-white">{k.titel}</h3>
                   <p className="mt-2 text-sm text-text-muted leading-relaxed">{k.text}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 type QA = { q: string; a: string };
 
 const faqs: QA[] = [
@@ -39,38 +37,28 @@ const faqs: QA[] = [
   },
 ];
 
-const enter = {
-  initial: { opacity: 0, y: 8 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
-};
-
 export default function FAQSection() {
   return (
     <section id="faq" className="py-24 md:py-28 px-4 sm:px-6 bg-surface">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <motion.span
-            {...enter}
-            className="text-xs font-semibold uppercase tracking-widest text-brand inline-block mb-3"
+          <span
+            className="ss-reveal text-xs font-semibold uppercase tracking-widest text-brand inline-block mb-3"
           >
             Antworten
-          </motion.span>
-          <motion.h2
-            {...enter}
-            transition={{ duration: 0.45, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-            className="text-3xl sm:text-4xl font-bold tracking-tight text-text-primary mb-4"
+          </span>
+          <h2
+            style={{ animationDelay: "60ms" }}
+            className="ss-reveal text-3xl sm:text-4xl font-bold tracking-tight text-text-primary mb-4"
           >
             Häufige Fragen
-          </motion.h2>
-          <motion.p
-            {...enter}
-            transition={{ duration: 0.45, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg text-text-secondary leading-relaxed"
+          </h2>
+          <p
+            style={{ animationDelay: "120ms" }}
+            className="ss-reveal text-lg text-text-secondary leading-relaxed"
           >
             Wenn Ihre Frage hier nicht beantwortet wird, schreiben Sie uns. Wir antworten in der Regel innerhalb eines Werktags.
-          </motion.p>
+          </p>
         </div>
 
         <div className="divide-y divide-border border-y border-border bg-white rounded-2xl px-6">

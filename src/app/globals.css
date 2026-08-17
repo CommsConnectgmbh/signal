@@ -45,6 +45,20 @@
   animation: ss-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Scroll-Reveal fuer alles unterhalb des Folds.
+   Standard ist SICHTBAR: ohne JS, ohne IntersectionObserver oder bei
+   prefers-reduced-motion bleibt nichts verborgen. Erst das Inline-Skript in
+   layout.tsx setzt data-reveal auf <html> und uebernimmt damit zugleich die
+   Verantwortung, per data-shown wieder einzublenden. Framer Motion rendert
+   dagegen serverseitig opacity:0 und liess den Inhalt ohne JS unsichtbar. */
+[data-reveal] .ss-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+[data-reveal] .ss-reveal[data-shown] {
+  animation: ss-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-sans);
