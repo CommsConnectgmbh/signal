@@ -125,7 +125,7 @@ export const produkte: Produkt[] = [
     url: "https://tryconduit.de",
     domain: "tryconduit.de",
     status: "live",
-    partnerprogramm: "geplant",
+    partnerprogramm: "aktiv",
   },
   {
     slug: "simvi",
@@ -144,7 +144,7 @@ export const produkte: Produkt[] = [
     url: "https://simvi.de",
     domain: "simvi.de",
     status: "live",
-    partnerprogramm: "geplant",
+    partnerprogramm: "aktiv",
   },
   {
     slug: "swing-and-savor",
@@ -159,7 +159,7 @@ export const produkte: Produkt[] = [
     url: "https://swingandsavor.at",
     domain: "swingandsavor.at",
     status: "live",
-    partnerprogramm: "geplant",
+    partnerprogramm: "aktiv",
   },
   {
     slug: "dealbuddy",
@@ -177,7 +177,7 @@ export const produkte: Produkt[] = [
     url: "https://deal-buddy.app",
     domain: "deal-buddy.app",
     status: "live",
-    partnerprogramm: "keins",
+    partnerprogramm: "aktiv",
   },
 ];
 

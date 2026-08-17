@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PartnerAnmeldung from "@/components/PartnerAnmeldung";
@@ -321,58 +322,55 @@ export default function HomePage() {
                 Was du empfehlen kannst
               </h2>
               <p className="mt-3 text-text-secondary leading-relaxed">
-                Jedes Produkt löst ein konkretes Problem und hat seinen eigenen
+                Für alle {imProgramm.length} läuft das Programm, du kannst sofort
+                starten. Jedes löst ein konkretes Problem und hat seinen eigenen
                 Kundenkreis. Du entscheidest, was zu deinen Leuten passt.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Bild fuehrt die Karte: der Partner sieht sofort, was sein
+                Kunde zu sehen bekommt. Alle Aufnahmen im gleichen Viewport und
+                Seitenverhaeltnis, damit sie als Serie wirken. */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {imProgramm.map((p, i) => (
-                <div
+                <a
                   key={p.slug}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener"
                   style={{ animationDelay: `${Math.min(i, 4) * 70}ms` }}
-                  className="ss-reveal ss-card flex flex-col rounded-2xl border border-border bg-white p-8"
+                  className="ss-reveal ss-card group flex flex-col overflow-hidden rounded-2xl border border-border bg-white"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <span className="text-xs font-semibold uppercase tracking-widest text-brand">
-                        {p.kategorie}
-                      </span>
-                      <h3 className="mt-2 text-xl font-bold tracking-tight">{p.name}</h3>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-accent-hover">
-                      Programm läuft
+                  <div className="relative aspect-[16/10] border-b border-border bg-surface">
+                    <Image
+                      src={`/images/produkte/${p.slug}.webp`}
+                      alt={`Startseite von ${p.domain}`}
+                      fill
+                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="text-xs font-semibold uppercase tracking-widest text-brand">
+                      {p.kategorie}
+                    </span>
+                    <h3 className="mt-2 text-lg font-bold tracking-tight">{p.name}</h3>
+                    <p className="mt-2 text-sm text-text-secondary leading-relaxed">{p.claim}</p>
+                    <dl className="mt-4 border-t border-border pt-4">
+                      <dt className="text-[10px] font-semibold uppercase tracking-widest text-text-secondary">
+                        Für wen
+                      </dt>
+                      <dd className="mt-1 text-sm text-text-secondary">{p.zielgruppe}</dd>
+                    </dl>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand group-hover:text-brand-hover transition-colors">
+                      {p.domain}
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                      </svg>
                     </span>
                   </div>
-                  <p className="mt-3 font-semibold">{p.claim}</p>
-                  <p className="mt-2 text-text-secondary leading-relaxed">{p.beschreibung}</p>
-                  <ul className="mt-5 space-y-2">
-                    {p.punkte.map((punkt) => (
-                      <li key={punkt} className="flex items-start gap-2.5 text-sm text-text-secondary">
-                        <Check />
-                        {punkt}
-                      </li>
-                    ))}
-                  </ul>
-                  <dl className="mt-6 border-t border-border pt-4">
-                    <dt className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
-                      Für wen
-                    </dt>
-                    <dd className="mt-1 text-sm text-text-secondary">{p.zielgruppe}</dd>
-                  </dl>
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener"
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover transition-colors"
-                  >
-                    {p.domain}
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </a>
-                </div>
+                </a>
               ))}
             </div>
 
@@ -382,10 +380,12 @@ export default function HomePage() {
                   Kommt dazu
                 </h3>
                 <p className="mt-3 text-text-secondary leading-relaxed">
-                  {inVorbereitung.map((p) => p.name).join(", ")}. Für diese
-                  Produkte gibt es noch kein laufendes Programm. Sobald eines
-                  startet, kommt es als Anlage zu deinem bestehenden Vertrag
-                  dazu.
+                  {inVorbereitung.map((p) => p.name).join(", ")}.{" "}
+                  {inVorbereitung.length === 1
+                    ? "Dafür gibt es noch kein laufendes Programm."
+                    : "Für diese Produkte gibt es noch kein laufendes Programm."}{" "}
+                  Sobald es startet, kommt es als Anlage zu deinem bestehenden
+                  Vertrag dazu.
                 </p>
               </div>
             )}
