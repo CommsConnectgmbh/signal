@@ -166,7 +166,7 @@ export const produkte: Produkt[] = [
     name: "Tagesteller",
     kategorie: "Gastronomie",
     segment: "betrieb",
-    claim: "Heutige Mittagsangebote auf einer Karte.",
+    claim: "Schau, was es heute gibt.",
     beschreibung:
       "Gäste sehen auf einer Karte, wo es heute Mittag was gibt, ohne Konto und ohne Umweg. Betriebe pflegen ihr Angebot, indem sie ein Foto ihres Aushangs an einen Telegram-Bot schicken.",
     zielgruppe: "Wirtshäuser, Bäckereien, Metzgereien, Imbisse und Kantinen",
@@ -177,7 +177,7 @@ export const produkte: Produkt[] = [
     ],
     url: "https://tagesteller.app",
     domain: "tagesteller.app",
-    status: "vorbereitung",
+    status: "live",
     partnerprogramm: "geplant",
   },
   {
