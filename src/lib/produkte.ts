@@ -162,6 +162,25 @@ export const produkte: Produkt[] = [
     partnerprogramm: "aktiv",
   },
   {
+    slug: "tagesteller",
+    name: "Tagesteller",
+    kategorie: "Gastronomie",
+    segment: "betrieb",
+    claim: "Heutige Mittagsangebote auf einer Karte.",
+    beschreibung:
+      "Gäste sehen auf einer Karte, wo es heute Mittag was gibt, ohne Konto und ohne Umweg. Betriebe pflegen ihr Angebot, indem sie ein Foto ihres Aushangs an einen Telegram-Bot schicken.",
+    zielgruppe: "Wirtshäuser, Bäckereien, Metzgereien, Imbisse und Kantinen",
+    punkte: [
+      "Ein Foto genügt zur Pflege",
+      "Basis-Eintrag kostenlos",
+      "Keine Bestellung, keine Provision auf den Umsatz",
+    ],
+    url: "https://tagesteller.app",
+    domain: "tagesteller.app",
+    status: "vorbereitung",
+    partnerprogramm: "geplant",
+  },
+  {
     slug: "dealbuddy",
     name: "DealBuddy",
     kategorie: "Freundeskreis",
