@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/lib/supabase";
+import { stripImageMetadataForUpload } from "@/lib/strip-image-metadata";
 
 type Material = {
   id: string;
@@ -83,9 +84,24 @@ export default function SchulungenPage() {
       const safeName = selectedFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
       const filePath = `${user.id}/${timestamp}-${safeName}`;
 
+      // Der Bucket ist public-read. Bilder vom Handy tragen GPS im EXIF — das
+      // raus, bevor die Bytes hochgehen. Nur Bilder werden eingelesen: PDFs,
+      // Videos und Office-Dateien wuerde die Funktion ohnehin unveraendert
+      // durchreichen, und ein Schulungsvideo muss dafuer nicht komplett in den
+      // Speicher. Der contentType muss ab hier explizit mit, weil Supabase ihn
+      // sonst aus dem File-Objekt ableitet.
+      const payload = selectedFile.type.startsWith("image/")
+        ? stripImageMetadataForUpload(
+            new Uint8Array(await selectedFile.arrayBuffer()),
+            "schulungen",
+          )
+        : selectedFile;
+
       const { error: uploadError } = await supabase.storage
         .from("schulungen")
-        .upload(filePath, selectedFile);
+        .upload(filePath, payload, {
+          contentType: selectedFile.type || "application/octet-stream",
+        });
 
       if (uploadError) throw uploadError;
 
