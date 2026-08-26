@@ -30,8 +30,10 @@ import {
 import { produkte, type Produkt } from "@/lib/produkte";
 
 const PLAETZE = 20;
-const ANMELDESCHLUSS = "18.09.2026";
-const VERGABE = "21.09.2026";
+// Anmeldeschluss ist der Wiesn-Anstich: der Tag laeuft noch als Werbetag mit.
+// Zusagen einen Tag spaeter, damit allen eine Woche Planungszeit bleibt.
+const ANMELDESCHLUSS = "19.09.2026";
+const VERGABE = "20.09.2026";
 
 /** Drei Karten je Publikum. Bilder liegen in public/images/produkte/. */
 const BETRIEB_SLUGS = ["belegify", "obacht", "conduit"];
