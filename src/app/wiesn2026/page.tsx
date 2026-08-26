@@ -51,12 +51,11 @@ function kartenFuer(segment: Segment | null): Produkt[] {
 const inputKlasse =
   "w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition";
 
-/* Bayerisches Rautenmuster: zwei diagonale Linienraster im Weiss der
-   Textebene, bewusst leise. Traegt keine Information (aria-hidden). */
-const rautenStil: React.CSSProperties = {
-  backgroundImage:
-    "repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 64px)," +
-    "repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 64px)",
+/* Abdunkelung ueber dem Zeltfoto. Ohne sie traegt weisser Text auf den
+   hellen Lichterketten nicht. Traegt keine Information (aria-hidden). */
+const schleierStil: React.CSSProperties = {
+  background:
+    "linear-gradient(to bottom, rgba(10,7,4,0.86) 0%, rgba(10,7,4,0.70) 35%, rgba(10,7,4,0.72) 65%, rgba(10,7,4,0.90) 100%)",
 };
 
 export default function WiesnPage() {
@@ -185,17 +184,18 @@ export default function WiesnPage() {
     schritt >= 1 && schritt <= karten.length ? karten[schritt - 1] : null;
 
   return (
-    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-brand-hover text-white">
-      {/* Dekor: Rauten + weiches Licht oben, reines CSS, keine Information */}
-      <div aria-hidden className="pointer-events-none absolute inset-0" style={rautenStil} />
-      <div
+    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-[#0A0704] text-white">
+      {/* Zeltfoto im Kaefer-Look als Buehne, darueber der Schleier */}
+      <Image
+        src="/images/wiesn-kaefer.webp"
+        alt=""
         aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255,255,255,0.14) 0%, transparent 70%)",
-        }}
+        fill
+        priority
+        sizes="100vw"
+        className="pointer-events-none select-none object-cover"
       />
+      <div aria-hidden className="pointer-events-none absolute inset-0" style={schleierStil} />
 
       {/* Kopf: nur das Logo, als Rueckweg zur Startseite */}
       <header className="relative z-10 flex justify-center pt-8">
