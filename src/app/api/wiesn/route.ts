@@ -49,7 +49,6 @@ export async function POST(req: Request) {
 
   const errors: string[] = [];
   if (!name) errors.push("name");
-  if (!firmenname) errors.push("firmenname");
   if (!email || !/.+@.+\..+/.test(email)) errors.push("email");
   if (!thema) errors.push("thema");
   if (errors.length) {
@@ -87,13 +86,13 @@ export async function POST(req: Request) {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `Wiesn-Anmeldung: ${name}, ${firmenname}${
+      subject: `Wiesn-Anmeldung: ${name}${firmenname ? `, ${firmenname}` : ""}${
         gruppe ? ` (Gruppe: ${gruppe})` : ""
       }`,
       html,
       text: [
         `Name: ${name}`,
-        `Firma: ${firmenname}`,
+        firmenname && `Firma: ${firmenname}`,
         `E-Mail: ${email}`,
         gruppe && `Gruppe: ${gruppe}`,
         `Thema: ${thema}`,

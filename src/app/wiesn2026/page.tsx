@@ -102,6 +102,18 @@ const ECKDATEN: Array<[string, string]> = [
   ["Anmeldung bis", ANMELDESCHLUSS],
 ];
 
+/** Produkte, fuer die ein Bild in public/images/produkte/ liegt.
+    Tagesteller hat (noch) keins und bekommt den Buchstaben-Fallback. */
+const BILD_SLUGS = [
+  "belegify",
+  "obacht",
+  "obacht-talents",
+  "conduit",
+  "simvi",
+  "swing-and-savor",
+  "dealbuddy",
+];
+
 function produktZuThema(key: string): Produkt | null {
   const thema = THEMEN.find((t) => t.key === key);
   if (!thema || !thema.produktSlug) return null;
@@ -147,8 +159,8 @@ export default function WiesnPage() {
   }
 
   function weiter() {
-    if (schritt === 0 && (!form.name.trim() || !form.firmenname.trim())) {
-      setError("Bitte gib Name und Firma an.");
+    if (schritt === 0 && !form.name.trim()) {
+      setError("Bitte gib deinen Namen an.");
       return;
     }
     if (schritt === 1 && !/.+@.+\..+/.test(form.email)) {
@@ -348,7 +360,8 @@ export default function WiesnPage() {
                         </div>
                         <div>
                           <label htmlFor="firmenname" className="mb-2 block text-sm font-medium text-text-primary">
-                            Firma
+                            Firma{" "}
+                            <span className="font-normal text-text-muted">(optional)</span>
                           </label>
                           <input
                             type="text"
@@ -437,23 +450,77 @@ export default function WiesnPage() {
                           Werkzeug.
                         </p>
                         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {THEMEN.map((t) => (
-                            <button
-                              key={t.key}
-                              type="button"
-                              onClick={() => themaWaehlen(t.key)}
-                              aria-pressed={thema === t.key}
-                              className={
-                                "ss-card rounded-xl border p-4 text-left transition-colors " +
-                                (thema === t.key
-                                  ? "border-brand bg-brand-soft"
-                                  : "border-border bg-white")
-                              }
-                            >
-                              <p className="text-sm font-semibold text-text-primary">{t.label}</p>
-                              <p className="mt-1 text-xs text-text-muted">{t.detail}</p>
-                            </button>
-                          ))}
+                          {THEMEN.map((t) => {
+                            const p = t.produktSlug
+                              ? produkte.find((pr) => pr.slug === t.produktSlug)
+                              : null;
+                            const bild =
+                              p && BILD_SLUGS.includes(p.slug)
+                                ? `/images/produkte/${p.slug}.webp`
+                                : null;
+                            return (
+                              <div
+                                key={t.key}
+                                role="button"
+                                tabIndex={0}
+                                onClick={() => themaWaehlen(t.key)}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                    e.preventDefault();
+                                    themaWaehlen(t.key);
+                                  }
+                                }}
+                                aria-pressed={thema === t.key}
+                                className={
+                                  "ss-card cursor-pointer rounded-xl border p-4 text-left transition-colors " +
+                                  (thema === t.key
+                                    ? "border-brand bg-brand-soft"
+                                    : "border-border bg-white")
+                                }
+                              >
+                                <div className="flex items-start gap-3">
+                                  {bild ? (
+                                    <Image
+                                      src={bild}
+                                      alt={p ? p.name : ""}
+                                      width={80}
+                                      height={80}
+                                      className="h-10 w-10 shrink-0 rounded-lg border border-border object-cover"
+                                    />
+                                  ) : (
+                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-sm font-bold text-brand">
+                                      {(p ? p.name : "Smart Signals").charAt(0)}
+                                    </span>
+                                  )}
+                                  <div className="min-w-0">
+                                    <p className="text-sm font-semibold text-text-primary">{t.label}</p>
+                                    <p className="mt-1 text-xs text-text-muted">{t.detail}</p>
+                                    {p ? (
+                                      <a
+                                        href={p.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
+                                      >
+                                        Mehr auf {p.domain}
+                                      </a>
+                                    ) : (
+                                      <a
+                                        href="/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
+                                      >
+                                        Mehr auf smart-signals.de
+                                      </a>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                         {error && (
                           <p role="alert" className="text-sm text-danger">
@@ -482,7 +549,7 @@ export default function WiesnPage() {
                           {(
                             [
                               ["Name", form.name],
-                              ["Firma", form.firmenname],
+                              ["Firma", form.firmenname || "Ohne Firma"],
                               ["E-Mail", form.email],
                               ["Gruppe", form.gruppe || "Komme allein"],
                               ["Thema", themaLabel],
