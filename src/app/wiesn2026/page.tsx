@@ -129,6 +129,16 @@ export default function WiesnPage() {
       setError("Bitte gib deinen Namen an.");
       return;
     }
+    // Wer ueber den Betriebs-Pfad kommt, nennt auch die Firma: sie ist der
+    // halbe Gespraechseinstieg am Tisch.
+    if (
+      schritt === NAME_SCHRITT &&
+      segment === "betrieb" &&
+      !form.firmenname.trim()
+    ) {
+      setError("Bitte gib deine Firma an.");
+      return;
+    }
     if (schritt === EMAIL_SCHRITT && !/.+@.+\..+/.test(form.email)) {
       setError("Bitte gib eine gültige E-Mail-Adresse an.");
       return;
@@ -157,17 +167,20 @@ export default function WiesnPage() {
     setSending(true);
     setError(null);
     try {
-      const thema = [
-        profilText(),
-        `Interessen: ${
-          interessiert.length ? interessiert.map((p) => p.name).join(", ") : "keine"
-        }`,
-        `Partnerprogramm: ${partner ? "ja" : "eher nicht"}`,
-      ].join(" | ");
       const res = await fetch("/api/wiesn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, thema, _honey: honey }),
+        body: JSON.stringify({
+          ...form,
+          profil: profilText(),
+          partner,
+          interessen: interessiert.map((p) => ({
+            name: p.name,
+            claim: p.claim,
+            url: p.url,
+          })),
+          _honey: honey,
+        }),
       });
       if (!res.ok) throw new Error("request failed");
       setAnsicht("fertig");
@@ -392,13 +405,25 @@ export default function WiesnPage() {
                     {/* App-Karten, eine pro Ansicht */}
                     {aktuelleKarte && (
                       <div className="space-y-5">
-                        <Image
-                          src={`/images/produkte/${aktuelleKarte.slug}.webp`}
-                          alt={aktuelleKarte.name}
-                          width={640}
-                          height={360}
-                          className="h-40 w-full rounded-xl border border-border object-cover"
-                        />
+                        {/* Bild ist der Weg zur Produktseite, neuer Tab, damit
+                            die angefangene Anmeldung stehen bleibt. */}
+                        <a
+                          href={aktuelleKarte.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group relative block overflow-hidden rounded-xl border border-border"
+                        >
+                          <Image
+                            src={`/images/wiesn-apps/${aktuelleKarte.slug}.webp`}
+                            alt={`${aktuelleKarte.name} ansehen`}
+                            width={960}
+                            height={600}
+                            className="h-44 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                          />
+                          <span className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-text-primary shadow-sm">
+                            {aktuelleKarte.domain} ansehen
+                          </span>
+                        </a>
                         <div>
                           <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand">
                             {aktuelleKarte.kategorie}
@@ -409,14 +434,6 @@ export default function WiesnPage() {
                           <p className="mt-2 text-sm leading-relaxed text-text-secondary">
                             {aktuelleKarte.beschreibung}
                           </p>
-                          <a
-                            href={aktuelleKarte.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
-                          >
-                            Mehr auf {aktuelleKarte.domain}
-                          </a>
                         </div>
                         <div className="flex items-center justify-between gap-3">
                           <button
@@ -509,8 +526,10 @@ export default function WiesnPage() {
                         </div>
                         <div>
                           <label htmlFor="firmenname" className="mb-2 block text-sm font-medium text-text-primary">
-                            Firma{" "}
-                            <span className="font-normal text-text-muted">(optional)</span>
+                            Firma
+                            {segment === "privat" && (
+                              <span className="font-normal text-text-muted"> (optional)</span>
+                            )}
                           </label>
                           <input
                             type="text"
@@ -703,9 +722,11 @@ export default function WiesnPage() {
                   Deine Anmeldung ist drin.
                 </h1>
                 <p className="mb-10 text-lg leading-relaxed text-text-secondary">
-                  Wir vergeben die Plätze am {VERGABE} und melden uns per
-                  E-Mail. Gruppen werden bevorzugt. Schön, wenn es klappt:
-                  Rainer Roloff sitzt selbst mit am Tisch.
+                  Eine Bestätigung liegt gleich in deinem Postfach, mit allem,
+                  was du dir gemerkt hast. Wir vergeben die Plätze am{" "}
+                  {VERGABE} und melden uns dann per E-Mail. Gruppen werden
+                  bevorzugt. Schön, wenn es klappt: Rainer Roloff sitzt selbst
+                  mit am Tisch.
                 </p>
 
                 {interessiert.length > 0 ? (
@@ -719,10 +740,10 @@ export default function WiesnPage() {
                         className="ss-card flex items-center gap-4 rounded-2xl border border-border bg-white p-5 text-left"
                       >
                         <Image
-                          src={`/images/produkte/${p.slug}.webp`}
+                          src={`/images/wiesn-apps/${p.slug}.webp`}
                           alt={p.name}
-                          width={96}
-                          height={96}
+                          width={240}
+                          height={160}
                           className="h-14 w-14 shrink-0 rounded-xl border border-border object-cover"
                         />
                         <div className="min-w-0 flex-1">
