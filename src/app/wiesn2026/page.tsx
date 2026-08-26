@@ -6,22 +6,23 @@
 // Mechanik entsteht. Jeder traegt sich selbst ein und verlinkt seine Gruppe
 // ueber das Gruppen-Feld.
 //
-// Aufbau: Aufmacher (Dekor-Ebene nach DESIGN.md Paragraph 10), dann ein
-// Schritt-fuer-Schritt-Flow (eine Frage pro Ansicht, Fortschrittsanzeige),
-// zum Schluss die Danke-Ansicht mit dem zum Thema passenden Produkt.
-// Nicht in der Navbar verlinkt, der Einstieg laeuft ueber den Instagram-Post
-// (/wiesn leitet per next.config.ts hierher weiter).
+// Eigenstaendige Vollbild-Landing OHNE Navbar/Footer (Rainers Vorgabe
+// 26.08.2026): nur das Logo als Rueckweg zur Startseite, Wiesn-Gefuehl ueber
+// ein bayerisches Rautenmuster im Markenblau, der Frage-Flow liegt als weisse
+// Karte darauf (eine Frage pro Ansicht, Fortschrittsanzeige). Impressum und
+// Datenschutz bleiben als Fusszeile erreichbar (Pflicht).
+// Nicht in der Site-Navigation verlinkt, der Einstieg laeuft ueber den
+// Instagram-Post (/wiesn leitet per next.config.ts hierher weiter).
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   AnimatePresence,
   motion,
   useReducedMotion,
   type HTMLMotionProps,
 } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { produkte, type Produkt } from "@/lib/produkte";
 
 const PLAETZE = 20;
@@ -110,6 +111,14 @@ function produktZuThema(key: string): Produkt | null {
 const inputKlasse =
   "w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition";
 
+/* Bayerisches Rautenmuster: zwei diagonale Linienraster im Weiss der
+   Textebene, bewusst leise. Traegt keine Information (aria-hidden). */
+const rautenStil: React.CSSProperties = {
+  backgroundImage:
+    "repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 64px)," +
+    "repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 64px)",
+};
+
 export default function WiesnPage() {
   const [ansicht, setAnsicht] = useState<"intro" | "flow" | "fertig">("intro");
   const [schritt, setSchritt] = useState(0);
@@ -195,105 +204,95 @@ export default function WiesnPage() {
 
   const produkt = produktZuThema(thema);
   const themaLabel = THEMEN.find((t) => t.key === thema)?.label ?? "";
-  const marqueeNamen = [...produkte.map((p) => p.name), "Partnerprogramm"];
 
   return (
-    <>
-      <Navbar />
-      <main className="bg-white pt-20 pb-32">
+    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-brand-hover text-white">
+      {/* Dekor: Rauten + weiches Licht oben, reines CSS, keine Information */}
+      <div aria-hidden className="pointer-events-none absolute inset-0" style={rautenStil} />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 45% at 50% 0%, rgba(255,255,255,0.14) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* Kopf: nur das Logo, als Rueckweg zur Startseite */}
+      <header className="relative z-10 flex justify-center pt-8">
+        <Link href="/" aria-label="Zur Smart-Signals-Startseite">
+          <Image
+            src="/logo.png"
+            alt="Smart Signals"
+            width={600}
+            height={319}
+            priority
+            className="h-9 w-auto brightness-0 invert"
+          />
+        </Link>
+      </header>
+
+      <main className="relative z-10 flex flex-1 flex-col justify-center px-6 py-14">
         <AnimatePresence mode="wait" initial={false}>
           {ansicht === "intro" && (
-            <motion.div key="intro" {...stepMotion}>
-              {/* Aufmacher mit Dekor-Ebene */}
-              <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24">
-                <div aria-hidden className="ss-grid pointer-events-none absolute inset-0" />
-                <div
-                  aria-hidden
-                  className="ss-glow pointer-events-none absolute -top-32 -right-24 h-[560px] w-[560px] rounded-full"
-                />
-                <div className="relative max-w-4xl mx-auto px-6 text-center">
-                  <p className="text-xs uppercase tracking-widest font-semibold text-brand mb-4">
-                    Firmen Connect Wiesn 2026
-                  </p>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-text-primary mb-6">
-                    Ein Tisch im Käfer-Zelt.
-                    <br />
-                    {PLAETZE} Plätze zu vergeben.
-                  </h1>
-                  <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed mb-10">
-                    Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir
-                    mit Unternehmern und Selbstständigen in der Käfer
-                    Wiesn-Schänke auf dem Oktoberfest. Trag dich ein, wir
-                    vergeben die Plätze unter allen Anmeldungen, Gruppen
-                    bevorzugt. Rainer Roloff ist selbst am Tisch.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAnsicht("flow");
-                      window.scrollTo({ top: 0 });
-                    }}
-                    className="px-10 py-4 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors text-lg"
+            <motion.div key="intro" {...stepMotion} className="mx-auto w-full max-w-4xl text-center">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/70">
+                Firmen Connect Wiesn 2026
+              </p>
+              <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                Ein Tisch im Käfer-Zelt.
+                <br />
+                {PLAETZE} Plätze zu vergeben.
+              </h1>
+              <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
+                Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir mit
+                Unternehmern und Selbstständigen in der Käfer Wiesn-Schänke
+                auf dem Oktoberfest. Trag dich ein, wir vergeben die Plätze
+                unter allen Anmeldungen, Gruppen bevorzugt. Rainer Roloff ist
+                selbst am Tisch.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setAnsicht("flow");
+                  window.scrollTo({ top: 0 });
+                }}
+                className="rounded-full bg-accent px-10 py-4 text-lg font-semibold text-white transition-colors hover:bg-accent-hover"
+              >
+                Platz anfragen
+              </button>
+              <p className="mt-4 text-sm text-white/60">
+                Vier kurze Fragen, eine Bestätigung. Dauert unter zwei Minuten.
+              </p>
+
+              <div className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+                {ECKDATEN.map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-2xl border border-white/15 bg-white/10 p-5 text-center"
                   >
-                    Platz anfragen
-                  </button>
-                  <p className="text-sm text-text-muted mt-4">
-                    Vier kurze Fragen, eine Bestätigung. Dauert unter zwei
-                    Minuten.
-                  </p>
-                </div>
-              </section>
-
-              {/* Eckdaten */}
-              <section className="max-w-3xl mx-auto px-6 mb-16">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {ECKDATEN.map(([label, value]) => (
-                    <div
-                      key={label}
-                      className="ss-card rounded-2xl border border-border bg-white p-5 text-center"
-                    >
-                      <p className="text-xs text-text-muted mb-1">{label}</p>
-                      <p className="text-sm font-semibold text-text-primary">{value}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Laufband: das Sortiment als leiser Hinweis auf den Gastgeber */}
-              <div className="ss-marquee-mask border-y border-border bg-surface py-5 overflow-hidden">
-                <div className="ss-marquee flex w-max">
-                  {[0, 1].map((kopie) => (
-                    <div key={kopie} className="flex items-center" aria-hidden={kopie === 1}>
-                      {marqueeNamen.map((name) => (
-                        <span
-                          key={`${kopie}-${name}`}
-                          className="flex items-center text-sm font-medium text-text-muted"
-                        >
-                          <span className="px-6">{name}</span>
-                          <span className="h-1 w-1 rounded-full bg-border" />
-                        </span>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                    <p className="mb-1 text-xs text-white/60">{label}</p>
+                    <p className="text-sm font-semibold">{value}</p>
+                  </div>
+                ))}
               </div>
             </motion.div>
           )}
 
           {ansicht === "flow" && (
-            <motion.div key="flow" {...stepMotion}>
-              <section className="max-w-xl mx-auto px-6 pt-16">
+            <motion.div key="flow" {...stepMotion} className="mx-auto w-full max-w-xl">
+              <div className="rounded-3xl bg-white p-6 text-text-primary shadow-lg sm:p-10">
                 {/* Fortschritt */}
-                <div className="mb-10">
-                  <div className="flex items-baseline justify-between mb-3">
-                    <p className="text-xs uppercase tracking-widest font-semibold text-brand">
+                <div className="mb-8">
+                  <div className="mb-3 flex items-baseline justify-between">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-brand">
                       Firmen Connect Wiesn
                     </p>
                     <p className="text-xs text-text-muted">
                       Schritt {schritt + 1} von {SCHRITTE.length}
                     </p>
                   </div>
-                  <div className="h-1 rounded-full bg-border overflow-hidden">
+                  <div className="h-1 overflow-hidden rounded-full bg-border">
                     <div
                       className="h-full rounded-full bg-brand transition-all duration-300"
                       style={{ width: `${((schritt + 1) / SCHRITTE.length) * 100}%` }}
@@ -316,7 +315,7 @@ export default function WiesnPage() {
 
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div key={schritt} {...stepMotion}>
-                    <h1 className="text-3xl font-bold tracking-tight text-text-primary mb-3">
+                    <h1 className="mb-3 text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
                       {SCHRITTE[schritt]}
                     </h1>
 
@@ -333,7 +332,7 @@ export default function WiesnPage() {
                           kommt. Gruppen werden bei der Vergabe bevorzugt.
                         </p>
                         <div>
-                          <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-2">
+                          <label htmlFor="name" className="mb-2 block text-sm font-medium text-text-primary">
                             Name
                           </label>
                           <input
@@ -348,7 +347,7 @@ export default function WiesnPage() {
                           />
                         </div>
                         <div>
-                          <label htmlFor="firmenname" className="block text-sm font-medium text-text-primary mb-2">
+                          <label htmlFor="firmenname" className="mb-2 block text-sm font-medium text-text-primary">
                             Firma
                           </label>
                           <input
@@ -377,7 +376,7 @@ export default function WiesnPage() {
                           An diese Adresse geht die Zusage am {VERGABE}.
                         </p>
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-text-primary mb-2">
+                          <label htmlFor="email" className="mb-2 block text-sm font-medium text-text-primary">
                             E-Mail-Adresse
                           </label>
                           <input
@@ -411,9 +410,9 @@ export default function WiesnPage() {
                           leer.
                         </p>
                         <div>
-                          <label htmlFor="gruppe" className="block text-sm font-medium text-text-primary mb-2">
+                          <label htmlFor="gruppe" className="mb-2 block text-sm font-medium text-text-primary">
                             Deine Gruppe{" "}
-                            <span className="text-text-muted font-normal">(optional)</span>
+                            <span className="font-normal text-text-muted">(optional)</span>
                           </label>
                           <input
                             type="text"
@@ -437,7 +436,7 @@ export default function WiesnPage() {
                           Tisch reden, und zeigen dir danach das passende
                           Werkzeug.
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                           {THEMEN.map((t) => (
                             <button
                               key={t.key}
@@ -445,14 +444,14 @@ export default function WiesnPage() {
                               onClick={() => themaWaehlen(t.key)}
                               aria-pressed={thema === t.key}
                               className={
-                                "ss-card text-left p-4 rounded-xl border transition-colors " +
+                                "ss-card rounded-xl border p-4 text-left transition-colors " +
                                 (thema === t.key
                                   ? "border-brand bg-brand-soft"
                                   : "border-border bg-white")
                               }
                             >
                               <p className="text-sm font-semibold text-text-primary">{t.label}</p>
-                              <p className="text-xs text-text-muted mt-1">{t.detail}</p>
+                              <p className="mt-1 text-xs text-text-muted">{t.detail}</p>
                             </button>
                           ))}
                         </div>
@@ -464,7 +463,7 @@ export default function WiesnPage() {
                         <button
                           type="button"
                           onClick={zurueck}
-                          className="text-sm font-medium text-text-muted hover:text-text-primary transition-colors"
+                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
                         >
                           Zurück
                         </button>
@@ -479,7 +478,7 @@ export default function WiesnPage() {
                         }}
                         className="space-y-6"
                       >
-                        <dl className="rounded-2xl border border-border divide-y divide-border overflow-hidden">
+                        <dl className="divide-y divide-border overflow-hidden rounded-2xl border border-border">
                           {(
                             [
                               ["Name", form.name],
@@ -489,28 +488,28 @@ export default function WiesnPage() {
                               ["Thema", themaLabel],
                             ] as Array<[string, string]>
                           ).map(([label, value]) => (
-                            <div key={label} className="flex items-baseline gap-4 px-5 py-3 bg-surface">
+                            <div key={label} className="flex items-baseline gap-4 bg-surface px-5 py-3">
                               <dt className="w-24 shrink-0 text-xs text-text-muted">{label}</dt>
-                              <dd className="text-sm font-medium text-text-primary break-all">
+                              <dd className="break-all text-sm font-medium text-text-primary">
                                 {value}
                               </dd>
                             </div>
                           ))}
                         </dl>
 
-                        <label className="flex items-start gap-3 cursor-pointer">
+                        <label className="flex cursor-pointer items-start gap-3">
                           <input
                             type="checkbox"
                             checked={datenschutz}
                             onChange={(e) => setDatenschutz(e.target.checked)}
                             required
-                            className="mt-1 w-4 h-4 accent-brand"
+                            className="mt-1 h-4 w-4 accent-brand"
                           />
                           <span className="text-sm text-text-secondary">
                             Ich bin einverstanden, dass meine Angaben zur
                             Abwicklung der Platzvergabe und zur Kontaktaufnahme
                             rund um den Abend verwendet werden. Details in der{" "}
-                            <Link href="/datenschutz" className="text-brand hover:text-brand-hover underline">
+                            <Link href="/datenschutz" className="text-brand underline hover:text-brand-hover">
                               Datenschutzerklärung
                             </Link>
                             .
@@ -527,20 +526,20 @@ export default function WiesnPage() {
                           <button
                             type="button"
                             onClick={zurueck}
-                            className="text-sm font-medium text-text-muted hover:text-text-primary transition-colors"
+                            className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
                           >
                             Zurück
                           </button>
                           <button
                             type="submit"
                             disabled={sending}
-                            className="px-8 py-3.5 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                            className="rounded-full bg-accent px-8 py-3.5 font-semibold text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
                           >
                             {sending ? "Wird gesendet ..." : "Platz anfragen"}
                           </button>
                         </div>
 
-                        <p className="text-xs text-text-muted leading-relaxed">
+                        <p className="text-xs leading-relaxed text-text-muted">
                           Anmeldung bis {ANMELDESCHLUSS}, Zusagen verschicken
                           wir am {VERGABE} per E-Mail. Die Plätze werden von
                           uns vergeben, Gruppen bevorzugt; ein Anspruch auf
@@ -551,16 +550,16 @@ export default function WiesnPage() {
                     )}
                   </motion.div>
                 </AnimatePresence>
-              </section>
+              </div>
             </motion.div>
           )}
 
           {ansicht === "fertig" && (
-            <motion.div key="fertig" {...stepMotion}>
-              <section className="max-w-2xl mx-auto px-6 text-center pt-24">
-                <div className="w-20 h-20 bg-accent-soft rounded-full flex items-center justify-center mx-auto mb-6">
+            <motion.div key="fertig" {...stepMotion} className="mx-auto w-full max-w-2xl">
+              <div className="rounded-3xl bg-white p-6 text-center text-text-primary shadow-lg sm:p-10">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-accent-soft">
                   <svg
-                    className="w-10 h-10 text-success"
+                    className="h-10 w-10 text-success"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -569,66 +568,80 @@ export default function WiesnPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h1 className="text-4xl font-bold tracking-tight text-text-primary mb-4">
+                <h1 className="mb-4 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
                   Deine Anmeldung ist drin.
                 </h1>
-                <p className="text-lg text-text-secondary leading-relaxed mb-12">
+                <p className="mb-10 text-lg leading-relaxed text-text-secondary">
                   Wir vergeben die Plätze am {VERGABE} und melden uns per
                   E-Mail. Gruppen werden bevorzugt. Schön, wenn es klappt:
                   Rainer Roloff sitzt selbst mit am Tisch.
                 </p>
 
                 {produkt ? (
-                  <div className="ss-card text-left border border-border rounded-2xl p-8 bg-white shadow-sm">
-                    <p className="text-xs uppercase tracking-widest font-semibold text-brand mb-3">
+                  <div className="ss-card rounded-2xl border border-border bg-white p-8 text-left shadow-sm">
+                    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
                       Passt zu deinem Thema
                     </p>
-                    <h2 className="text-2xl font-bold text-text-primary mb-2">
+                    <h2 className="mb-2 text-2xl font-bold text-text-primary">
                       {produkt.name}
                     </h2>
-                    <p className="text-text-secondary leading-relaxed mb-6">
+                    <p className="mb-6 leading-relaxed text-text-secondary">
                       {produkt.beschreibung}
                     </p>
                     <a
                       href={produkt.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-block px-6 py-3 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors"
+                      className="inline-block rounded-full bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hover"
                     >
                       {produkt.name} ausprobieren
                     </a>
-                    <p className="text-xs text-text-muted mt-3">
+                    <p className="mt-3 text-xs text-text-muted">
                       Kein Muss für die Platzvergabe. Aber ein guter Gesprächseinstieg am Tisch.
                     </p>
                   </div>
                 ) : (
-                  <div className="ss-card text-left border border-border rounded-2xl p-8 bg-white shadow-sm">
-                    <p className="text-xs uppercase tracking-widest font-semibold text-brand mb-3">
+                  <div className="ss-card rounded-2xl border border-border bg-white p-8 text-left shadow-sm">
+                    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
                       Passt zu deinem Thema
                     </p>
-                    <h2 className="text-2xl font-bold text-text-primary mb-2">
+                    <h2 className="mb-2 text-2xl font-bold text-text-primary">
                       Das Partnerprogramm
                     </h2>
-                    <p className="text-text-secondary leading-relaxed mb-6">
+                    <p className="mb-6 leading-relaxed text-text-secondary">
                       Sieben eigene Software-Produkte, ein Rahmenvertrag. Du
                       empfiehlst, wir schließen ab, rechnen ab und machen den
                       Support. Auf der Wiesn erzählen wir dir gern, wie das läuft.
                     </p>
                     <Link
                       href="/"
-                      className="inline-block px-6 py-3 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors"
+                      className="inline-block rounded-full bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hover"
                     >
                       Zum Partnerprogramm
                     </Link>
                   </div>
                 )}
-              </section>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </main>
-      <Footer />
-    </>
+
+      {/* Minimal-Fusszeile: Pflichtlinks bleiben erreichbar */}
+      <footer className="relative z-10 pb-8 text-center text-xs text-white/60">
+        <p>
+          Eine Aktion der Comms Connect GmbH
+          {" · "}
+          <Link href="/impressum" className="underline hover:text-white">
+            Impressum
+          </Link>
+          {" · "}
+          <Link href="/datenschutz" className="underline hover:text-white">
+            Datenschutz
+          </Link>
+        </p>
+      </footer>
+    </div>
   );
 }
 
@@ -650,13 +663,13 @@ function FlowNav({
         <button
           type="button"
           onClick={zurueck}
-          className="text-sm font-medium text-text-muted hover:text-text-primary transition-colors"
+          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
         >
           Zurück
         </button>
         <button
           type="submit"
-          className="px-8 py-3.5 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors"
+          className="rounded-full bg-accent px-8 py-3.5 font-semibold text-white transition-colors hover:bg-accent-hover"
         >
           Weiter
         </button>
