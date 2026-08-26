@@ -225,9 +225,9 @@ export default function WiesnPage() {
               </h1>
               <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
                 Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir in
-                der Käfer Wiesn-Schänke auf dem Oktoberfest. Trag dich ein,
-                wir vergeben die Plätze unter allen Anmeldungen, Gruppen
-                bevorzugt. Rainer Roloff ist selbst am Tisch.
+                der Käfer Wiesn-Schänke auf dem Oktoberfest. Kein Pitch, keine
+                Präsentation, nur Brezn, Bier und Leute, die man sonst nur
+                schreibt. Rainer Roloff ist selbst am Tisch.
               </p>
               <button
                 type="button"
@@ -261,6 +261,44 @@ export default function WiesnPage() {
                     <p className="text-sm font-semibold">{value}</p>
                   </div>
                 ))}
+              </div>
+
+              {/* Was zugesagt ist, und warum vergeben statt zuerst-kommt */}
+              <div className="mx-auto mt-10 grid max-w-3xl gap-4 text-left sm:grid-cols-2">
+                <ul className="space-y-3 rounded-2xl border border-white/15 bg-white/10 p-6">
+                  {[
+                    ["Antwort", `am ${VERGABE} per Mail`],
+                    ["Tisch und Reservierung", "laufen über uns"],
+                    ["Absage", "jederzeit möglich, sag einfach Bescheid"],
+                  ].map(([fett, rest]) => (
+                    <li key={fett} className="flex items-start gap-3 text-sm text-white/85">
+                      <svg
+                        aria-hidden
+                        className="mt-0.5 h-4 w-4 shrink-0 text-white/70"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>
+                        <strong className="font-semibold text-white">{fett}</strong> {rest}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="rounded-2xl border border-white/15 bg-white/10 p-6">
+                  <p className="mb-2 text-sm font-semibold text-white">
+                    Warum eine Anfrage und keine Buchung?
+                  </p>
+                  <p className="text-sm leading-relaxed text-white/75">
+                    Wir haben {PLAETZE} Plätze und vermutlich mehr Anfragen.
+                    Statt „wer zuerst klickt" schauen wir sie uns an und
+                    stellen den Tisch so zusammen, dass er zusammenpasst.
+                    Gruppen werden dabei bevorzugt.
+                  </p>
+                </div>
               </div>
             </motion.div>
           )}
