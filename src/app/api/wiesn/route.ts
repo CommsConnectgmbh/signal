@@ -1,6 +1,7 @@
 // Anmeldungen zur Firmen Connect Wiesn. Gleiche Mechanik wie api/contact:
 // Resend-Mail an das Smart-Signals-Postfach, Honeypot, Server-Validierung.
-// Die Verlosung selbst laeuft manuell aus dem Postfach.
+// Die Verlosung selbst laeuft manuell aus dem Postfach; das Gruppen-Feld
+// verknuepft Einzelanmeldungen, die zusammen kommen wollen.
 
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
   const name = sanitize(body.name);
   const firmenname = sanitize(body.firmenname);
   const email = sanitize(body.email);
+  const gruppe = sanitize(body.gruppe);
   const thema = sanitize(body.thema);
 
   const errors: string[] = [];
@@ -72,6 +74,7 @@ export async function POST(req: Request) {
       <tr><td style="border-bottom:1px solid #eee;color:#666;">E-Mail</td><td style="border-bottom:1px solid #eee;"><a href="mailto:${escapeHtml(
         email
       )}">${escapeHtml(email)}</a></td></tr>
+      ${row("Gruppe", gruppe)}
       ${row("Thema", thema)}
       <tr><td style="color:#aaa;font-size:11px;">IP / UA</td><td style="color:#aaa;font-size:11px;">${escapeHtml(
         ip
@@ -84,15 +87,20 @@ export async function POST(req: Request) {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `Wiesn-Anmeldung: ${name}, ${firmenname}`,
+      subject: `Wiesn-Anmeldung: ${name}, ${firmenname}${
+        gruppe ? ` (Gruppe: ${gruppe})` : ""
+      }`,
       html,
       text: [
         `Name: ${name}`,
         `Firma: ${firmenname}`,
         `E-Mail: ${email}`,
+        gruppe && `Gruppe: ${gruppe}`,
         `Thema: ${thema}`,
         `IP: ${ip}`,
-      ].join("\n"),
+      ]
+        .filter(Boolean)
+        .join("\n"),
     });
   } catch {
     return NextResponse.json({ error: "send failed" }, { status: 502 });

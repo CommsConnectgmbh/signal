@@ -1,9 +1,11 @@
 "use client";
 
 // Aktionsseite zur Firmen Connect Wiesn am 26.09.2026 (Kaefer Wiesn-Schaenke).
-// Verlosung von Tischplaetzen: Anmeldung + Themenwahl, danach zeigt die
-// Danke-Ansicht das zum Thema passende Produkt aus dem Portfolio.
-// Nicht in der Navbar verlinkt, der Einstieg laeuft ueber den Instagram-Post.
+// Verlost werden Einzelplaetze: Gruppen tragen sich einzeln ein und verlinken
+// sich ueber das Gruppen-Feld. Die Danke-Ansicht zeigt das zum gewaehlten
+// Thema passende Produkt aus dem Portfolio.
+// Nicht in der Navbar verlinkt, der Einstieg laeuft ueber den Instagram-Post
+// (/wiesn leitet per next.config.ts hierher weiter).
 
 import { useState } from "react";
 import Link from "next/link";
@@ -80,7 +82,12 @@ function produktZuThema(key: string): Produkt | null {
 }
 
 export default function WiesnPage() {
-  const [form, setForm] = useState({ name: "", firmenname: "", email: "" });
+  const [form, setForm] = useState({
+    name: "",
+    firmenname: "",
+    email: "",
+    gruppe: "",
+  });
   const [thema, setThema] = useState("");
   const [datenschutz, setDatenschutz] = useState(false);
   const [honey, setHoney] = useState("");
@@ -207,8 +214,9 @@ export default function WiesnPage() {
               <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
                 Am Samstag, 26.09.2026, sitzen wir mit Unternehmern und
                 Selbstständigen in der Käfer Wiesn-Schänke auf dem
-                Oktoberfest. Trag dich ein, wir verlosen die Plätze unter
-                allen Anmeldungen. Rainer Roloff ist selbst am Tisch.
+                Oktoberfest. Verlost werden Einzelplätze: Kommt ihr als
+                Gruppe, trägt sich jeder selbst ein und nennt die anderen.
+                Rainer Roloff ist selbst am Tisch.
               </p>
             </section>
 
@@ -251,6 +259,10 @@ export default function WiesnPage() {
                     <span className="text-3xl font-bold text-brand">01</span>
                     <h2 className="text-2xl font-bold text-text-primary">Wer kommt?</h2>
                   </div>
+                  <p className="text-sm text-text-secondary">
+                    Jeder Platz wird einzeln verlost. Kommt ihr zu mehreren,
+                    trägt sich jeder selbst ein und nennt unten die Gruppe.
+                  </p>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-2">
                       Name
@@ -295,6 +307,25 @@ export default function WiesnPage() {
                       className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition"
                       placeholder="deine@email.de"
                     />
+                  </div>
+                  <div>
+                    <label htmlFor="gruppe" className="block text-sm font-medium text-text-primary mb-2">
+                      Deine Gruppe{" "}
+                      <span className="text-text-muted font-normal">(optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="gruppe"
+                      name="gruppe"
+                      value={form.gruppe}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition"
+                      placeholder="Namen oder Gruppenname, z. B. Team Huber"
+                    />
+                    <p className="text-xs text-text-muted mt-2">
+                      So wissen wir, wer zusammengehört. Eintragen muss sich
+                      trotzdem jeder selbst.
+                    </p>
                   </div>
                 </div>
 
@@ -370,8 +401,9 @@ export default function WiesnPage() {
                   </button>
 
                   <p className="text-xs text-text-muted text-center leading-relaxed">
-                    Teilnahme bis {ANMELDESCHLUSS}, Ziehung am {ZIEHUNG}. Die
-                    Gewinner werden per E-Mail benachrichtigt. Der Platz am
+                    Teilnahme bis {ANMELDESCHLUSS}, Ziehung am {ZIEHUNG}.
+                    Verlost werden Einzelplätze. Die Gewinner werden per
+                    E-Mail benachrichtigt. Der Platz am
                     Tisch ist nicht übertragbar, eine Barauszahlung ist nicht
                     möglich, der Rechtsweg ist ausgeschlossen. Veranstalter der
                     Verlosung ist die Comms Connect GmbH.

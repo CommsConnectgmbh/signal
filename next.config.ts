@@ -41,6 +41,14 @@ const nextConfig: NextConfig = {
         destination: "/partner",
         permanent: true,
       },
+      // Die Wiesn-Aktion heisst nach aussen /wiesn2026 (Instagram-Link).
+      // Kurzform bleibt tippbar. Bewusst nicht permanent: naechstes Jahr
+      // zeigt /wiesn auf die dann aktuelle Aktion.
+      {
+        source: "/wiesn",
+        destination: "/wiesn2026",
+        permanent: false,
+      },
     ];
   },
 };
