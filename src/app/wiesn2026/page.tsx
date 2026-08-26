@@ -238,11 +238,18 @@ export default function WiesnPage() {
                   <br />
                   {PLAETZE} Plätze zu vergeben.
                 </h1>
+                {/* Wortlaut aus Rainers Instagram-Text, ohne die Teilen- und
+                    Kommentier-Mechanik, die nur dort Sinn ergibt. */}
+                <p className="mb-4 text-lg leading-relaxed text-text-secondary">
+                  Am 26.09. haben wir einen Tisch in der Käfer Wiesn-Schänke,
+                  und ein paar Plätze geben wir an unsere Community weiter.
+                </p>
                 <p className="mb-8 text-lg leading-relaxed text-text-secondary">
-                  Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir in
-                  der Käfer Wiesn-Schänke auf dem Oktoberfest. Kein Pitch,
-                  keine Präsentation, nur Brezn, Bier und Leute, die man sonst
-                  nur schreibt. Rainer Roloff ist selbst am Tisch.
+                  <strong className="font-semibold text-text-primary">
+                    Keine Präsentationen. Keine Pitches.
+                  </strong>{" "}
+                  Einfach gute Gespräche, neue Kontakte, Brezn und das ein
+                  oder andere Maß. Rainer Roloff ist selbst am Tisch.
                 </p>
 
                 <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -266,6 +273,9 @@ export default function WiesnPage() {
                   ))}
                 </div>
 
+                <p className="mb-4 text-center text-lg font-semibold text-text-primary">
+                  Du willst mit an den Tisch?
+                </p>
                 <button
                   type="button"
                   onClick={() => {
@@ -277,7 +287,8 @@ export default function WiesnPage() {
                   Platz anfragen
                 </button>
                 <p className="mt-3 text-center text-sm text-text-muted">
-                  Ein paar kurze Fragen, ein Tipp pro Antwort. Dauert unter
+                  Die Anmeldung ist Voraussetzung für die Teilnahme, die
+                  Plätze sind begrenzt. Ein paar kurze Fragen, dauert unter
                   zwei Minuten.
                 </p>
 
