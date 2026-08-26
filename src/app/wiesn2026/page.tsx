@@ -51,11 +51,12 @@ function kartenFuer(segment: Segment | null): Produkt[] {
 const inputKlasse =
   "w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition";
 
-/* Abdunkelung ueber dem Zeltfoto. Ohne sie traegt weisser Text auf den
-   hellen Lichterketten nicht. Traegt keine Information (aria-hidden). */
+/* Schleier ueber dem Zeltfoto. Oben und unten kraeftiger, damit Logo und
+   Fusszeile in Weiss tragen; in der Mitte leicht, dort liegt ohnehin die
+   weisse Karte. Traegt keine Information (aria-hidden). */
 const schleierStil: React.CSSProperties = {
   background:
-    "linear-gradient(to bottom, rgba(10,7,4,0.86) 0%, rgba(10,7,4,0.70) 35%, rgba(10,7,4,0.72) 65%, rgba(10,7,4,0.90) 100%)",
+    "linear-gradient(to bottom, rgba(10,7,4,0.72) 0%, rgba(10,7,4,0.34) 26%, rgba(10,7,4,0.34) 72%, rgba(10,7,4,0.76) 100%)",
 };
 
 export default function WiesnPage() {
@@ -214,85 +215,87 @@ export default function WiesnPage() {
       <main className="relative z-10 flex flex-1 flex-col justify-center px-6 py-14">
         <AnimatePresence mode="wait" initial={false}>
           {ansicht === "intro" && (
-            <motion.div key="intro" {...stepMotion} className="mx-auto w-full max-w-4xl text-center">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/70">
-                Firmen Connect Wiesn 2026
-              </p>
-              <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-                Ein Tisch im Käfer-Zelt.
-                <br />
-                {PLAETZE} Plätze zu vergeben.
-              </h1>
-              <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
-                Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir in
-                der Käfer Wiesn-Schänke auf dem Oktoberfest. Kein Pitch, keine
-                Präsentation, nur Brezn, Bier und Leute, die man sonst nur
-                schreibt. Rainer Roloff ist selbst am Tisch.
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setAnsicht("flow");
-                  window.scrollTo({ top: 0 });
-                }}
-                className="rounded-full bg-accent px-10 py-4 text-lg font-semibold text-white transition-colors hover:bg-accent-hover"
-              >
-                Platz anfragen
-              </button>
-              <p className="mt-4 text-sm text-white/60">
-                Ein paar kurze Fragen, ein Tipp pro Antwort. Dauert unter zwei
-                Minuten.
-              </p>
+            <motion.div key="intro" {...stepMotion} className="mx-auto w-full max-w-2xl">
+              <div className="rounded-3xl bg-white p-8 text-text-primary shadow-lg sm:p-12">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand">
+                  Firmen Connect Wiesn 2026
+                </p>
+                <h1 className="mb-6 text-4xl font-bold leading-[1.05] tracking-tight text-text-primary sm:text-5xl">
+                  Ein Tisch im Käfer-Zelt.
+                  <br />
+                  {PLAETZE} Plätze zu vergeben.
+                </h1>
+                <p className="mb-8 text-lg leading-relaxed text-text-secondary">
+                  Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir in
+                  der Käfer Wiesn-Schänke auf dem Oktoberfest. Kein Pitch,
+                  keine Präsentation, nur Brezn, Bier und Leute, die man sonst
+                  nur schreibt. Rainer Roloff ist selbst am Tisch.
+                </p>
 
-              <div className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
-                {(
-                  [
-                    ["Datum", "Sa., 26.09.2026"],
-                    ["Uhrzeit", "11:30 bis 15:30 Uhr"],
-                    ["Ort", "Käfer Wiesn-Schänke"],
-                    ["Anmeldung bis", ANMELDESCHLUSS],
-                  ] as Array<[string, string]>
-                ).map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="rounded-2xl border border-white/15 bg-white/10 p-5 text-center"
-                  >
-                    <p className="mb-1 text-xs text-white/60">{label}</p>
-                    <p className="text-sm font-semibold">{value}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Was zugesagt ist, und warum vergeben statt zuerst-kommt */}
-              <div className="mx-auto mt-10 grid max-w-3xl gap-4 text-left sm:grid-cols-2">
-                <ul className="space-y-3 rounded-2xl border border-white/15 bg-white/10 p-6">
-                  {[
-                    ["Antwort", `am ${VERGABE} per Mail`],
-                    ["Tisch und Reservierung", "laufen über uns"],
-                    ["Absage", "jederzeit möglich, sag einfach Bescheid"],
-                  ].map(([fett, rest]) => (
-                    <li key={fett} className="flex items-start gap-3 text-sm text-white/85">
-                      <svg
-                        aria-hidden
-                        className="mt-0.5 h-4 w-4 shrink-0 text-white/70"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>
-                        <strong className="font-semibold text-white">{fett}</strong> {rest}
-                      </span>
-                    </li>
+                <div className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {(
+                    [
+                      ["Datum", "Sa., 26.09."],
+                      ["Uhrzeit", "11:30–15:30"],
+                      ["Ort", "Käfer-Schänke"],
+                      ["Anmeldung bis", ANMELDESCHLUSS],
+                    ] as Array<[string, string]>
+                  ).map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="rounded-2xl border border-border p-4 text-center"
+                    >
+                      <p className="mb-1 text-[11px] uppercase tracking-wider text-text-muted">
+                        {label}
+                      </p>
+                      <p className="text-sm font-semibold text-text-primary">{value}</p>
+                    </div>
                   ))}
-                </ul>
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-6">
-                  <p className="mb-2 text-sm font-semibold text-white">
-                    Warum eine Anfrage und keine Buchung?
-                  </p>
-                  <p className="text-sm leading-relaxed text-white/75">
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAnsicht("flow");
+                    window.scrollTo({ top: 0 });
+                  }}
+                  className="w-full rounded-full bg-accent px-10 py-4 text-lg font-semibold text-white transition-colors hover:bg-accent-hover"
+                >
+                  Platz anfragen
+                </button>
+                <p className="mt-3 text-center text-sm text-text-muted">
+                  Ein paar kurze Fragen, ein Tipp pro Antwort. Dauert unter
+                  zwei Minuten.
+                </p>
+
+                <div className="mt-8 border-t border-border pt-6">
+                  <ul className="space-y-2.5">
+                    {[
+                      ["Antwort", `am ${VERGABE} per Mail`],
+                      ["Tisch und Reservierung", "laufen über uns"],
+                      ["Absage", "jederzeit möglich, sag einfach Bescheid"],
+                    ].map(([fett, rest]) => (
+                      <li key={fett} className="flex items-start gap-3 text-sm text-text-secondary">
+                        <svg
+                          aria-hidden
+                          className="mt-0.5 h-4 w-4 shrink-0 text-accent"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2.5}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>
+                          <strong className="font-semibold text-text-primary">{fett}</strong> {rest}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-5 rounded-2xl bg-surface p-5 text-sm leading-relaxed text-text-secondary">
+                    <strong className="font-semibold text-text-primary">
+                      Warum eine Anfrage und keine Buchung?
+                    </strong>{" "}
                     Wir haben {PLAETZE} Plätze und vermutlich mehr Anfragen.
                     Statt „wer zuerst klickt" schauen wir sie uns an und
                     stellen den Tisch so zusammen, dass er zusammenpasst.
