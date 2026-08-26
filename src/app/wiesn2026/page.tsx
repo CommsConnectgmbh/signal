@@ -6,13 +6,17 @@
 // Mechanik entsteht. Jeder traegt sich selbst ein und verlinkt seine Gruppe
 // ueber das Gruppen-Feld.
 //
-// Eigenstaendige Vollbild-Landing OHNE Navbar/Footer (Rainers Vorgabe
-// 26.08.2026): nur das Logo als Rueckweg zur Startseite, Wiesn-Gefuehl ueber
-// ein bayerisches Rautenmuster im Markenblau, der Frage-Flow liegt als weisse
-// Karte darauf (eine Frage pro Ansicht, Fortschrittsanzeige). Impressum und
-// Datenschutz bleiben als Fusszeile erreichbar (Pflicht).
-// Nicht in der Site-Navigation verlinkt, der Einstieg laeuft ueber den
-// Instagram-Post (/wiesn leitet per next.config.ts hierher weiter).
+// Publikum ist NICHT steuerbar (Instagram): die erste Frage segmentiert
+// deshalb selbst (Betrieb vs. privat), danach werden die drei passenden
+// Apps einzeln vorgestellt (Bild, ein Satz, Link) mit "Interessiert mich /
+// Eher nicht". So entsteht je Gast ein Interessenprofil, das als Thema in
+// der Anmelde-Mail landet. Kontaktdaten kommen bewusst erst nach den Karten.
+//
+// Eigenstaendige Vollbild-Landing OHNE Navbar/Footer: nur das Logo als
+// Rueckweg zur Startseite, bayerisches Rautenmuster im Markenblau, der Flow
+// als weisse Karte darauf. Impressum/Datenschutz als Pflicht-Fusszeile.
+// Nicht in der Site-Navigation verlinkt, Einstieg ueber den Instagram-Post
+// (/wiesn leitet per next.config.ts hierher weiter).
 
 import { useState } from "react";
 import Link from "next/link";
@@ -29,95 +33,17 @@ const PLAETZE = 20;
 const ANMELDESCHLUSS = "18.09.2026";
 const VERGABE = "21.09.2026";
 
-type Thema = {
-  key: string;
-  label: string;
-  detail: string;
-  produktSlug: string | null;
-};
+/** Drei Karten je Publikum. Bilder liegen in public/images/produkte/. */
+const BETRIEB_SLUGS = ["belegify", "obacht", "conduit"];
+const PRIVAT_SLUGS = ["dealbuddy", "simvi", "swing-and-savor"];
 
-const THEMEN: Thema[] = [
-  {
-    key: "belege",
-    label: "Belege und Buchhaltung",
-    detail: "Belege erfassen und an die Kanzlei übergeben",
-    produktSlug: "belegify",
-  },
-  {
-    key: "personal",
-    label: "Personaleinsatz und Zeiterfassung",
-    detail: "Wer arbeitet heute an welchem Standort",
-    produktSlug: "obacht",
-  },
-  {
-    key: "unterwegs",
-    label: "Arbeiten von unterwegs",
-    detail: "Der eigene Rechner, bedienbar vom Handy",
-    produktSlug: "conduit",
-  },
-  {
-    key: "kollegen",
-    label: "Tipprunden mit Kollegen",
-    detail: "Challenges im Team anlegen und nachhalten",
-    produktSlug: "dealbuddy",
-  },
-  {
-    key: "familie",
-    label: "Familie und ältere Angehörige",
-    detail: "Messenger und Notruf für Großeltern",
-    produktSlug: "simvi",
-  },
-  {
-    key: "golf",
-    label: "Golfrunden mit Freunden",
-    detail: "Turniere anlegen, Ergebnisse auswerten",
-    produktSlug: "swing-and-savor",
-  },
-  {
-    key: "mittagstisch",
-    label: "Gäste für den Mittagstisch",
-    detail: "Dein Tagesangebot auf der Karte, ein Foto genügt",
-    produktSlug: "tagesteller",
-  },
-  {
-    key: "partner",
-    label: "Software empfehlen und mitverdienen",
-    detail: "Das Smart-Signals-Partnerprogramm",
-    produktSlug: null,
-  },
-];
+type Segment = "betrieb" | "privat";
 
-const SCHRITTE = [
-  "Wer kommt?",
-  "Wie erreichen wir dich?",
-  "Deine Gruppe",
-  "Was treibt dich gerade um?",
-  "Kurz prüfen und abschicken",
-];
-
-const ECKDATEN: Array<[string, string]> = [
-  ["Datum", "Sa., 26.09.2026"],
-  ["Uhrzeit", "11:30 bis 15:30 Uhr"],
-  ["Ort", "Käfer Wiesn-Schänke"],
-  ["Anmeldung bis", ANMELDESCHLUSS],
-];
-
-/** Produkte, fuer die ein Bild in public/images/produkte/ liegt.
-    Tagesteller hat (noch) keins und bekommt den Buchstaben-Fallback. */
-const BILD_SLUGS = [
-  "belegify",
-  "obacht",
-  "obacht-talents",
-  "conduit",
-  "simvi",
-  "swing-and-savor",
-  "dealbuddy",
-];
-
-function produktZuThema(key: string): Produkt | null {
-  const thema = THEMEN.find((t) => t.key === key);
-  if (!thema || !thema.produktSlug) return null;
-  return produkte.find((p) => p.slug === thema.produktSlug) ?? null;
+function kartenFuer(segment: Segment | null): Produkt[] {
+  const slugs = segment === "privat" ? PRIVAT_SLUGS : BETRIEB_SLUGS;
+  return slugs
+    .map((s) => produkte.find((p) => p.slug === s))
+    .filter((p): p is Produkt => Boolean(p));
 }
 
 const inputKlasse =
@@ -134,18 +60,37 @@ const rautenStil: React.CSSProperties = {
 export default function WiesnPage() {
   const [ansicht, setAnsicht] = useState<"intro" | "flow" | "fertig">("intro");
   const [schritt, setSchritt] = useState(0);
+  const [segment, setSegment] = useState<Segment | null>(null);
+  const [interessen, setInteressen] = useState<Record<string, boolean>>({});
+  const [partner, setPartner] = useState<boolean | null>(null);
   const [form, setForm] = useState({
     name: "",
     firmenname: "",
     email: "",
     gruppe: "",
   });
-  const [thema, setThema] = useState("");
   const [datenschutz, setDatenschutz] = useState(false);
   const [honey, setHoney] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const ruhig = useReducedMotion();
+
+  const karten = kartenFuer(segment);
+  // Schrittfolge: Profil, 3 App-Karten, Partnerfrage, Name, E-Mail, Gruppe,
+  // Zusammenfassung. Karten zuerst: erst neugierig machen, dann Daten.
+  const titel = [
+    "Was beschreibt dich am besten?",
+    ...karten.map((p) => p.name),
+    "Empfehlen und mitverdienen?",
+    "Wer kommt?",
+    "Wie erreichen wir dich?",
+    "Deine Gruppe",
+    "Kurz prüfen und abschicken",
+  ];
+  const NAME_SCHRITT = karten.length + 2;
+  const EMAIL_SCHRITT = karten.length + 3;
+  const GRUPPE_SCHRITT = karten.length + 4;
+  const FINAL_SCHRITT = karten.length + 5;
 
   const stepMotion: HTMLMotionProps<"div"> = {
     initial: ruhig ? { opacity: 0 } : { opacity: 0, y: 8 },
@@ -158,17 +103,36 @@ export default function WiesnPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  function profilWaehlen(s: Segment) {
+    if (s !== segment) setInteressen({});
+    setSegment(s);
+    setError(null);
+    setSchritt(1);
+  }
+
+  function karteBeantworten(slug: string, ja: boolean) {
+    setInteressen((prev) => ({ ...prev, [slug]: ja }));
+    setError(null);
+    setSchritt((x) => x + 1);
+  }
+
+  function partnerBeantworten(ja: boolean) {
+    setPartner(ja);
+    setError(null);
+    setSchritt((x) => x + 1);
+  }
+
   function weiter() {
-    if (schritt === 0 && !form.name.trim()) {
+    if (schritt === NAME_SCHRITT && !form.name.trim()) {
       setError("Bitte gib deinen Namen an.");
       return;
     }
-    if (schritt === 1 && !/.+@.+\..+/.test(form.email)) {
+    if (schritt === EMAIL_SCHRITT && !/.+@.+\..+/.test(form.email)) {
       setError("Bitte gib eine gültige E-Mail-Adresse an.");
       return;
     }
     setError(null);
-    setSchritt((s) => Math.min(s + 1, SCHRITTE.length - 1));
+    setSchritt((s) => Math.min(s + 1, titel.length - 1));
   }
 
   function zurueck() {
@@ -180,27 +144,28 @@ export default function WiesnPage() {
     setSchritt((s) => s - 1);
   }
 
-  function themaWaehlen(key: string) {
-    setThema(key);
-    setError(null);
-    setSchritt(4);
+  const interessiert = karten.filter((p) => interessen[p.slug]);
+
+  function profilText() {
+    return segment === "privat" ? "Privat unterwegs" : "Selbstständig / Betrieb";
   }
 
   async function absenden() {
     if (sending) return;
-    if (!thema) {
-      setError("Bitte wähle noch ein Thema aus.");
-      setSchritt(3);
-      return;
-    }
     setSending(true);
     setError(null);
     try {
-      const label = THEMEN.find((t) => t.key === thema)?.label ?? thema;
+      const thema = [
+        profilText(),
+        `Interessen: ${
+          interessiert.length ? interessiert.map((p) => p.name).join(", ") : "keine"
+        }`,
+        `Partnerprogramm: ${partner ? "ja" : "eher nicht"}`,
+      ].join(" | ");
       const res = await fetch("/api/wiesn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, thema: label, _honey: honey }),
+        body: JSON.stringify({ ...form, thema, _honey: honey }),
       });
       if (!res.ok) throw new Error("request failed");
       setAnsicht("fertig");
@@ -214,8 +179,8 @@ export default function WiesnPage() {
     }
   }
 
-  const produkt = produktZuThema(thema);
-  const themaLabel = THEMEN.find((t) => t.key === thema)?.label ?? "";
+  const aktuelleKarte =
+    schritt >= 1 && schritt <= karten.length ? karten[schritt - 1] : null;
 
   return (
     <div className="relative flex min-h-dvh flex-col overflow-hidden bg-brand-hover text-white">
@@ -257,11 +222,10 @@ export default function WiesnPage() {
                 {PLAETZE} Plätze zu vergeben.
               </h1>
               <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-white/85 md:text-xl">
-                Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir mit
-                Unternehmern und Selbstständigen in der Käfer Wiesn-Schänke
-                auf dem Oktoberfest. Trag dich ein, wir vergeben die Plätze
-                unter allen Anmeldungen, Gruppen bevorzugt. Rainer Roloff ist
-                selbst am Tisch.
+                Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir in
+                der Käfer Wiesn-Schänke auf dem Oktoberfest. Trag dich ein,
+                wir vergeben die Plätze unter allen Anmeldungen, Gruppen
+                bevorzugt. Rainer Roloff ist selbst am Tisch.
               </p>
               <button
                 type="button"
@@ -274,11 +238,19 @@ export default function WiesnPage() {
                 Platz anfragen
               </button>
               <p className="mt-4 text-sm text-white/60">
-                Vier kurze Fragen, eine Bestätigung. Dauert unter zwei Minuten.
+                Ein paar kurze Fragen, ein Tipp pro Antwort. Dauert unter zwei
+                Minuten.
               </p>
 
               <div className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
-                {ECKDATEN.map(([label, value]) => (
+                {(
+                  [
+                    ["Datum", "Sa., 26.09.2026"],
+                    ["Uhrzeit", "11:30 bis 15:30 Uhr"],
+                    ["Ort", "Käfer Wiesn-Schänke"],
+                    ["Anmeldung bis", ANMELDESCHLUSS],
+                  ] as Array<[string, string]>
+                ).map(([label, value]) => (
                   <div
                     key={label}
                     className="rounded-2xl border border-white/15 bg-white/10 p-5 text-center"
@@ -301,13 +273,13 @@ export default function WiesnPage() {
                       Firmen Connect Wiesn
                     </p>
                     <p className="text-xs text-text-muted">
-                      Schritt {schritt + 1} von {SCHRITTE.length}
+                      Schritt {schritt + 1} von {titel.length}
                     </p>
                   </div>
                   <div className="h-1 overflow-hidden rounded-full bg-border">
                     <div
                       className="h-full rounded-full bg-brand transition-all duration-300"
-                      style={{ width: `${((schritt + 1) / SCHRITTE.length) * 100}%` }}
+                      style={{ width: `${((schritt + 1) / titel.length) * 100}%` }}
                     />
                   </div>
                 </div>
@@ -328,10 +300,144 @@ export default function WiesnPage() {
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div key={schritt} {...stepMotion}>
                     <h1 className="mb-3 text-2xl font-bold tracking-tight text-text-primary sm:text-3xl">
-                      {SCHRITTE[schritt]}
+                      {titel[schritt]}
                     </h1>
 
+                    {/* Profil */}
                     {schritt === 0 && (
+                      <div className="space-y-6">
+                        <p className="text-sm text-text-secondary">
+                          Damit wir dir gleich die richtigen Werkzeuge zeigen.
+                        </p>
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <button
+                            type="button"
+                            onClick={() => profilWaehlen("betrieb")}
+                            className="ss-card rounded-xl border border-border bg-white p-5 text-left transition-colors"
+                          >
+                            <p className="text-sm font-semibold text-text-primary">
+                              Selbstständig oder im Betrieb
+                            </p>
+                            <p className="mt-1 text-xs text-text-muted">
+                              Ich führe einen Betrieb, bin selbstständig oder
+                              entscheide im Job mit
+                            </p>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => profilWaehlen("privat")}
+                            className="ss-card rounded-xl border border-border bg-white p-5 text-left transition-colors"
+                          >
+                            <p className="text-sm font-semibold text-text-primary">
+                              Privat unterwegs
+                            </p>
+                            <p className="mt-1 text-xs text-text-muted">
+                              Ich bin einfach dabei, ganz ohne Firma
+                            </p>
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={zurueck}
+                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
+                        >
+                          Zurück
+                        </button>
+                      </div>
+                    )}
+
+                    {/* App-Karten, eine pro Ansicht */}
+                    {aktuelleKarte && (
+                      <div className="space-y-5">
+                        <Image
+                          src={`/images/produkte/${aktuelleKarte.slug}.webp`}
+                          alt={aktuelleKarte.name}
+                          width={640}
+                          height={360}
+                          className="h-40 w-full rounded-xl border border-border object-cover"
+                        />
+                        <div>
+                          <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand">
+                            {aktuelleKarte.kategorie}
+                          </p>
+                          <p className="text-base font-semibold text-text-primary">
+                            {aktuelleKarte.claim}
+                          </p>
+                          <p className="mt-2 text-sm leading-relaxed text-text-secondary">
+                            {aktuelleKarte.beschreibung}
+                          </p>
+                          <a
+                            href={aktuelleKarte.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
+                          >
+                            Mehr auf {aktuelleKarte.domain}
+                          </a>
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <button
+                            type="button"
+                            onClick={() => karteBeantworten(aktuelleKarte.slug, false)}
+                            className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-text-secondary transition-colors hover:border-brand hover:text-text-primary"
+                          >
+                            Eher nicht
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => karteBeantworten(aktuelleKarte.slug, true)}
+                            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                          >
+                            Interessiert mich
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={zurueck}
+                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
+                        >
+                          Zurück
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Partnerfrage */}
+                    {schritt === karten.length + 1 && (
+                      <div className="space-y-5">
+                        <p className="text-sm leading-relaxed text-text-secondary">
+                          Alle Produkte kommen aus einem Haus. Wer sie
+                          weiterempfiehlt, verdient mit: du empfiehlst, wir
+                          schließen ab, rechnen ab und machen den Support.
+                          Wäre das etwas für dich?
+                        </p>
+                        <div className="flex items-center justify-between gap-3">
+                          <button
+                            type="button"
+                            onClick={() => partnerBeantworten(false)}
+                            className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-text-secondary transition-colors hover:border-brand hover:text-text-primary"
+                          >
+                            Eher nicht
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => partnerBeantworten(true)}
+                            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                          >
+                            Klingt interessant
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={zurueck}
+                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
+                        >
+                          Zurück
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Name + Firma */}
+                    {schritt === NAME_SCHRITT && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -377,7 +483,8 @@ export default function WiesnPage() {
                       </form>
                     )}
 
-                    {schritt === 1 && (
+                    {/* E-Mail */}
+                    {schritt === EMAIL_SCHRITT && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -407,7 +514,8 @@ export default function WiesnPage() {
                       </form>
                     )}
 
-                    {schritt === 2 && (
+                    {/* Gruppe */}
+                    {schritt === GRUPPE_SCHRITT && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -442,102 +550,8 @@ export default function WiesnPage() {
                       </form>
                     )}
 
-                    {schritt === 3 && (
-                      <div className="space-y-6">
-                        <p className="text-sm text-text-secondary">
-                          Eine Antwort genügt. So wissen wir, worüber wir am
-                          Tisch reden, und zeigen dir danach das passende
-                          Werkzeug.
-                        </p>
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          {THEMEN.map((t) => {
-                            const p = t.produktSlug
-                              ? produkte.find((pr) => pr.slug === t.produktSlug)
-                              : null;
-                            const bild =
-                              p && BILD_SLUGS.includes(p.slug)
-                                ? `/images/produkte/${p.slug}.webp`
-                                : null;
-                            return (
-                              <div
-                                key={t.key}
-                                role="button"
-                                tabIndex={0}
-                                onClick={() => themaWaehlen(t.key)}
-                                onKeyDown={(e) => {
-                                  if (e.key === "Enter" || e.key === " ") {
-                                    e.preventDefault();
-                                    themaWaehlen(t.key);
-                                  }
-                                }}
-                                aria-pressed={thema === t.key}
-                                className={
-                                  "ss-card cursor-pointer rounded-xl border p-4 text-left transition-colors " +
-                                  (thema === t.key
-                                    ? "border-brand bg-brand-soft"
-                                    : "border-border bg-white")
-                                }
-                              >
-                                <div className="flex items-start gap-3">
-                                  {bild ? (
-                                    <Image
-                                      src={bild}
-                                      alt={p ? p.name : ""}
-                                      width={80}
-                                      height={80}
-                                      className="h-10 w-10 shrink-0 rounded-lg border border-border object-cover"
-                                    />
-                                  ) : (
-                                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-sm font-bold text-brand">
-                                      {(p ? p.name : "Smart Signals").charAt(0)}
-                                    </span>
-                                  )}
-                                  <div className="min-w-0">
-                                    <p className="text-sm font-semibold text-text-primary">{t.label}</p>
-                                    <p className="mt-1 text-xs text-text-muted">{t.detail}</p>
-                                    {p ? (
-                                      <a
-                                        href={p.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
-                                      >
-                                        Mehr auf {p.domain}
-                                      </a>
-                                    ) : (
-                                      <a
-                                        href="/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="mt-2 inline-block text-xs font-medium text-brand underline hover:text-brand-hover"
-                                      >
-                                        Mehr auf smart-signals.de
-                                      </a>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        {error && (
-                          <p role="alert" className="text-sm text-danger">
-                            {error}
-                          </p>
-                        )}
-                        <button
-                          type="button"
-                          onClick={zurueck}
-                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
-                        >
-                          Zurück
-                        </button>
-                      </div>
-                    )}
-
-                    {schritt === 4 && (
+                    {/* Zusammenfassung */}
+                    {schritt === FINAL_SCHRITT && (
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -552,7 +566,14 @@ export default function WiesnPage() {
                               ["Firma", form.firmenname || "Ohne Firma"],
                               ["E-Mail", form.email],
                               ["Gruppe", form.gruppe || "Komme allein"],
-                              ["Thema", themaLabel],
+                              ["Profil", profilText()],
+                              [
+                                "Interessen",
+                                interessiert.length
+                                  ? interessiert.map((p) => p.name).join(", ")
+                                  : "Erstmal keine",
+                              ],
+                              ["Empfehlen", partner ? "Klingt interessant" : "Eher nicht"],
                             ] as Array<[string, string]>
                           ).map(([label, value]) => (
                             <div key={label} className="flex items-baseline gap-4 bg-surface px-5 py-3">
@@ -644,47 +665,59 @@ export default function WiesnPage() {
                   Rainer Roloff sitzt selbst mit am Tisch.
                 </p>
 
-                {produkt ? (
-                  <div className="ss-card rounded-2xl border border-border bg-white p-8 text-left shadow-sm">
-                    <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
-                      Passt zu deinem Thema
+                {interessiert.length > 0 ? (
+                  <div className="space-y-4">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-brand">
+                      Deine Merkliste zum Ausprobieren
                     </p>
-                    <h2 className="mb-2 text-2xl font-bold text-text-primary">
-                      {produkt.name}
-                    </h2>
-                    <p className="mb-6 leading-relaxed text-text-secondary">
-                      {produkt.beschreibung}
-                    </p>
-                    <a
-                      href={produkt.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block rounded-full bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hover"
-                    >
-                      {produkt.name} ausprobieren
-                    </a>
-                    <p className="mt-3 text-xs text-text-muted">
+                    {interessiert.map((p) => (
+                      <div
+                        key={p.slug}
+                        className="ss-card flex items-center gap-4 rounded-2xl border border-border bg-white p-5 text-left"
+                      >
+                        <Image
+                          src={`/images/produkte/${p.slug}.webp`}
+                          alt={p.name}
+                          width={96}
+                          height={96}
+                          className="h-14 w-14 shrink-0 rounded-xl border border-border object-cover"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-bold text-text-primary">{p.name}</p>
+                          <p className="truncate text-xs text-text-muted">{p.claim}</p>
+                        </div>
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
+                        >
+                          Ausprobieren
+                        </a>
+                      </div>
+                    ))}
+                    <p className="text-xs text-text-muted">
                       Kein Muss für die Platzvergabe. Aber ein guter Gesprächseinstieg am Tisch.
                     </p>
                   </div>
                 ) : (
                   <div className="ss-card rounded-2xl border border-border bg-white p-8 text-left shadow-sm">
                     <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand">
-                      Passt zu deinem Thema
+                      Falls du doch neugierig wirst
                     </p>
                     <h2 className="mb-2 text-2xl font-bold text-text-primary">
-                      Das Partnerprogramm
+                      Unsere Produkte im Überblick
                     </h2>
                     <p className="mb-6 leading-relaxed text-text-secondary">
-                      Sieben eigene Software-Produkte, ein Rahmenvertrag. Du
-                      empfiehlst, wir schließen ab, rechnen ab und machen den
-                      Support. Auf der Wiesn erzählen wir dir gern, wie das läuft.
+                      Sieben eigene Software-Produkte aus einem Haus, vom
+                      Belege-Erfassen bis zur Tipprunde im Freundeskreis. Auf
+                      der Wiesn erzählen wir dir gern mehr.
                     </p>
                     <Link
-                      href="/"
+                      href="/produkte"
                       className="inline-block rounded-full bg-accent px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-hover"
                     >
-                      Zum Partnerprogramm
+                      Zu den Produkten
                     </Link>
                   </div>
                 )}
