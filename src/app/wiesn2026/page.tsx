@@ -215,11 +215,11 @@ export default function WiesnPage() {
                 {PLAETZE} Plätze zu vergeben.
               </h1>
               <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
-                Am Samstag, 26.09.2026, sitzen wir mit Unternehmern und
-                Selbstständigen in der Käfer Wiesn-Schänke auf dem
-                Oktoberfest. Trag dich ein, wir vergeben die Plätze unter
-                allen Anmeldungen, Gruppen bevorzugt. Rainer Roloff ist
-                selbst am Tisch.
+                Am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr sitzen wir
+                mit Unternehmern und Selbstständigen in der Käfer
+                Wiesn-Schänke auf dem Oktoberfest. Trag dich ein, wir
+                vergeben die Plätze unter allen Anmeldungen, Gruppen
+                bevorzugt. Rainer Roloff ist selbst am Tisch.
               </p>
             </section>
 
@@ -228,8 +228,8 @@ export default function WiesnPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden border border-border">
                 {[
                   ["Datum", "Sa., 26.09.2026"],
+                  ["Uhrzeit", "11:30 bis 15:30 Uhr"],
                   ["Ort", "Käfer Wiesn-Schänke"],
-                  ["Plätze", String(PLAETZE)],
                   ["Anmeldung bis", ANMELDESCHLUSS],
                 ].map(([label, value]) => (
                   <div key={label} className="bg-surface p-5 text-center">
