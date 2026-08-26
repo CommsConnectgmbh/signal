@@ -1,9 +1,11 @@
 "use client";
 
 // Aktionsseite zur Firmen Connect Wiesn am 26.09.2026 (Kaefer Wiesn-Schaenke).
-// Verlost werden Einzelplaetze: Gruppen tragen sich einzeln ein und verlinken
-// sich ueber das Gruppen-Feld. Die Danke-Ansicht zeigt das zum gewaehlten
-// Thema passende Produkt aus dem Portfolio.
+// Die Plaetze werden VERGEBEN, nicht verlost: bewusste Auswahl, Gruppen
+// bevorzugt. Kein Losentscheid, damit gar keine Gewinnspiel-/Gluecksspiel-
+// Mechanik entsteht. Jeder traegt sich selbst ein und verlinkt seine Gruppe
+// ueber das Gruppen-Feld. Die Danke-Ansicht zeigt das zum gewaehlten Thema
+// passende Produkt aus dem Portfolio.
 // Nicht in der Navbar verlinkt, der Einstieg laeuft ueber den Instagram-Post
 // (/wiesn leitet per next.config.ts hierher weiter).
 
@@ -13,9 +15,9 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { produkte, type Produkt } from "@/lib/produkte";
 
-const PLAETZE = 6;
+const PLAETZE = 20;
 const ANMELDESCHLUSS = "18.09.2026";
-const ZIEHUNG = "21.09.2026";
+const VERGABE = "21.09.2026";
 
 type Thema = {
   key: string;
@@ -147,11 +149,12 @@ export default function WiesnPage() {
               </svg>
             </div>
             <h1 className="text-4xl font-bold tracking-tight text-text-primary mb-4">
-              Du bist im Lostopf.
+              Deine Anmeldung ist drin.
             </h1>
             <p className="text-lg text-text-secondary leading-relaxed mb-12">
-              Wir ziehen die Plätze am {ZIEHUNG} und melden uns per E-Mail.
-              Schön, wenn es klappt: Rainer Roloff sitzt selbst mit am Tisch.
+              Wir vergeben die Plätze am {VERGABE} und melden uns per E-Mail.
+              Gruppen werden bevorzugt. Schön, wenn es klappt: Rainer Roloff
+              sitzt selbst mit am Tisch.
             </p>
 
             {produkt ? (
@@ -174,7 +177,7 @@ export default function WiesnPage() {
                   {produkt.name} ausprobieren
                 </a>
                 <p className="text-xs text-text-muted mt-3">
-                  Kein Muss für die Verlosung. Aber ein guter Gesprächseinstieg am Tisch.
+                  Kein Muss für die Platzvergabe. Aber ein guter Gesprächseinstieg am Tisch.
                 </p>
               </div>
             ) : (
@@ -214,9 +217,9 @@ export default function WiesnPage() {
               <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
                 Am Samstag, 26.09.2026, sitzen wir mit Unternehmern und
                 Selbstständigen in der Käfer Wiesn-Schänke auf dem
-                Oktoberfest. Verlost werden Einzelplätze: Kommt ihr als
-                Gruppe, trägt sich jeder selbst ein und nennt die anderen.
-                Rainer Roloff ist selbst am Tisch.
+                Oktoberfest. Trag dich ein, wir vergeben die Plätze unter
+                allen Anmeldungen, Gruppen bevorzugt. Rainer Roloff ist
+                selbst am Tisch.
               </p>
             </section>
 
@@ -260,8 +263,9 @@ export default function WiesnPage() {
                     <h2 className="text-2xl font-bold text-text-primary">Wer kommt?</h2>
                   </div>
                   <p className="text-sm text-text-secondary">
-                    Jeder Platz wird einzeln verlost. Kommt ihr zu mehreren,
-                    trägt sich jeder selbst ein und nennt unten die Gruppe.
+                    Jeder trägt sich selbst ein, auch wer zu mehreren kommt.
+                    Gruppen nennen unten ihre Leute und werden bei der
+                    Vergabe bevorzugt.
                   </p>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-text-primary mb-2">
@@ -377,8 +381,8 @@ export default function WiesnPage() {
                     />
                     <span className="text-sm text-text-secondary">
                       Ich bin einverstanden, dass meine Angaben zur Abwicklung
-                      der Verlosung und zur Kontaktaufnahme rund um den Abend
-                      verwendet werden. Details in der{" "}
+                      der Platzvergabe und zur Kontaktaufnahme rund um den
+                      Abend verwendet werden. Details in der{" "}
                       <Link href="/datenschutz" className="text-brand hover:text-brand-hover underline">
                         Datenschutzerklärung
                       </Link>
@@ -397,16 +401,15 @@ export default function WiesnPage() {
                     disabled={sending}
                     className="w-full py-4 bg-accent hover:bg-accent-hover text-white font-semibold rounded-full transition-colors text-lg disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {sending ? "Wird gesendet ..." : "In den Lostopf"}
+                    {sending ? "Wird gesendet ..." : "Platz anfragen"}
                   </button>
 
                   <p className="text-xs text-text-muted text-center leading-relaxed">
-                    Teilnahme bis {ANMELDESCHLUSS}, Ziehung am {ZIEHUNG}.
-                    Verlost werden Einzelplätze. Die Gewinner werden per
-                    E-Mail benachrichtigt. Der Platz am
-                    Tisch ist nicht übertragbar, eine Barauszahlung ist nicht
-                    möglich, der Rechtsweg ist ausgeschlossen. Veranstalter der
-                    Verlosung ist die Comms Connect GmbH.
+                    Anmeldung bis {ANMELDESCHLUSS}, Zusagen verschicken wir am{" "}
+                    {VERGABE} per E-Mail. Die Plätze werden von uns vergeben,
+                    Gruppen bevorzugt; ein Anspruch auf einen Platz besteht
+                    nicht, der Platz ist nicht übertragbar. Gastgeber ist die
+                    Comms Connect GmbH.
                   </p>
                 </div>
               </form>
