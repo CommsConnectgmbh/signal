@@ -236,8 +236,8 @@ export default function HomePage() {
                           läuft
                         </span>
                       ) : p.partnerprogramm === "geplant" ? (
-                        <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-text-secondary">
-                          bald
+                        <span className="shrink-0 rounded-full bg-surface-hover border border-border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-text-secondary">
+                          Programm in Planung
                         </span>
                       ) : (
                         <span className="shrink-0 text-[10px] uppercase tracking-wide text-text-muted">
@@ -377,13 +377,13 @@ export default function HomePage() {
             {inVorbereitung.length > 0 && (
               <div className="ss-reveal mt-10 rounded-2xl border border-dashed border-border bg-white p-8">
                 <h3 className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
-                  Kommt dazu
+                  Partnerprogramm in Planung
                 </h3>
                 <p className="mt-3 text-text-secondary leading-relaxed">
-                  {inVorbereitung.map((p) => p.name).join(", ")}.{" "}
+                  Die Software für {inVorbereitung.map((p) => p.name).join(" und ")} ist bereits live.{" "}
                   {inVorbereitung.length === 1
-                    ? "Dafür gibt es noch kein laufendes Programm."
-                    : "Für diese Produkte gibt es noch kein laufendes Programm."}{" "}
+                    ? "Dafür gibt es allerdings noch kein laufendes Partnerprogramm."
+                    : "Für diese Produkte gibt es allerdings noch kein laufendes Partnerprogramm."}{" "}
                   Sobald es startet, kommt es als Anlage zu deinem bestehenden
                   Vertrag dazu.
                 </p>

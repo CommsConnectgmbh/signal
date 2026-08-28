@@ -120,7 +120,48 @@ export async function POST(req: Request) {
         .join("\n"),
     });
   } catch {
-    return NextResponse.json({ error: "send failed" }, { status: 502 });
+    console.error("Resend send failed");
+    // Wir werfen keinen Fehler, wenn nur die E-Mail fehlschlägt, aber wir loggen es
+  }
+
+  // CC-CRM Integration: Anmeldungen direkt als Account + Activity erfassen
+  if (process.env.SUPABASE_URL_CRM && process.env.SUPABASE_SERVICE_ROLE_KEY_CRM) {
+    try {
+      const { createClient } = await import("@supabase/supabase-js");
+      const supabaseCrm = createClient(
+        process.env.SUPABASE_URL_CRM,
+        process.env.SUPABASE_SERVICE_ROLE_KEY_CRM,
+        { auth: { persistSession: false } }
+      );
+
+      // 1. Account erstellen
+      const { data: accountData, error: accountError } = await supabaseCrm
+        .from("accounts")
+        .insert({
+          firma_input: firmenname,
+          telefon: telefon || null,
+          ist_partner: true,
+          status: "neu",
+          trigger_event: "Smart Signals Partneranmeldung",
+          notes: `Anfrage über smart-signals.de\n\nName: ${name}\nE-Mail: ${email}\nProdukt: ${produkt}\n\nBeschreibung:\n${beschreibung}`,
+        })
+        .select("id")
+        .single();
+
+      // 2. Activity als Timeline-Event loggen, falls Account erfolgreich erstellt wurde
+      if (!accountError && accountData) {
+        await supabaseCrm.from("account_activities").insert({
+          account_id: accountData.id,
+          kind: "note",
+          title: "Anmeldung über Smart Signals Website",
+          body: `Eingegangene Daten:\nName: ${name}\nE-Mail: ${email}\nTelefon: ${telefon}\nProdukt: ${produkt}\nBeschreibung: ${beschreibung}`,
+        });
+      } else {
+        console.error("CRM Account creation failed:", accountError);
+      }
+    } catch (e) {
+      console.error("CRM Sync failed", e);
+    }
   }
 
   return NextResponse.json({ ok: true });
