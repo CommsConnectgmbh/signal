@@ -141,6 +141,9 @@ export async function POST(req: Request) {
           firma_input: firmenname,
           telefon: telefon || null,
           ist_partner: true,
+          // Trennt die Programm-Anmeldungen von den Channel-Partnern
+          // (Carrier/Distributoren) im CRM — sonst landen beide in einer Liste.
+          partner_source: "smart_signals",
           status: "neu",
           trigger_event: "Smart Signals Partneranmeldung",
           notes: `Anfrage über smart-signals.de\n\nName: ${name}\nE-Mail: ${email}\nProdukt: ${produkt}\n\nBeschreibung:\n${beschreibung}`,
@@ -148,8 +151,18 @@ export async function POST(req: Request) {
         .select("id")
         .single();
 
-      // 2. Activity als Timeline-Event loggen, falls Account erfolgreich erstellt wurde
+      // 2. Kontakt + Activity anlegen, falls der Account durchging
       if (!accountError && accountData) {
+        await supabaseCrm.from("account_contacts").insert({
+          account_id: accountData.id,
+          account_name_cache: firmenname,
+          full_name: name || email,
+          email,
+          phone: telefon || null,
+          source: "smart-signals.de",
+          is_primary: true,
+        });
+
         await supabaseCrm.from("account_activities").insert({
           account_id: accountData.id,
           kind: "note",
