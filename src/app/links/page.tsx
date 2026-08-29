@@ -50,13 +50,15 @@ export default function Links() {
       }]
     : [];
 
-  const produktZeilen: Zeile[] = produkte.map((p) => ({
-    titel: p.name,
-    unter: p.claim,
-    url: p.url,
-    slot: p.slug,
-    bild: `/images/produkte/${p.slug}.webp`,
-  }));
+  const produktZeilen: Zeile[] = produkte
+    .filter((p) => p.status === "live")
+    .map((p) => ({
+      titel: p.name,
+      unter: p.claim,
+      url: p.url,
+      slot: p.slug,
+      bild: `/images/produkte/${p.slug}.webp`,
+    }));
 
   const unten: Zeile[] = [
     {
@@ -64,12 +66,6 @@ export default function Links() {
       unter: "Du empfiehlst, wir schließen ab und rechnen ab.",
       url: "/#anmeldung",
       slot: "partner",
-    },
-    {
-      titel: "Kontakt",
-      unter: "Comms Connect GmbH, Tal 30, München",
-      url: "/kontaktanfrage",
-      slot: "kontakt",
     },
   ];
 
@@ -111,7 +107,9 @@ export default function Links() {
   };
 
   return (
-    <main className="mx-auto max-w-md px-5 py-12">
+    <div className="min-h-dvh bg-surface py-10 sm:py-16">
+      <main className="mx-auto max-w-md px-5 sm:max-w-3xl">
+       <div className="rounded-3xl bg-white px-5 py-10 sm:px-10 sm:py-12 sm:shadow-sm sm:ring-1 sm:ring-border">
       <div className="text-center">
         <Image
           src="/logo.png"
@@ -127,8 +125,8 @@ export default function Links() {
         </p>
       </div>
 
-      <div className="mt-10 flex flex-col gap-3">
-        {oben.map((z) => zeile(z, true))}
+      <div className="mt-10 grid gap-3 sm:grid-cols-2">
+        <div className="sm:col-span-2">{oben.map((z) => zeile(z, true))}</div>
         {produktZeilen.map((z) => zeile(z))}
         {unten.map((z) => zeile(z))}
       </div>
@@ -140,6 +138,8 @@ export default function Links() {
         {" · "}
         <a href="/datenschutz" className="underline hover:text-text-secondary">Datenschutz</a>
       </p>
-    </main>
+       </div>
+      </main>
+    </div>
   );
 }

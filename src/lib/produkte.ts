@@ -54,14 +54,14 @@ export const produkte: Produkt[] = [
     name: "Belegify",
     kategorie: "Buchhaltung",
     segment: "betrieb",
-    claim: "Belege erfassen, ohne sie zu sortieren.",
+    claim: "Bewirtungsbelege prüfsicher, alle Belege erledigt.",
     beschreibung:
-      "Belege per Foto, Sprachnachricht, Messenger oder E-Mail erfassen. Belegify liest sie aus, prüft sie auf Pflichtangaben und übergibt sie als fertiges PDF an die Steuerkanzlei.",
+      "Der Bewirtungsbeleg ist der Beleg, der bei einer Prüfung am ehesten aberkannt wird, weil Anlass und Teilnehmer fehlen. Belegify fragt beides ab, nimmt Trinkgeld und den 70/30-Split mit und erzeugt ein prüfsicheres PDF. Alle anderen Belege aus Foto, Sprachnachricht, Messenger oder E-Mail erledigt es gleich mit.",
     zielgruppe: "Selbstständige, kleine Betriebe, Steuerkanzleien",
     punkte: [
-      "Foto, Sprache oder E-Mail als Eingang",
-      "Prüfung auf Pflichtangaben vor der Übergabe",
-      "Übergabe an die Kanzlei ohne Sammelordner",
+      "Bewirtungsbeleg mit Anlass, Teilnehmern und Trinkgeld",
+      "70/30-Split und prüfsicheres PDF mit Korrekturhistorie",
+      "DATEV-fertig für sevDesk, Lexware und DATEV",
     ],
     url: "https://belegify.app",
     domain: "belegify.app",
@@ -105,7 +105,7 @@ export const produkte: Produkt[] = [
     ],
     url: "https://talents.obacht.app",
     domain: "talents.obacht.app",
-    status: "live",
+    status: "vorbereitung",
     partnerprogramm: "geplant",
   },
   {
