@@ -291,6 +291,14 @@ export default function WiesnPage() {
                   Plätze sind begrenzt. Ein paar kurze Fragen, dauert unter
                   zwei Minuten.
                 </p>
+                {/* Muss hier stehen, nicht im Kleingedruckten: Die Anzeige sagt
+                    Selbstzahler und ab 18 zu, und Meta prueft, ob die Seite
+                    dasselbe sagt wie die Anzeige. */}
+                <p className="mt-3 text-center text-sm text-text-muted">
+                  Vergeben wird der Platz am Tisch. Speisen und Getränke
+                  bestellt und bezahlt jeder selbst. Teilnahme ab 18 Jahren,
+                  im Zelt wird Alkohol ausgeschenkt.
+                </p>
 
                 <div className="mt-8 border-t border-border pt-6">
                   <ul className="space-y-2.5">
@@ -813,6 +821,13 @@ export default function WiesnPage() {
           {" · "}
           <Link href="/datenschutz" className="underline hover:text-white">
             Datenschutz
+          </Link>
+          {" · "}
+          <Link
+            href="/wiesn2026/teilnahmebedingungen"
+            className="underline hover:text-white"
+          >
+            Bedingungen
           </Link>
         </p>
       </footer>
