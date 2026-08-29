@@ -1,4 +1,4 @@
-// Anmeldungen zur Firmen Connect Wiesn. Zwei Mails pro Anfrage:
+// Anmeldungen zur Smart Signals Wiesn. Zwei Mails pro Anfrage:
 // 1. an das Smart-Signals-Postfach mit allen Angaben (Vergabe laeuft manuell),
 // 2. eine Bestaetigung an den Anmelder mit seinem Interessenprofil und den
 //    Links zu den Apps, die er sich angeschaut hat.
@@ -195,7 +195,7 @@ export async function POST(req: Request) {
   const bestaetigungHtml = `
   <div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;color:#0F172A;">
     <p style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#186088;font-weight:700;margin:0;">
-      Firmen Connect Wiesn 2026
+      Smart Signals Wiesn 2026
     </p>
     <h1 style="font-size:26px;line-height:1.2;margin:12px 0 0;">Deine Anfrage ist da.</h1>
     <p style="font-size:15px;line-height:1.6;color:#475569;margin:14px 0 0;">
@@ -231,7 +231,7 @@ export async function POST(req: Request) {
       from: FROM,
       to: email,
       replyTo: TO,
-      subject: "Deine Anfrage für die Firmen Connect Wiesn ist da",
+      subject: "Deine Anfrage für die Smart Signals Wiesn ist da",
       html: bestaetigungHtml,
       text: [
         `Hallo ${name.split(" ")[0] || name},`,
