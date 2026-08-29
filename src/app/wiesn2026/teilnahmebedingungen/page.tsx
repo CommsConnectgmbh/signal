@@ -37,7 +37,8 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
       "Die Comms Connect GmbH hat am Samstag, 26.09.2026, von 11:30 bis 15:30 Uhr einen Tisch " +
         "in der Käfer Wiesn-Schänke auf dem Oktoberfest München. An diesem Tisch sind 20 Plätze. " +
         "Rainer Roloff ist selbst da.",
-      "Vergeben wird der Sitzplatz. Speisen und Getränke bestellt und bezahlt jeder Gast selbst. " +
+      "Vergeben wird der Sitzplatz. Eine Runde Brezn und Obatzda für den Tisch geht auf den " +
+        "Gastgeber. Alle weiteren Speisen und Getränke bestellt und bezahlt jeder Gast selbst. " +
         "Es gibt kein Programm, keine Präsentationen und keine Pitches.",
       "Dies ist kein Gewinnspiel. Es wird nicht gelost. Wer am Tisch sitzt, entscheidet die " +
         "Comms Connect GmbH nach den Kriterien in Abschnitt 3.",

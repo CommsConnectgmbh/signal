@@ -295,9 +295,9 @@ export default function WiesnPage() {
                     Selbstzahler und ab 18 zu, und Meta prueft, ob die Seite
                     dasselbe sagt wie die Anzeige. */}
                 <p className="mt-3 text-center text-sm text-text-muted">
-                  Vergeben wird der Platz am Tisch. Speisen und Getränke
-                  bestellt und bezahlt jeder selbst. Teilnahme ab 18 Jahren,
-                  im Zelt wird Alkohol ausgeschenkt.
+                  Eine Runde Brezn und Obatzda für den Tisch geht auf uns. Alle
+                  weiteren Speisen und Getränke zahlst du selbst. Teilnahme ab
+                  18 Jahren, im Zelt wird Alkohol ausgeschenkt.
                 </p>
 
                 <div className="mt-8 border-t border-border pt-6">
