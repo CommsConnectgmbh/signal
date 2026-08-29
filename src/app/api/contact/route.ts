@@ -2,9 +2,15 @@
 // Schickt Anfragen per Resend (DPF-zertifiziert, AVV verfügbar) an das
 // Smart-Signals-Postfach. Honeypot + Server-Validierung + HTML-Escaping.
 // Vorbild: Comms-Connect-Homepage api/contact.ts.
+//
+// Zwei Mails pro Anfrage:
+// 1. an das Smart-Signals-Postfach mit allen Angaben,
+// 2. eine Bestätigung an den Absender, die sagt, was als Nächstes passiert
+//    (Templates in src/lib/bestaetigungsmail.ts).
 
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { bestaetigungsmail } from "@/lib/bestaetigungsmail";
 
 export const runtime = "nodejs";
 
@@ -122,6 +128,31 @@ export async function POST(req: Request) {
   } catch {
     console.error("Resend send failed");
     // Wir werfen keinen Fehler, wenn nur die E-Mail fehlschlägt, aber wir loggen es
+  }
+
+  // Bestätigung an den Absender. Der Lead ist oben schon gesichert, deshalb
+  // darf ein Fehler hier den Rest der Verarbeitung nicht abbrechen.
+  try {
+    const mail = bestaetigungsmail({
+      anrede,
+      vorname,
+      nachname,
+      firmenname,
+      email,
+      telefon,
+      produkt,
+      beschreibung,
+    });
+    await resend.emails.send({
+      from: FROM,
+      to: email,
+      replyTo: TO,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    });
+  } catch {
+    console.error("Bestaetigung an den Absender fehlgeschlagen");
   }
 
   // CC-CRM Integration: Anmeldungen direkt als Account + Activity erfassen
