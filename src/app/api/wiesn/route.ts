@@ -253,5 +253,72 @@ export async function POST(req: Request) {
     // bewusst still: die Anmeldung selbst ist durch.
   }
 
+  // --- 3. CC-CRM ------------------------------------------------------
+  // Gleicher Weg wie bei api/contact, nur mit eigener Quelle: so lassen sich
+  // die Wiesn-Anmeldungen von den Partner-Anfragen trennen und liegen
+  // trotzdem dort, wo Rainer ohnehin hinschaut. Schlaegt es fehl, ist die
+  // Anmeldung trotzdem gueltig, sie liegt bereits im Postfach.
+  if (process.env.SUPABASE_URL_CRM && process.env.SUPABASE_SERVICE_ROLE_KEY_CRM) {
+    try {
+      const { createClient } = await import("@supabase/supabase-js");
+      const crm = createClient(
+        process.env.SUPABASE_URL_CRM,
+        process.env.SUPABASE_SERVICE_ROLE_KEY_CRM,
+        { auth: { persistSession: false } }
+      );
+
+      // Privatleute haben keine Firma. Ohne Platzhalter stehen sie sonst
+      // als namenloser Account in der Liste.
+      const anzeigename = firmenname || `Privat · ${name}`;
+
+      const angaben = [
+        `Name: ${name}`,
+        firmenname && `Firma: ${firmenname}`,
+        `E-Mail: ${email}`,
+        `Profil: ${profil}`,
+        gruppe && `Gruppe: ${gruppe}`,
+        `Interessen: ${interessenText}`,
+        `Partnerprogramm: ${partner ? "ja" : "eher nicht"}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      const { data: account, error: accountFehler } = await crm
+        .from("accounts")
+        .insert({
+          firma_input: anzeigename,
+          ist_partner: partner,
+          partner_source: "wiesn_2026",
+          status: "neu",
+          trigger_event: "Wiesn 2026 Anmeldung",
+          notes: `Anmeldung über smart-signals.de/wiesn2026\n\n${angaben}`,
+        })
+        .select("id")
+        .single();
+
+      if (!accountFehler && account) {
+        await crm.from("account_contacts").insert({
+          account_id: account.id,
+          account_name_cache: anzeigename,
+          full_name: name,
+          email,
+          source: "smart-signals.de/wiesn2026",
+          is_primary: true,
+        });
+
+        await crm.from("account_activities").insert({
+          account_id: account.id,
+          kind: "note",
+          title: `Wiesn 2026: Anmeldung${gruppe ? ` (${gruppe})` : ""}`,
+          body: angaben,
+        });
+      } else {
+        console.error("CRM: Account fuer Wiesn-Anmeldung fehlgeschlagen", accountFehler);
+      }
+    } catch (e) {
+      console.error("CRM: Wiesn-Anmeldung nicht uebernommen", e);
+    }
+  }
+
   return NextResponse.json({ ok: true });
 }
