@@ -57,7 +57,7 @@ export default function Links() {
       unter: p.claim,
       url: p.url,
       slot: p.slug,
-      bild: `/images/produkte/${p.slug}.webp`,
+      bild: `/images/icons/${p.slug}.png`,
     }));
 
   const unten: Zeile[] = [
@@ -90,7 +90,7 @@ export default function Links() {
             alt=""
             width={56}
             height={56}
-            className="h-14 w-14 shrink-0 rounded-xl object-cover"
+            className="h-14 w-14 shrink-0 rounded-xl object-contain"
           />
         ) : (
           <span
