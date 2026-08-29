@@ -47,6 +47,7 @@ export default function Links() {
         unter: "26.09. in der Käfer Wiesn-Schänke. Anmeldung bis 19.09.",
         url: "/wiesn2026",
         slot: "wiesn",
+        bild: "/images/icons/wiesn.png",
       }]
     : [];
 
@@ -66,6 +67,7 @@ export default function Links() {
       unter: "Du empfiehlst, wir schließen ab und rechnen ab.",
       url: "/#anmeldung",
       slot: "partner",
+      bild: "/images/icons/partner.png",
     },
   ];
 
