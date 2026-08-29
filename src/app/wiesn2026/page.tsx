@@ -1,6 +1,6 @@
 "use client";
 
-// Aktionsseite zur Firmen Connect Wiesn am 26.09.2026 (Kaefer Wiesn-Schaenke).
+// Aktionsseite zur Smart Signals Wiesn am 26.09.2026 (Kaefer Wiesn-Schaenke).
 // Die Plaetze werden VERGEBEN, nicht verlost: bewusste Auswahl, Gruppen
 // bevorzugt. Kein Losentscheid, damit gar keine Gewinnspiel-/Gluecksspiel-
 // Mechanik entsteht. Jeder traegt sich selbst ein und verlinkt seine Gruppe
@@ -231,7 +231,7 @@ export default function WiesnPage() {
             <motion.div key="intro" {...stepMotion} className="mx-auto w-full max-w-2xl">
               <div className="rounded-3xl bg-white p-8 text-text-primary shadow-lg sm:p-12">
                 <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand">
-                  Firmen Connect Wiesn 2026
+                  Smart Signals Wiesn 2026
                 </p>
                 <h1 className="mb-6 text-4xl font-bold leading-[1.05] tracking-tight text-text-primary sm:text-5xl">
                   Ein Tisch im Käfer-Zelt.
@@ -345,7 +345,7 @@ export default function WiesnPage() {
                 <div className="mb-8">
                   <div className="mb-3 flex items-baseline justify-between">
                     <p className="text-xs font-semibold uppercase tracking-widest text-brand">
-                      Firmen Connect Wiesn
+                      Smart Signals Wiesn
                     </p>
                     <p className="text-xs text-text-muted">
                       Schritt {schritt + 1} von {titel.length}
