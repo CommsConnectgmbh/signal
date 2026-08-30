@@ -15,7 +15,8 @@ const FROM =
   "Smart Signals Website <no-reply@smart-signals.de>";
 
 const VERGABE = "20.09.2026";
-const SEITE = "https://smart-signals.de/wiesn2026";
+const BASIS = "https://smart-signals.de";
+const SEITE = `${BASIS}/wiesn2026`;
 
 const sanitize = (v: unknown) => String(v ?? "").trim().slice(0, 500);
 const escapeHtml = (s: string) =>
@@ -38,6 +39,24 @@ const ERLAUBTE_HOSTS = [
   "deal-buddy.app",
   "smart-signals.de",
 ];
+
+/* Ein Flyer je App, an die Bestaetigungsmail angehaengt. Es sind die
+   Endkunden-Flyer aus /Volumes/Code/Vertrieb, bewusst NICHT die
+   Partner-Battlecards und erst recht nicht die Partnerprogramm-Flyer: die
+   Battlecard spricht den Leser als Vertriebspartner ueber seinen Kunden an,
+   der Partnerprogramm-Flyer traegt die Konditionen. Beides gehoert nicht an
+   jemanden, der die App selbst nutzen will.
+
+   Fuer Swing & Savor gibt es noch keinen Flyer, der Eintrag fehlt deshalb.
+   Fehlt ein Flyer, wird die App einfach ohne Anhang verschickt. */
+const FLYER: Record<string, string> = {
+  Belegify: "belegify",
+  Obacht: "obacht",
+  Conduit: "conduit",
+  Simvi: "simvi",
+  DealBuddy: "dealbuddy",
+  Tagesteller: "tagesteller",
+};
 
 /* Die App-Links in der Bestaetigungsmail tragen Marker, sonst ist der Weg
    Anmeldung -> Mail -> App nicht von anderen Quellen zu unterscheiden. Genau
@@ -211,6 +230,18 @@ export async function POST(req: Request) {
         <a href="https://smart-signals.de/produkte" style="color:#186088;">unsere Produkte im Überblick</a>.
       </p>`;
 
+  const anhangSlugs =
+    produktinfos && interessen.length
+      ? interessen.map((i) => FLYER[i.name]).filter(Boolean)
+      : [];
+
+  /* Ohne diesen Satz wundert sich der Empfaenger ueber PDFs im Anhang. */
+  const anhangHinweis = anhangSlugs.length
+    ? `<p style="margin:16px 0 0;color:#64748B;font-size:13px;">
+         ${anhangSlugs.length === 1 ? "Das Infoblatt dazu liegt" : "Die Infoblätter dazu liegen"} im Anhang.
+       </p>`
+    : "";
+
   /* Der Partnerhinweis stand frueher als eigener Schritt mitten im Fragebogen,
      zwischen den App-Karten und der Namenseingabe. Dort hat er den Ablauf
      gebrochen: nach Weiterempfehlung fragen, bevor jemand selbst etwas
@@ -251,6 +282,7 @@ export async function POST(req: Request) {
     </table>
 
     ${appBlock}
+    ${anhangHinweis}
     ${partnerBlock}
 
     <p style="font-size:13px;color:#64748B;margin:28px 0 0;line-height:1.6;">
@@ -264,12 +296,21 @@ export async function POST(req: Request) {
     </p>
   </div>`.trim();
 
+  /* Nur fuer die Apps, die sich die Person gemerkt hat, und nur mit ihrer
+     Zustimmung: ein PDF im Anhang ist Werbung wie der Textblock darueber.
+     Resend laedt die Datei selbst von der URL. */
+  const anhaenge = anhangSlugs.map((slug) => ({
+    filename: `${slug}.pdf`,
+    path: `${BASIS}/flyer/${slug}.pdf`,
+  }));
+
   try {
     await resend.emails.send({
       from: FROM,
       to: email,
       replyTo: TO,
       subject: "Deine Anfrage für die Smart Signals Wiesn ist da",
+      ...(anhaenge.length ? { attachments: anhaenge } : {}),
       html: bestaetigungHtml,
       text: [
         `Hallo ${name.split(" ")[0] || name},`,
@@ -282,6 +323,8 @@ export async function POST(req: Request) {
         "",
         produktinfos && interessen.length ? "Das hat dich interessiert:" : "",
         ...(produktinfos ? interessen.map((i) => `- ${i.name}: ${i.url}`) : []),
+        "",
+        anhangSlugs.length ? "Die Infoblätter dazu liegen im Anhang." : "",
         "",
         `Alle Angaben zur Aktion: ${SEITE}`,
         "Diese Mail bestätigt deine Anfrage, sie ist noch keine Zusage.",
