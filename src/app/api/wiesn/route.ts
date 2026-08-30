@@ -88,7 +88,10 @@ export async function POST(req: Request) {
   const email = sanitize(body.email);
   const gruppe = sanitize(body.gruppe);
   const profil = sanitize(body.profil);
-  const partner = Boolean(body.partner);
+  // Die Partnerfrage ist am 30.08.2026 aus dem Fragebogen geflogen. Das Feld
+  // bleibt im CRM erhalten, wird aber nicht mehr aus dem Formular befuellt:
+  // Partner-Interesse entsteht jetzt ueber den Hinweis in der Mail.
+  const partner = false;
   // Produktkarten sind Werbung und gehen nur mit eigener Zustimmung raus.
   const produktinfos = Boolean(body.produktinfos);
 
@@ -208,13 +211,24 @@ export async function POST(req: Request) {
         <a href="https://smart-signals.de/produkte" style="color:#186088;">unsere Produkte im Überblick</a>.
       </p>`;
 
-  const partnerBlock = partner
-    ? `<p style="margin:24px 0 0;color:#475569;">
-         Du hast angegeben, dass dich das Partnerprogramm interessiert. Dazu
-         erzählen wir dir am Tisch gern mehr, vorab steht alles auf
-         <a href="https://smart-signals.de" style="color:#186088;">smart-signals.de</a>.
-       </p>`
-    : "";
+  /* Der Partnerhinweis stand frueher als eigener Schritt mitten im Fragebogen,
+     zwischen den App-Karten und der Namenseingabe. Dort hat er den Ablauf
+     gebrochen: nach Weiterempfehlung fragen, bevor jemand selbst etwas
+     bekommen hat. Jetzt steht er hier, direkt unter den gemerkten Apps, wo
+     die Person schon weiss, was sie interessiert.
+
+     Er haengt bewusst an derselben Einwilligung wie die Produktkarten: ohne
+     Zustimmung ist auch dieser Hinweis Werbung und geht nicht raus. */
+  const partnerBlock =
+    produktinfos && interessen.length
+      ? `<p style="margin:24px 0 0;color:#475569;">
+           Falls eine der Apps überzeugt: Im Partnerprogramm kannst du sie
+           weiterempfehlen und daran mitverdienen. Abschluss, Abrechnung und
+           Support übernimmt die Comms Connect GmbH. Du musst weder verkaufen
+           noch betreuen.
+           <a href="https://smart-signals.de/#anmeldung" style="color:#186088;">Mehr dazu</a>.
+         </p>`
+      : "";
 
   const bestaetigungHtml = `
   <div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;color:#0F172A;">

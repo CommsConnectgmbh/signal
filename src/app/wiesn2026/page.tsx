@@ -75,7 +75,6 @@ export default function WiesnPage() {
   const [schritt, setSchritt] = useState(0);
   const [segment, setSegment] = useState<Segment | null>(null);
   const [interessen, setInteressen] = useState<Record<string, boolean>>({});
-  const [partner, setPartner] = useState<boolean | null>(null);
   // Getrennte Einwilligung fuer die Produkt-Mail. Eine Mail mit Produktkarten
   // und Links ist Werbung und braucht eine eigene Zustimmung, unabhaengig von
   // der Bestaetigung zur Platzvergabe. Freiwillig, ohne Haken geht die
@@ -94,21 +93,26 @@ export default function WiesnPage() {
   const ruhig = useReducedMotion();
 
   const karten = kartenFuer(segment);
-  // Schrittfolge: Profil, 3 App-Karten, Partnerfrage, Name, E-Mail, Gruppe,
-  // Zusammenfassung. Karten zuerst: erst neugierig machen, dann Daten.
+  // Schrittfolge: Profil, 3 App-Karten, Name, E-Mail, Gruppe, Zusammenfassung.
+  // Karten zuerst: erst neugierig machen, dann Daten.
+  //
+  // Die Partnerfrage stand frueher zwischen Karten und Name. Sie ist am
+  // 30.08.2026 raus: mitten in der Bewerbung nach Weiterempfehlung zu fragen,
+  // bevor jemand selbst etwas bekommen hat, bricht den Ablauf. Der Hinweis
+  // steht jetzt am Ende der Bestaetigungsmail, dort kennt die Person schon
+  // ihre gemerkten Apps.
   const titel = [
     "Was beschreibt dich am besten?",
     ...karten.map((p) => p.name),
-    "Empfehlen und mitverdienen?",
     "Wer kommt?",
     "Wie erreichen wir dich?",
     "Deine Gruppe",
     "Kurz prüfen und abschicken",
   ];
-  const NAME_SCHRITT = karten.length + 2;
-  const EMAIL_SCHRITT = karten.length + 3;
-  const GRUPPE_SCHRITT = karten.length + 4;
-  const FINAL_SCHRITT = karten.length + 5;
+  const NAME_SCHRITT = karten.length + 1;
+  const EMAIL_SCHRITT = karten.length + 2;
+  const GRUPPE_SCHRITT = karten.length + 3;
+  const FINAL_SCHRITT = karten.length + 4;
 
   const stepMotion: HTMLMotionProps<"div"> = {
     initial: ruhig ? { opacity: 0 } : { opacity: 0, y: 8 },
@@ -134,11 +138,6 @@ export default function WiesnPage() {
     setSchritt((x) => x + 1);
   }
 
-  function partnerBeantworten(ja: boolean) {
-    setPartner(ja);
-    setError(null);
-    setSchritt((x) => x + 1);
-  }
 
   function weiter() {
     if (schritt === NAME_SCHRITT && !form.name.trim()) {
@@ -189,7 +188,6 @@ export default function WiesnPage() {
         body: JSON.stringify({
           ...form,
           profil: profilText(),
-          partner,
           produktinfos,
           interessen: interessiert.map((p) => ({
             name: p.name,
@@ -497,41 +495,6 @@ export default function WiesnPage() {
                       </div>
                     )}
 
-                    {/* Partnerfrage */}
-                    {schritt === karten.length + 1 && (
-                      <div className="space-y-5">
-                        <p className="text-sm leading-relaxed text-text-secondary">
-                          Alle Produkte kommen aus einem Haus. Wer sie
-                          weiterempfiehlt, verdient mit: du empfiehlst, wir
-                          schließen ab, rechnen ab und machen den Support.
-                          Wäre das etwas für dich?
-                        </p>
-                        <div className="flex items-center justify-between gap-3">
-                          <button
-                            type="button"
-                            onClick={() => partnerBeantworten(false)}
-                            className="rounded-full border border-border px-6 py-3 text-sm font-semibold text-text-secondary transition-colors hover:border-brand hover:text-text-primary"
-                          >
-                            Eher nicht
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => partnerBeantworten(true)}
-                            className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
-                          >
-                            Klingt interessant
-                          </button>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={zurueck}
-                          className="text-sm font-medium text-text-muted transition-colors hover:text-text-primary"
-                        >
-                          Zurück
-                        </button>
-                      </div>
-                    )}
-
                     {/* Name + Firma */}
                     {schritt === NAME_SCHRITT && (
                       <form
@@ -671,7 +634,6 @@ export default function WiesnPage() {
                                   ? interessiert.map((p) => p.name).join(", ")
                                   : "Erstmal keine",
                               ],
-                              ["Empfehlen", partner ? "Klingt interessant" : "Eher nicht"],
                             ] as Array<[string, string]>
                           ).map(([label, value]) => (
                             <div key={label} className="flex items-baseline gap-4 bg-surface px-5 py-3">
