@@ -230,12 +230,31 @@ export async function POST(req: Request) {
         <a href="https://smart-signals.de/produkte" style="color:#186088;">unsere Produkte im Überblick</a>.
       </p>`;
 
+  /* Der Abmeldelink in der Mail und der Kontakt im CRM brauchen denselben
+     Schluessel. Die Mail geht aber zuerst raus, damit sie nicht an einem
+     CRM-Problem haengt. Also wird die Kontakt-ID hier vorab erzeugt und
+     unten beim Insert mitgegeben, statt sie aus der Datenbank zurueckzulesen. */
+  const kontaktId = crypto.randomUUID();
+  const abmeldeUrl = `${BASIS}/widerruf?k=${kontaktId}`;
+
   const anhangSlugs =
     produktinfos && interessen.length
       ? interessen.map((i) => FLYER[i.name]).filter(Boolean)
       : [];
 
   /* Ohne diesen Satz wundert sich der Empfaenger ueber PDFs im Anhang. */
+  /* Pflicht bei jeder werblichen Mail: der Widerruf muss so einfach sein wie
+     die Einwilligung, Art. 7 Abs. 3 DSGVO. Ein Hinweis "antworte auf diese
+     Mail" reicht dafuer nicht, es braucht einen Klick. */
+  const abmeldeBlock =
+    produktinfos && interessen.length
+      ? `<p style="font-size:12px;color:#94A3B8;margin:16px 0 0;line-height:1.6;">
+           Keine Produktinfos mehr?
+           <a href="${abmeldeUrl}" style="color:#94A3B8;">Hier abmelden</a>.
+           Deine Bewerbung um einen Platz bleibt davon unberührt.
+         </p>`
+      : "";
+
   const anhangHinweis = anhangSlugs.length
     ? `<p style="margin:16px 0 0;color:#64748B;font-size:13px;">
          ${anhangSlugs.length === 1 ? "Das Infoblatt dazu liegt" : "Die Infoblätter dazu liegen"} im Anhang.
@@ -294,6 +313,7 @@ export async function POST(req: Request) {
       Comms Connect GmbH · Diese Mail bestätigt deine Anfrage, sie ist noch
       keine Zusage.
     </p>
+    ${abmeldeBlock}
   </div>`.trim();
 
   /* Nur fuer die Apps, die sich die Person gemerkt hat, und nur mit ihrer
@@ -325,6 +345,9 @@ export async function POST(req: Request) {
         ...(produktinfos ? interessen.map((i) => `- ${i.name}: ${i.url}`) : []),
         "",
         anhangSlugs.length ? "Die Infoblätter dazu liegen im Anhang." : "",
+        produktinfos && interessen.length
+          ? `Keine Produktinfos mehr? Hier abmelden: ${abmeldeUrl}`
+          : "",
         "",
         `Alle Angaben zur Aktion: ${SEITE}`,
         "Diese Mail bestätigt deine Anfrage, sie ist noch keine Zusage.",
@@ -386,6 +409,7 @@ export async function POST(req: Request) {
 
       if (!accountFehler && account) {
         await crm.from("account_contacts").insert({
+          id: kontaktId,
           account_id: account.id,
           account_name_cache: anzeigename,
           full_name: name,

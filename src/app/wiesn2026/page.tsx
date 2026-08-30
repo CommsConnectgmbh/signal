@@ -678,6 +678,16 @@ export default function WiesnPage() {
                           </span>
                         </label>
 
+                        {/* Ohne diesen Satz koennte jemand annehmen, schon der
+                            Klick auf "Interessiert mich" habe eine Zusendung
+                            ausgeloest. Das Haekchen entscheidet, OB eine Mail
+                            kommt, die Klicks nur, WELCHE Apps darin stehen. */}
+                        <p className="pl-7 text-xs leading-relaxed text-text-muted">
+                            Ohne dieses Häkchen bekommst du keine Produktinfos.
+                            Die Apps, die du dir gemerkt hast, entscheiden nur
+                            darüber, welche darin vorkommen.
+                        </p>
+
                         {error && (
                           <p role="alert" className="text-sm text-danger">
                             {error}
