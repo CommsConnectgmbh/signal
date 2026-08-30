@@ -39,6 +39,22 @@ const ERLAUBTE_HOSTS = [
   "smart-signals.de",
 ];
 
+/* Die App-Links in der Bestaetigungsmail tragen Marker, sonst ist der Weg
+   Anmeldung -> Mail -> App nicht von anderen Quellen zu unterscheiden. Genau
+   diese Frage entscheidet, ob die Wiesn-Aktion den Apps etwas gebracht hat.
+   Gleiche Marker-Systematik wie auf /wiesn2026 und /danke. */
+function mitMarker(url: string, name: string) {
+  if (!url) return url;
+  const slot = name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  const marker =
+    "utm_source=smart-signals&utm_medium=mail&utm_campaign=wiesn2026&utm_content=" +
+    (slot || "app");
+  return url + (url.includes("?") ? "&" : "?") + marker;
+}
+
 function istErlaubt(url: string) {
   try {
     const u = new URL(url);
@@ -86,7 +102,11 @@ export async function POST(req: Request) {
         url: sanitize(eintrag.url),
       };
     })
-    .filter((i) => i.name && istErlaubt(i.url));
+    // Erst die Allowlist auf der unveraenderten URL, dann erst die Marker.
+    // Andersherum liefe der Sicherheitscheck auf einem Wert, den wir selbst
+    // schon angefasst haben.
+    .filter((i) => i.name && istErlaubt(i.url))
+    .map((i) => ({ ...i, url: mitMarker(i.url, i.name) }));
 
   const errors: string[] = [];
   if (!name) errors.push("name");
