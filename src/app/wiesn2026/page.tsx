@@ -188,7 +188,11 @@ export default function WiesnPage() {
         body: JSON.stringify({
           ...form,
           profil: profilText(),
-          produktinfos,
+          // Wer zurueckgeht und seine Markierungen wieder entfernt, sieht
+          // das Haekchen nicht mehr, koennte es aber vorher gesetzt haben.
+          // Ohne diese Absicherung ginge eine Einwilligung raus, die auf
+          // dem Bildschirm gar nicht mehr steht.
+          produktinfos: interessiert.length > 0 && produktinfos,
           interessen: interessiert.map((p) => ({
             name: p.name,
             claim: p.claim,
@@ -664,29 +668,37 @@ export default function WiesnPage() {
                           </span>
                         </label>
 
-                        <label className="flex cursor-pointer items-start gap-3">
-                          <input
-                            type="checkbox"
-                            checked={produktinfos}
-                            onChange={(e) => setProduktinfos(e.target.checked)}
-                            className="mt-1 h-4 w-4 accent-brand"
-                          />
-                          <span className="text-sm text-text-secondary">
-                            Schickt mir zusätzlich Informationen zu den Apps,
-                            die ich mir gemerkt habe. Freiwillig, jederzeit
-                            widerrufbar und keine Bedingung für die Anmeldung.
-                          </span>
-                        </label>
+                        {/* Das Haekchen nennt die Apps beim Namen, statt
+                            allgemein von "Produktinfos" zu sprechen. Eine
+                            Einwilligung muss sich auf den bestimmten Fall
+                            beziehen, und "Infoblatt zu Belegify" ist ein
+                            bestimmter Fall, "Informationen zu den Apps" nicht.
 
-                        {/* Ohne diesen Satz koennte jemand annehmen, schon der
-                            Klick auf "Interessiert mich" habe eine Zusendung
-                            ausgeloest. Das Haekchen entscheidet, OB eine Mail
-                            kommt, die Klicks nur, WELCHE Apps darin stehen. */}
-                        <p className="pl-7 text-xs leading-relaxed text-text-muted">
-                            Ohne dieses Häkchen bekommst du keine Produktinfos.
-                            Die Apps, die du dir gemerkt hast, entscheiden nur
-                            darüber, welche darin vorkommen.
-                        </p>
+                            Wer keine App markiert hat, sieht das Haekchen gar
+                            nicht: es gaebe nichts, wofuer er einwilligen
+                            koennte. Der Absendeknopf bleibt bewusst neutral
+                            bei "Platz anfragen", damit kein Klick zugleich
+                            Bewerbung und Werbeeinwilligung erledigt. */}
+                        {interessiert.length > 0 && (
+                          <label className="flex cursor-pointer items-start gap-3">
+                            <input
+                              type="checkbox"
+                              checked={produktinfos}
+                              onChange={(e) => setProduktinfos(e.target.checked)}
+                              className="mt-1 h-4 w-4 accent-brand"
+                            />
+                            <span className="text-sm text-text-secondary">
+                              Ja, schickt mir zusätzlich die Infoblätter zu{" "}
+                              <strong className="font-semibold text-text-primary">
+                                {interessiert.map((p) => p.name).join(" und ")}
+                              </strong>{" "}
+                              als PDF per E-Mail, mit einem kurzen Hinweis auf
+                              das Partnerprogramm. Freiwillig, jederzeit über
+                              den Abmeldelink widerrufbar und keine Bedingung
+                              für die Anmeldung.
+                            </span>
+                          </label>
+                        )}
 
                         {error && (
                           <p role="alert" className="text-sm text-danger">
