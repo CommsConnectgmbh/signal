@@ -387,13 +387,16 @@ export async function POST(req: Request) {
         .insert({
           firma_input: anzeigename,
           ist_partner: partner,
-          // partner_source bleibt leer. Die Spalte hat einen Check-Constraint
-          // auf 'channel' oder 'smart_signals'; der frueher hier gesetzte Wert
+          // partner_source ist der Filter, ueber den die Smart-Signals-Seite im
+          // CRM ihre Anfragen findet. Die Spalte hat einen Check-Constraint auf
+          // 'channel' oder 'smart_signals'; der frueher hier gesetzte Wert
           // 'wiesn_2026' hat jeden Insert abgewiesen, still, weil der Fehler
           // unten nur geloggt wird. Ergebnis: Bis 30.08.2026 landete KEINE
           // einzige Wiesn-Anmeldung im CRM, auch keine echte.
-          // Die Herkunft steckt ohnehin in trigger_event und notes, und
-          // ist_partner ist seit dem Wegfall der Partnerfrage immer false.
+          // 'smart_signals' ist erlaubt und richtig, die Anmeldung kommt ueber
+          // smart-signals.de. Wiesn oder Partneranfrage unterscheidet
+          // trigger_event, das die Liste als Herkunft anzeigt.
+          partner_source: "smart_signals",
           status: "neu",
           trigger_event: "Wiesn 2026 Anmeldung",
           notes: `Anmeldung über smart-signals.de/wiesn2026\n\n${angaben}`,
