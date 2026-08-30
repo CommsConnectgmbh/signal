@@ -40,15 +40,20 @@ const ERLAUBTE_HOSTS = [
   "smart-signals.de",
 ];
 
-/* Ein Flyer je App, an die Bestaetigungsmail angehaengt. Es sind die
-   Endkunden-Flyer aus /Volumes/Code/Vertrieb, bewusst NICHT die
+/* Ein Flyer je App, als Link in der Bestaetigungsmail.
+
+   Bewusst als Link und nicht als Anhang: Anhaenge verschlechtern den
+   Spam-Score, und die Absenderdomain hat kaum Versandhistorie. Landet die
+   Mail im Spam, ist auch die Bewerbungsbestaetigung weg, nicht nur der Flyer.
+
+   Es sind die Endkunden-Flyer aus /Volumes/Code/Vertrieb, bewusst NICHT die
    Partner-Battlecards und erst recht nicht die Partnerprogramm-Flyer: die
    Battlecard spricht den Leser als Vertriebspartner ueber seinen Kunden an,
    der Partnerprogramm-Flyer traegt die Konditionen. Beides gehoert nicht an
    jemanden, der die App selbst nutzen will.
 
    Fuer Swing & Savor gibt es noch keinen Flyer, der Eintrag fehlt deshalb.
-   Fehlt ein Flyer, wird die App einfach ohne Anhang verschickt. */
+   Fehlt ein Flyer, steht bei der App einfach kein Infoblatt-Link. */
 const FLYER: Record<string, string> = {
   Belegify: "belegify",
   Obacht: "obacht",
@@ -217,7 +222,11 @@ export async function POST(req: Request) {
                   ? `<div style="font-size:13px;color:#475569;margin-top:2px;">${escapeHtml(i.claim)}</div>`
                   : ""
               }
-              <a href="${escapeHtml(i.url)}" style="display:inline-block;margin-top:10px;background:#36813D;color:#fff;text-decoration:none;font-weight:600;font-size:13px;padding:9px 16px;border-radius:999px;">App ansehen und laden</a>
+              <a href="${escapeHtml(i.url)}" style="display:inline-block;margin-top:10px;background:#36813D;color:#fff;text-decoration:none;font-weight:600;font-size:13px;padding:9px 16px;border-radius:999px;">App ansehen und laden</a>${
+                FLYER[i.name]
+                  ? `<a href="${BASIS}/flyer/${FLYER[i.name]}.pdf" style="display:inline-block;margin:10px 0 0 12px;color:#186088;text-decoration:none;font-size:13px;">Infoblatt als PDF</a>`
+                  : ""
+              }
             </td>
           </tr>
         </table>`
@@ -237,12 +246,6 @@ export async function POST(req: Request) {
   const kontaktId = crypto.randomUUID();
   const abmeldeUrl = `${BASIS}/widerruf?k=${kontaktId}`;
 
-  const anhangSlugs =
-    produktinfos && interessen.length
-      ? interessen.map((i) => FLYER[i.name]).filter(Boolean)
-      : [];
-
-  /* Ohne diesen Satz wundert sich der Empfaenger ueber PDFs im Anhang. */
   /* Pflicht bei jeder werblichen Mail: der Widerruf muss so einfach sein wie
      die Einwilligung, Art. 7 Abs. 3 DSGVO. Ein Hinweis "antworte auf diese
      Mail" reicht dafuer nicht, es braucht einen Klick. */
@@ -254,12 +257,6 @@ export async function POST(req: Request) {
            Deine Bewerbung um einen Platz bleibt davon unberührt.
          </p>`
       : "";
-
-  const anhangHinweis = anhangSlugs.length
-    ? `<p style="margin:16px 0 0;color:#64748B;font-size:13px;">
-         ${anhangSlugs.length === 1 ? "Das Infoblatt dazu liegt" : "Die Infoblätter dazu liegen"} im Anhang.
-       </p>`
-    : "";
 
   /* Der Partnerhinweis stand frueher als eigener Schritt mitten im Fragebogen,
      zwischen den App-Karten und der Namenseingabe. Dort hat er den Ablauf
@@ -301,7 +298,6 @@ export async function POST(req: Request) {
     </table>
 
     ${appBlock}
-    ${anhangHinweis}
     ${partnerBlock}
 
     <p style="font-size:13px;color:#64748B;margin:28px 0 0;line-height:1.6;">
@@ -319,18 +315,12 @@ export async function POST(req: Request) {
   /* Nur fuer die Apps, die sich die Person gemerkt hat, und nur mit ihrer
      Zustimmung: ein PDF im Anhang ist Werbung wie der Textblock darueber.
      Resend laedt die Datei selbst von der URL. */
-  const anhaenge = anhangSlugs.map((slug) => ({
-    filename: `${slug}.pdf`,
-    path: `${BASIS}/flyer/${slug}.pdf`,
-  }));
-
   try {
     await resend.emails.send({
       from: FROM,
       to: email,
       replyTo: TO,
       subject: "Deine Anfrage für die Smart Signals Wiesn ist da",
-      ...(anhaenge.length ? { attachments: anhaenge } : {}),
       html: bestaetigungHtml,
       text: [
         `Hallo ${name.split(" ")[0] || name},`,
@@ -344,7 +334,11 @@ export async function POST(req: Request) {
         produktinfos && interessen.length ? "Das hat dich interessiert:" : "",
         ...(produktinfos ? interessen.map((i) => `- ${i.name}: ${i.url}`) : []),
         "",
-        anhangSlugs.length ? "Die Infoblätter dazu liegen im Anhang." : "",
+        ...(produktinfos
+          ? interessen
+              .filter((i) => FLYER[i.name])
+              .map((i) => `  Infoblatt ${i.name}: ${BASIS}/flyer/${FLYER[i.name]}.pdf`)
+          : []),
         produktinfos && interessen.length
           ? `Keine Produktinfos mehr? Hier abmelden: ${abmeldeUrl}`
           : "",
