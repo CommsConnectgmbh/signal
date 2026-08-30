@@ -48,6 +48,17 @@ function kartenFuer(segment: Segment | null): Produkt[] {
     .filter((p): p is Produkt => Boolean(p));
 }
 
+/* Jeder Ausgang auf eine Produktdomain traegt Marker. Ohne das ist hinterher
+   nicht unterscheidbar, ob jemand ueber die Anmeldung kam oder ueber die
+   Bio-Zeile, und die Frage "welche App traegt" bleibt unbeantwortet. Gleiche
+   Lehre wie bei der Briefkampagne im August, siehe Kommentar in /links. */
+function mitMarker(url: string, slot: string) {
+  const marker =
+    "utm_source=smart-signals&utm_medium=wiesn&utm_campaign=wiesn2026&utm_content=" +
+    slot;
+  return url + (url.includes("?") ? "&" : "?") + marker;
+}
+
 const inputKlasse =
   "w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition";
 
@@ -433,7 +444,7 @@ export default function WiesnPage() {
                         {/* Bild ist der Weg zur Produktseite, neuer Tab, damit
                             die angefangene Anmeldung stehen bleibt. */}
                         <a
-                          href={aktuelleKarte.url}
+                          href={mitMarker(aktuelleKarte.url, aktuelleKarte.slug)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="group relative block overflow-hidden rounded-xl border border-border"
@@ -790,7 +801,7 @@ export default function WiesnPage() {
                           <p className="truncate text-xs text-text-muted">{p.claim}</p>
                         </div>
                         <a
-                          href={p.url}
+                          href={mitMarker(p.url, p.slug)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="shrink-0 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-hover"
