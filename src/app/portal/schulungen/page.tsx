@@ -105,16 +105,15 @@ export default function SchulungenPage() {
 
       if (uploadError) throw uploadError;
 
-      const { data: urlData } = supabase.storage
-        .from("schulungen")
-        .getPublicUrl(filePath);
-
+      // Bewusst der Pfad, nicht getPublicUrl(): der Bucket ist privat, damit
+      // Partnermaterial nicht ueber eine geratene URL im Netz landet. Der
+      // Download laeuft ueber einen kurzlebigen signierten Link.
       const { error: insertError } = await supabase.from("materials").insert({
         title: uploadTitle,
         description: uploadDesc || null,
         category: uploadCategory,
         file_name: selectedFile.name,
-        file_url: urlData.publicUrl,
+        file_url: filePath,
         file_type: selectedFile.name.split(".").pop()?.toLowerCase() || null,
         file_size: selectedFile.size,
         uploaded_by: user.id,
@@ -137,12 +136,31 @@ export default function SchulungenPage() {
   }
 
   async function handleDelete(material: Material) {
-    const pathParts = material.file_url.split("/schulungen/");
-    const filePath = pathParts[pathParts.length - 1];
+    // Aeltere Eintraege trugen die volle oeffentliche URL, neue nur den Pfad.
+    const filePath = material.file_url.includes("/schulungen/")
+      ? material.file_url.split("/schulungen/").pop()!
+      : material.file_url;
 
     await supabase.storage.from("schulungen").remove([filePath]);
     await supabase.from("materials").delete().eq("id", material.id);
     fetchMaterials();
+  }
+
+  /** Signierten Link holen und oeffnen. Laeuft nach 5 Minuten ab. */
+  async function oeffnen(material: Material) {
+    const filePath = material.file_url.includes("/schulungen/")
+      ? material.file_url.split("/schulungen/").pop()!
+      : material.file_url;
+
+    const { data, error } = await supabase.storage
+      .from("schulungen")
+      .createSignedUrl(filePath, 300);
+
+    if (error || !data?.signedUrl) {
+      alert("Die Datei konnte nicht geöffnet werden. Bitte melde dich neu an.");
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
   }
 
   function handleDrop(e: React.DragEvent) {
@@ -250,14 +268,12 @@ export default function SchulungenPage() {
                   <span className="mx-2">·</span>
                   <span>{new Date(material.created_at).toLocaleDateString("de-DE")}</span>
                 </div>
-                <a
-                  href={material.file_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => void oeffnen(material)}
                   className="text-xs font-semibold text-[#D4A843] hover:text-[#F59E0B] transition-colors"
                 >
                   Öffnen ↗
-                </a>
+                </button>
               </div>
             </div>
           ))}
