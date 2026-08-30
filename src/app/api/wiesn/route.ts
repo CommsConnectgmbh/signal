@@ -392,6 +392,12 @@ export async function POST(req: Request) {
           email,
           source: "smart-signals.de/wiesn2026",
           is_primary: true,
+          // Die Einwilligung stand frueher nur als Textzeile in den Notizen und
+          // war damit weder auffindbar noch filterbar. Sie ist aber nach
+          // Paragraph 7 UWG nachweispflichtig: wer, wann, wofuer.
+          marketing_optin: produktinfos,
+          marketing_optin_at: produktinfos ? new Date().toISOString() : null,
+          marketing_optin_source: produktinfos ? "smart-signals.de/wiesn2026" : null,
         });
 
         await crm.from("account_activities").insert({
