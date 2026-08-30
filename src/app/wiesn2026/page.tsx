@@ -65,6 +65,11 @@ export default function WiesnPage() {
   const [segment, setSegment] = useState<Segment | null>(null);
   const [interessen, setInteressen] = useState<Record<string, boolean>>({});
   const [partner, setPartner] = useState<boolean | null>(null);
+  // Getrennte Einwilligung fuer die Produkt-Mail. Eine Mail mit Produktkarten
+  // und Links ist Werbung und braucht eine eigene Zustimmung, unabhaengig von
+  // der Bestaetigung zur Platzvergabe. Freiwillig, ohne Haken geht die
+  // Anmeldung trotzdem durch.
+  const [produktinfos, setProduktinfos] = useState(false);
   const [form, setForm] = useState({
     name: "",
     firmenname: "",
@@ -174,6 +179,7 @@ export default function WiesnPage() {
           ...form,
           profil: profilText(),
           partner,
+          produktinfos,
           interessen: interessiert.map((p) => ({
             name: p.name,
             claim: p.claim,
@@ -682,6 +688,20 @@ export default function WiesnPage() {
                               Datenschutzerklärung
                             </Link>
                             .
+                          </span>
+                        </label>
+
+                        <label className="flex cursor-pointer items-start gap-3">
+                          <input
+                            type="checkbox"
+                            checked={produktinfos}
+                            onChange={(e) => setProduktinfos(e.target.checked)}
+                            className="mt-1 h-4 w-4 accent-brand"
+                          />
+                          <span className="text-sm text-text-secondary">
+                            Schickt mir zusätzlich Informationen zu den Apps,
+                            die ich mir gemerkt habe. Freiwillig, jederzeit
+                            widerrufbar und keine Bedingung für die Anmeldung.
                           </span>
                         </label>
 

@@ -73,6 +73,8 @@ export async function POST(req: Request) {
   const gruppe = sanitize(body.gruppe);
   const profil = sanitize(body.profil);
   const partner = Boolean(body.partner);
+  // Produktkarten sind Werbung und gehen nur mit eigener Zustimmung raus.
+  const produktinfos = Boolean(body.produktinfos);
 
   const interessen = (Array.isArray(body.interessen) ? body.interessen : [])
     .slice(0, 8)
@@ -121,6 +123,7 @@ export async function POST(req: Request) {
       ${row("Profil", profil)}
       ${row("Interessen", interessenText)}
       ${row("Partnerprogramm", partner ? "ja" : "eher nicht")}
+      ${row("Produktinfos erlaubt", produktinfos ? "ja" : "nein")}
       <tr><td style="color:#aaa;font-size:11px;">IP / UA</td><td style="color:#aaa;font-size:11px;">${escapeHtml(
         ip
       )} · ${escapeHtml(ua)}</td></tr>
@@ -144,6 +147,7 @@ export async function POST(req: Request) {
         `Profil: ${profil}`,
         `Interessen: ${interessenText}`,
         `Partnerprogramm: ${partner ? "ja" : "eher nicht"}`,
+        `Produktinfos erlaubt: ${produktinfos ? "ja" : "nein"}`,
         `IP: ${ip}`,
       ]
         .filter(Boolean)
@@ -156,7 +160,7 @@ export async function POST(req: Request) {
   // --- 2. Bestaetigung an den Anmelder --------------------------------
   // Schlaegt sie fehl, ist die Anmeldung trotzdem gueltig: sie liegt bereits
   // in unserem Postfach. Deshalb kein Fehler zurueck an den Browser.
-  const appBlock = interessen.length
+  const appBlock = produktinfos && interessen.length
     ? `
       <p style="margin:28px 0 12px;font-weight:600;">Das hat dich interessiert:</p>
       ${interessen
@@ -180,7 +184,7 @@ export async function POST(req: Request) {
     `
     : `
       <p style="margin:28px 0 0;color:#475569;">
-        Du hast dir diesmal nichts gemerkt. Falls du doch neugierig wirst:
+        Falls du dir die Apps ansehen willst:
         <a href="https://smart-signals.de/produkte" style="color:#186088;">unsere Produkte im Überblick</a>.
       </p>`;
 
@@ -242,8 +246,8 @@ export async function POST(req: Request) {
         `Profil: ${profil}`,
         gruppe ? `Gruppe: ${gruppe}` : "",
         "",
-        interessen.length ? "Das hat dich interessiert:" : "",
-        ...interessen.map((i) => `- ${i.name}: ${i.url}`),
+        produktinfos && interessen.length ? "Das hat dich interessiert:" : "",
+        ...(produktinfos ? interessen.map((i) => `- ${i.name}: ${i.url}`) : []),
         "",
         `Alle Angaben zur Aktion: ${SEITE}`,
         "Diese Mail bestätigt deine Anfrage, sie ist noch keine Zusage.",
@@ -279,6 +283,7 @@ export async function POST(req: Request) {
         gruppe && `Gruppe: ${gruppe}`,
         `Interessen: ${interessenText}`,
         `Partnerprogramm: ${partner ? "ja" : "eher nicht"}`,
+        `Produktinfos erlaubt: ${produktinfos ? "ja" : "nein"}`,
       ]
         .filter(Boolean)
         .join("\n");
