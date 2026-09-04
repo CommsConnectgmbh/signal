@@ -26,10 +26,17 @@
 //   Belege im Konto anzusehen, um Gaeste auszuwaehlen, waere eine
 //   Zweckaenderung nach Art. 6 Abs. 4 DSGVO. Produktdaten sind fuer diese
 //   Auswahl tabu.
-// * Es braucht eine kurze Nachricht. Eine App-Anmeldung allein ist keine
-//   Bewerbung um einen Platz — wer im September Belegify laedt, um Belege
-//   zu sortieren, hat sich nicht beworben. Ihn deswegen anzuschreiben waere
-//   Werbung ohne Einwilligung nach § 7 Abs. 2 UWG.
+// * Es braucht den Kommentar. Eine App-Anmeldung allein ist keine Bewerbung
+//   um einen Platz — wer im September Belegify laedt, um Belege zu sortieren,
+//   hat sich nicht beworben. Ihn deswegen anzuschreiben waere Werbung ohne
+//   Einwilligung nach § 7 Abs. 2 UWG. Der Kommentar ist die Meldung: Er sagt,
+//   dass jemand an den Tisch will, und er nennt gleich die Begleitung, nach
+//   der in Abschnitt 3 ausgewaehlt wird.
+//
+// Der Kommentar ist ausdruecklich KEIN Wettbewerb. Weder Anzahl noch
+// Reihenfolge noch Likes entscheiden. Wer daraus "die meisten Likes gewinnen"
+// macht, macht aus einer Gastgeberauswahl ein Gewinnspiel und muss diese
+// Seite komplett neu schreiben.
 //
 // Eigene Serverkomponente mit eigenem metadata-Block, weil die Seite aus
 // einer bezahlten Anzeige heraus verlinkt wird. /wiesn2026 selbst ist
@@ -69,13 +76,14 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
         "Das Mindestalter ergibt sich daraus, dass im Zelt Alkohol ausgeschenkt wird.",
       "Es gibt zwei Wege, und beide zählen gleich viel. Erstens: der Fragebogen auf " +
         "smart-signals.de/wiesn2026. Zweitens: ein Konto in der Belegify-App, angelegt bis " +
-        "zum 19.09.2026, und danach eine kurze Nachricht an @belegify auf Instagram oder an " +
-        "info@comms-connect.de.",
-      "Die Nachricht ist nötig, weil eine App-Anmeldung allein nichts darüber sagt, ob du an " +
-        "den Tisch möchtest. Wer Belegify aus anderen Gründen nutzt, hat sich nicht beworben " +
-        "und wird von uns deswegen auch nicht angeschrieben. Ein Kommentar oder ein Like " +
-        "allein reicht umgekehrt nicht: Ohne Fragebogen oder Belegify-Konto sind wir nicht bei " +
-        "der Anmeldung.",
+        "zum 19.09.2026, und ein Kommentar unter dem Wiesn-Beitrag auf @belegify, in dem du " +
+        "markierst, wer mit dir kommen soll.",
+      "Beides gehört zusammen. Der Kommentar sagt uns, dass du an den Tisch möchtest, und " +
+        "nennt gleich deine Begleitung. Ohne ihn wüssten wir es nicht: Wer Belegify aus " +
+        "anderen Gründen nutzt, hat sich nicht beworben und wird von uns deswegen auch nicht " +
+        "angeschrieben. Umgekehrt reicht ein Kommentar ohne Belegify-Konto nicht.",
+      "Der Kommentar ist kein Wettbewerb. Es zählt nicht, wie viele Kommentare du schreibst, " +
+        "wie viele Likes du bekommst oder wie schnell du bist. Ein Kommentar genügt.",
       "Beide Wege sind kostenlos. Belegify hat einen dauerhaft kostenlosen Tarif, eine " +
         "Kreditkarte wird nicht abgefragt, und ein bezahlter Tarif bringt keinen Vorteil bei " +
         "der Auswahl.",
@@ -92,7 +100,9 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
       "Ein Anspruch auf einen Platz besteht nicht. Die Reihenfolge der Anmeldung entscheidet " +
         "nicht, und es macht keinen Unterschied, über welchen der beiden Wege du dich " +
         "gemeldet hast.",
-      "Anmeldeschluss ist der 19.09.2026. Die Zu- und Absagen gehen am 20.09.2026 per E-Mail raus. " +
+      "Anmeldeschluss ist der 19.09.2026. Die Zu- und Absagen gehen am 20.09.2026 raus: per " +
+        "E-Mail an alle, die den Fragebogen ausgefüllt haben, und als Direktnachricht auf " +
+        "Instagram an alle, die über den Kommentar gekommen sind. " +
         "Wer zusagt und doch nicht kann, sagt uns bitte bis zum 25.09.2026 Bescheid, damit der " +
         "Platz weitergegeben werden kann.",
     ],
@@ -108,6 +118,11 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
         "nicht an: Deine Belege, Händler, Beträge und Auswertungen spielen bei der Auswahl " +
         "keine Rolle und werden dafür nicht ausgewertet. Sie gehören zu deiner Nutzung von " +
         "Belegify und nicht zu dieser Einladung.",
+      "Von deinem Kommentar verarbeiten wir deinen Instagram-Namen und die Konten, die du " +
+        "darin markiert hast, und wir schreiben dir am 20.09.2026 über Instagram. Der " +
+        "Kommentar ist öffentlich, das entscheidest du: Wenn du deine Begleitung nicht " +
+        "öffentlich nennen möchtest, nimm den Fragebogen. Wer markiert wird, hat sich damit " +
+        "noch nicht angemeldet und muss das für sich selbst tun.",
       "Wenn du im Fragebogen angibst, welche unserer Produkte dich interessieren, nutzen wir das " +
         "als Gesprächsthema am Tisch. Es hat keinen Einfluss darauf, ob du einen Platz bekommst.",
       "Spätestens einen Monat nach der Veranstaltung löschen wir die Angaben, sofern du uns nicht " +
