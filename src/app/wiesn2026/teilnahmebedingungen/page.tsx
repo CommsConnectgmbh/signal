@@ -13,6 +13,24 @@
 // Mindestalter und fuer die Frage, was mit den Daten aus dem Fragebogen
 // passiert.
 //
+// Zweiter Weg seit 04.09.2026: Die Aktion laeuft jetzt auch auf @belegify,
+// und dort ist die Anmeldung in der Belegify-App der Weg zum Tisch. Vorher
+// stand hier "ausschliesslich ueber den Fragebogen" — das waere ab sofort
+// falsch gewesen und haette den Beitrag auf dem Belegify-Kanal zu einer
+// irrefuehrenden Angabe gemacht.
+//
+// Zwei Saetze in Abschnitt 2 und 4 sind bewusst so hart formuliert und
+// duerfen nicht wegredigiert werden:
+//
+// * Geprueft wird nur, OB zum Stichtag ein Belegify-Konto besteht. Die
+//   Belege im Konto anzusehen, um Gaeste auszuwaehlen, waere eine
+//   Zweckaenderung nach Art. 6 Abs. 4 DSGVO. Produktdaten sind fuer diese
+//   Auswahl tabu.
+// * Es braucht eine kurze Nachricht. Eine App-Anmeldung allein ist keine
+//   Bewerbung um einen Platz — wer im September Belegify laedt, um Belege
+//   zu sortieren, hat sich nicht beworben. Ihn deswegen anzuschreiben waere
+//   Werbung ohne Einwilligung nach § 7 Abs. 2 UWG.
+//
 // Eigene Serverkomponente mit eigenem metadata-Block, weil die Seite aus
 // einer bezahlten Anzeige heraus verlinkt wird. /wiesn2026 selbst ist
 // "use client" und kann kein metadata exportieren.
@@ -49,10 +67,20 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
     text: [
       "Anmelden kann sich, wer am Tag der Veranstaltung das 18. Lebensjahr vollendet hat. " +
         "Das Mindestalter ergibt sich daraus, dass im Zelt Alkohol ausgeschenkt wird.",
-      "Die Anmeldung läuft ausschließlich über den Fragebogen auf smart-signals.de/wiesn2026. " +
-        "Ein Kommentar auf Instagram oder eine Nachricht an uns ersetzt die Anmeldung nicht.",
-      "Wer als Gruppe kommen möchte, meldet sich einzeln an und nennt die Gruppe im Fragebogen. " +
-        "Die Anmeldung ist kostenlos.",
+      "Es gibt zwei Wege, und beide zählen gleich viel. Erstens: der Fragebogen auf " +
+        "smart-signals.de/wiesn2026. Zweitens: ein Konto in der Belegify-App, angelegt bis " +
+        "zum 19.09.2026, und danach eine kurze Nachricht an @belegify auf Instagram oder an " +
+        "info@comms-connect.de.",
+      "Die Nachricht ist nötig, weil eine App-Anmeldung allein nichts darüber sagt, ob du an " +
+        "den Tisch möchtest. Wer Belegify aus anderen Gründen nutzt, hat sich nicht beworben " +
+        "und wird von uns deswegen auch nicht angeschrieben. Ein Kommentar oder ein Like " +
+        "allein reicht umgekehrt nicht: Ohne Fragebogen oder Belegify-Konto sind wir nicht bei " +
+        "der Anmeldung.",
+      "Beide Wege sind kostenlos. Belegify hat einen dauerhaft kostenlosen Tarif, eine " +
+        "Kreditkarte wird nicht abgefragt, und ein bezahlter Tarif bringt keinen Vorteil bei " +
+        "der Auswahl.",
+      "Wer als Gruppe kommen möchte, meldet sich einzeln an und nennt die Gruppe im Fragebogen " +
+        "oder in der Nachricht.",
     ],
   },
   {
@@ -61,7 +89,9 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
       "Es gibt 20 Plätze und voraussichtlich mehr Anfragen. Wir wählen bewusst aus, damit der " +
         "Tisch zusammenpasst. Gruppen werden dabei bevorzugt berücksichtigt, weil es sich zu " +
         "zweit leichter an einem fremden Tisch sitzt.",
-      "Ein Anspruch auf einen Platz besteht nicht. Die Reihenfolge der Anmeldung entscheidet nicht.",
+      "Ein Anspruch auf einen Platz besteht nicht. Die Reihenfolge der Anmeldung entscheidet " +
+        "nicht, und es macht keinen Unterschied, über welchen der beiden Wege du dich " +
+        "gemeldet hast.",
       "Anmeldeschluss ist der 19.09.2026. Die Zu- und Absagen gehen am 20.09.2026 per E-Mail raus. " +
         "Wer zusagt und doch nicht kann, sagt uns bitte bis zum 25.09.2026 Bescheid, damit der " +
         "Platz weitergegeben werden kann.",
@@ -73,6 +103,11 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
       "Aus dem Fragebogen verarbeiten wir Name, E-Mail-Adresse und deine Angaben zu Gruppe und " +
         "Interessen. Wir nutzen sie, um die Plätze zu vergeben, dir zu- oder abzusagen und den " +
         "Tisch anzumelden. Der Wiesn-Betrieb bekommt dafür nur die Namensliste der Gäste.",
+      "Wenn du über die Belegify-App teilnimmst, prüfen wir ausschließlich, ob zum 19.09.2026 " +
+        "ein Konto auf deine Adresse besteht. Was in diesem Konto liegt, sehen wir uns dafür " +
+        "nicht an: Deine Belege, Händler, Beträge und Auswertungen spielen bei der Auswahl " +
+        "keine Rolle und werden dafür nicht ausgewertet. Sie gehören zu deiner Nutzung von " +
+        "Belegify und nicht zu dieser Einladung.",
       "Wenn du im Fragebogen angibst, welche unserer Produkte dich interessieren, nutzen wir das " +
         "als Gesprächsthema am Tisch. Es hat keinen Einfluss darauf, ob du einen Platz bekommst.",
       "Spätestens einen Monat nach der Veranstaltung löschen wir die Angaben, sofern du uns nicht " +
@@ -91,7 +126,7 @@ const ABSCHNITTE: { titel: string; text: string[] }[] = [
         "die eine Zusage haben.",
       "Sollte eine Bestimmung dieser Bedingungen unwirksam sein, bleiben die übrigen wirksam.",
       "Comms Connect GmbH, Tal 30, 80331 München, HRB 295951, info@smart-signals.de. " +
-        "Stand: 29.08.2026.",
+        "Stand: 04.09.2026.",
     ],
   },
 ];
