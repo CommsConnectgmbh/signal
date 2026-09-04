@@ -60,12 +60,14 @@ export default function LoginPage() {
 
       if (signUpError) throw signUpError;
 
-      // Partner profile is auto-created by DB trigger
-      // Update with extra fields
+      // Die partners-Zeile legt der Trigger handle_new_user an. Der setzt auch
+      // den Status: active nur, wenn die Adresse in partner_invites steht,
+      // sonst pending. Hier deshalb bewusst KEIN status mitschreiben — das
+      // wuerde eine eingeladene Partnerin sofort wieder aussperren.
       if (data.user) {
         await supabase
           .from("partners")
-          .update({ region: regRegion, experience: regExperience, status: "pending" })
+          .update({ region: regRegion, experience: regExperience })
           .eq("id", data.user.id);
       }
 
@@ -73,7 +75,10 @@ export default function LoginPage() {
       if (data.session) {
         router.push("/portal");
       } else {
-        setError("Bitte bestätige deine E-Mail-Adresse. Wir haben dir einen Link gesendet.");
+        setError(
+          "Bitte bestätige deine E-Mail-Adresse. Wir haben dir einen Link gesendet. " +
+            "Den Zugang zu Materialien und Provisionen schalten wir frei, sobald der Partnervertrag vorliegt."
+        );
       }
     } catch (err: unknown) {
       const message =

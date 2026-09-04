@@ -21,6 +21,7 @@ export default function PortalLayout({
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
+  const [partnerStatus, setPartnerStatus] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -34,12 +35,14 @@ export default function PortalLayout({
         return;
       }
 
-      // Get partner name
+      // Eingeloggt zu sein reicht nicht: das Portal fuehrt Partnermaterial, und
+      // die Registrierung auf /login steht jedem offen. Massgeblich ist der
+      // Status der partners-Zeile, den auch die RLS-Policies auswerten.
       const { data: partner } = await supabase
         .from("partners")
-        .select("full_name")
+        .select("full_name, status")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
       setUserName(
         partner?.full_name ||
@@ -47,6 +50,7 @@ export default function PortalLayout({
           user.email ||
           ""
       );
+      setPartnerStatus(partner?.status ?? "pending");
       setLoading(false);
     };
 
@@ -67,6 +71,59 @@ export default function PortalLayout({
     return (
       <div className="min-h-screen bg-[#050A14] flex items-center justify-center">
         <div className="text-[#D4A843] text-lg">Laden...</div>
+      </div>
+    );
+  }
+
+  // Warteraum. Wer registriert, aber noch nicht freigeschaltet ist, sieht keine
+  // Navigation und keine Materialien — die RLS-Policies wuerden ohnehin nichts
+  // liefern, aber ein leeres Dashboard erklaert sich nicht von selbst.
+  if (partnerStatus !== "active") {
+    const texte: Record<string, { titel: string; text: string }> = {
+      pending: {
+        titel: "Dein Zugang wird geprüft",
+        text: "Dein Konto ist angelegt. Sobald der Partnervertrag unterschrieben vorliegt, schalten wir dich frei und du kommst an Battlecards, Pipeline und Provisionen.",
+      },
+      inactive: {
+        titel: "Dein Zugang ruht",
+        text: "Dein Partnerkonto ist derzeit nicht aktiv. Melde dich bei uns, wenn du wieder loslegen möchtest.",
+      },
+      rejected: {
+        titel: "Kein aktiver Partnerzugang",
+        text: "Für dieses Konto besteht kein Partnervertrag. Bei Fragen erreichst du uns direkt.",
+      },
+    };
+    const inhalt = texte[partnerStatus ?? "pending"] ?? texte.pending;
+
+    return (
+      <div className="min-h-screen bg-[#050A14] flex items-center justify-center p-6">
+        <div className="w-full max-w-md text-center">
+          <img
+            src="/logo.png"
+            className="h-8 brightness-0 invert mx-auto mb-8"
+            alt="Smart Signals"
+          />
+          <h1 className="text-[#F1F5F9] text-2xl font-semibold mb-3">
+            {inhalt.titel}
+          </h1>
+          <p className="text-[#94A3B8] text-sm leading-relaxed mb-8">
+            {inhalt.text}
+          </p>
+          <div className="flex items-center justify-center gap-6 text-sm">
+            <a
+              href="mailto:rainer.roloff@comms-connect.de"
+              className="text-[#D4A843] hover:underline"
+            >
+              Kontakt aufnehmen
+            </a>
+            <button
+              onClick={handleSignOut}
+              className="text-[#64748B] hover:text-red-400 transition-colors"
+            >
+              Abmelden
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

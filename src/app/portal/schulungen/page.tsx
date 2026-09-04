@@ -57,11 +57,29 @@ export default function SchulungenPage() {
   const [uploadCategory, setUploadCategory] = useState("Allgemein");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [istAnbieter, setIstAnbieter] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchMaterials();
+    pruefeAnbieterseite();
   }, []);
+
+  /**
+   * Hochladen und Loeschen ist Anbietersache. Die Policies auf materials und
+   * storage.objects erzwingen das ohnehin (is_partner_admin), hier geht es nur
+   * darum, dem Partner keine Knoepfe zu zeigen, die ihm die Datenbank verwehrt.
+   */
+  async function pruefeAnbieterseite() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const { data } = await supabase
+      .from("partners")
+      .select("is_admin")
+      .eq("id", user.id)
+      .maybeSingle();
+    setIstAnbieter(Boolean(data?.is_admin));
+  }
 
   async function fetchMaterials() {
     const { data } = await supabase
@@ -185,12 +203,14 @@ export default function SchulungenPage() {
           <h1 className="text-2xl font-bold text-[#F1F5F9]">Schulungen & Materialien</h1>
           <p className="text-[#64748B] mt-1">Trainings, Playbooks und Dokumente für dein Team.</p>
         </div>
-        <button
-          onClick={() => setShowUpload(true)}
-          className="bg-gradient-to-r from-[#D4A843] to-[#F59E0B] text-[#050A14] font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity text-sm"
-        >
-          + Material hochladen
-        </button>
+        {istAnbieter && (
+          <button
+            onClick={() => setShowUpload(true)}
+            className="bg-gradient-to-r from-[#D4A843] to-[#F59E0B] text-[#050A14] font-semibold px-5 py-2.5 rounded-lg hover:opacity-90 transition-opacity text-sm"
+          >
+            + Material hochladen
+          </button>
+        )}
       </div>
 
       {/* Category Tabs */}
@@ -221,7 +241,11 @@ export default function SchulungenPage() {
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-[#64748B] text-lg mb-2">Noch keine Materialien vorhanden</p>
-          <p className="text-[#4A5568] text-sm">Lade das erste Dokument hoch.</p>
+          <p className="text-[#4A5568] text-sm">
+            {istAnbieter
+              ? "Lade das erste Dokument hoch."
+              : "Sobald es hier etwas gibt, findest du es an dieser Stelle."}
+          </p>
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -238,15 +262,17 @@ export default function SchulungenPage() {
                     {material.category}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => handleDelete(material)}
-                    className="text-xs text-[#64748B] hover:text-red-400 transition-colors"
-                    title="Löschen"
-                  >
-                    ✕
-                  </button>
-                </div>
+                {istAnbieter && (
+                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => handleDelete(material)}
+                      className="text-xs text-[#64748B] hover:text-red-400 transition-colors"
+                      title="Löschen"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Title */}
