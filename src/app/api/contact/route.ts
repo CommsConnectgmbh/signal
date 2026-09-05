@@ -28,6 +28,123 @@ const escapeHtml = (s: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
+type CrmErgebnis = { ok: boolean; text: string };
+
+/**
+ * Anmeldung im CC-CRM erfassen.
+ *
+ * Laeuft bewusst VOR dem Mailversand: das Ergebnis steht als Zeile in der
+ * internen Benachrichtigungsmail. Damit hat der Ingest ein Dead-Letter-Fach.
+ * Vorher wurde ein fehlgeschlagener Insert nur in die Server-Logs geschrieben,
+ * und eine Anmeldung konnte still verschwinden — genau das ist dem
+ * Wiesn-Formular am 30.08.2026 passiert, als ein CHECK-Constraint jeden Insert
+ * abwies und das erst Tage spaeter auffiel.
+ *
+ * Ein Fehler hier darf die Anmeldung nie scheitern lassen; die Mail ist die
+ * zweite, unabhaengige Kopie.
+ */
+async function imCrmErfassen(daten: {
+  name: string;
+  firmenname: string;
+  email: string;
+  telefon: string;
+  produkt: string;
+  beschreibung: string;
+}): Promise<CrmErgebnis> {
+  const url = process.env.SUPABASE_URL_CRM;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY_CRM;
+  if (!url || !key) {
+    return { ok: false, text: "nicht konfiguriert (SUPABASE_URL_CRM / SERVICE_ROLE_KEY_CRM fehlt)" };
+  }
+
+  // Bewusst ohne IP und User-Agent: die gehoeren in die Mail zur
+  // Spam-Beurteilung, aber nicht dauerhaft in den CRM-Datensatz.
+  const angaben = [
+    `Name: ${daten.name}`,
+    `Firma: ${daten.firmenname}`,
+    `E-Mail: ${daten.email}`,
+    daten.telefon && `Telefon: ${daten.telefon}`,
+    daten.produkt && `Produkt: ${daten.produkt}`,
+    daten.beschreibung && `Beschreibung:\n${daten.beschreibung}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  try {
+    const { createClient } = await import("@supabase/supabase-js");
+    const crm = createClient(url, key, { auth: { persistSession: false } });
+
+    // Meldet sich jemand ein zweites Mal, gehoert das an den bestehenden
+    // Account. Sonst steht dieselbe Person mehrfach in der Liste und die
+    // Historie verteilt sich auf zwei Datensaetze.
+    const { data: bekannt } = await crm
+      .from("account_contacts")
+      .select("account_id, account_name_cache")
+      .ilike("email", daten.email)
+      .limit(1)
+      .maybeSingle();
+
+    let accountId: string;
+    let hinweis: string;
+
+    if (bekannt?.account_id) {
+      accountId = bekannt.account_id;
+      hinweis = `an bestehenden Account angehängt (${bekannt.account_name_cache || "ohne Namen"})`;
+    } else {
+      const { data: account, error: accountFehler } = await crm
+        .from("accounts")
+        .insert({
+          firma_input: daten.firmenname,
+          telefon: daten.telefon || null,
+          ist_partner: true,
+          // Trennt die Programm-Anmeldungen von den Channel-Partnern
+          // (Carrier, Distributoren). Der Wertebereich ist per CHECK auf
+          // 'channel' und 'smart_signals' begrenzt.
+          partner_source: "smart_signals",
+          status: "neu",
+          trigger_event: "Smart Signals Partneranmeldung",
+          notes: `Anmeldung über smart-signals.de\n\n${angaben}`,
+        })
+        .select("id")
+        .single();
+
+      if (accountFehler || !account) {
+        return { ok: false, text: `FEHLGESCHLAGEN: ${accountFehler?.message || "kein Account zurückgegeben"}` };
+      }
+
+      accountId = account.id;
+      hinweis = "neu angelegt";
+
+      const { error: kontaktFehler } = await crm.from("account_contacts").insert({
+        account_id: accountId,
+        account_name_cache: daten.firmenname,
+        full_name: daten.name || daten.email,
+        email: daten.email,
+        phone: daten.telefon || null,
+        source: "smart-signals.de",
+        is_primary: true,
+      });
+      if (kontaktFehler) {
+        return { ok: false, text: `Account angelegt, Kontakt FEHLGESCHLAGEN: ${kontaktFehler.message}` };
+      }
+    }
+
+    const { error: notizFehler } = await crm.from("account_activities").insert({
+      account_id: accountId,
+      kind: "note",
+      title: "Smart Signals: Partneranmeldung",
+      body: angaben,
+    });
+    if (notizFehler) {
+      return { ok: false, text: `Account ${hinweis}, Notiz FEHLGESCHLAGEN: ${notizFehler.message}` };
+    }
+
+    return { ok: true, text: hinweis };
+  } catch (e) {
+    return { ok: false, text: `FEHLGESCHLAGEN: ${e instanceof Error ? e.message : String(e)}` };
+  }
+}
+
 const row = (label: string, value: string) =>
   value
     ? `<tr><td style="border-bottom:1px solid #eee;color:#666;width:150px;">${label}</td><td style="border-bottom:1px solid #eee;">${escapeHtml(
@@ -82,6 +199,25 @@ export async function POST(req: Request) {
   const ip = (req.headers.get("x-forwarded-for") || "").toString();
   const ua = (req.headers.get("user-agent") || "").toString();
 
+  // Erst ins CRM, dann die Mails: so traegt die interne Mail das Ergebnis und
+  // ein fehlgeschlagener Ingest faellt sofort auf, statt nur im Log zu landen.
+  const crm = await imCrmErfassen({
+    name,
+    firmenname,
+    email,
+    telefon,
+    produkt,
+    beschreibung,
+  });
+
+  const crmZeile = crm.ok
+    ? `<tr><td style="border-bottom:1px solid #eee;color:#666;">CRM</td><td style="border-bottom:1px solid #eee;color:#166534;">${escapeHtml(
+        crm.text
+      )}</td></tr>`
+    : `<tr><td style="border-bottom:1px solid #eee;color:#666;">CRM</td><td style="border-bottom:1px solid #eee;color:#b91c1c;font-weight:600;">nicht übernommen — ${escapeHtml(
+        crm.text
+      )}<br><span style="font-weight:400;">Diese Anmeldung steht nur in dieser Mail. Bitte von Hand nachtragen.</span></td></tr>`;
+
   const html = `
     <table cellpadding="6" cellspacing="0" style="font-family:system-ui,sans-serif;font-size:14px;border-collapse:collapse;">
       ${row("Name", name)}
@@ -99,6 +235,7 @@ export async function POST(req: Request) {
             )}</td></tr>`
           : ""
       }
+      ${crmZeile}
       <tr><td style="color:#aaa;font-size:11px;">IP / UA</td><td style="color:#aaa;font-size:11px;">${escapeHtml(
         ip
       )} · ${escapeHtml(ua)}</td></tr>
@@ -120,6 +257,7 @@ export async function POST(req: Request) {
         produkt && `Produkt: ${produkt}`,
         mitarbeiteranzahl && `Mitarbeiteranzahl: ${mitarbeiteranzahl}`,
         beschreibung && `Beschreibung:\n${beschreibung}`,
+        `CRM: ${crm.ok ? crm.text : `NICHT ÜBERNOMMEN — ${crm.text} · bitte von Hand nachtragen`}`,
         `IP: ${ip}`,
       ]
         .filter(Boolean)
@@ -153,59 +291,6 @@ export async function POST(req: Request) {
     });
   } catch {
     console.error("Bestaetigung an den Absender fehlgeschlagen");
-  }
-
-  // CC-CRM Integration: Anmeldungen direkt als Account + Activity erfassen
-  if (process.env.SUPABASE_URL_CRM && process.env.SUPABASE_SERVICE_ROLE_KEY_CRM) {
-    try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabaseCrm = createClient(
-        process.env.SUPABASE_URL_CRM,
-        process.env.SUPABASE_SERVICE_ROLE_KEY_CRM,
-        { auth: { persistSession: false } }
-      );
-
-      // 1. Account erstellen
-      const { data: accountData, error: accountError } = await supabaseCrm
-        .from("accounts")
-        .insert({
-          firma_input: firmenname,
-          telefon: telefon || null,
-          ist_partner: true,
-          // Trennt die Programm-Anmeldungen von den Channel-Partnern
-          // (Carrier/Distributoren) im CRM — sonst landen beide in einer Liste.
-          partner_source: "smart_signals",
-          status: "neu",
-          trigger_event: "Smart Signals Partneranmeldung",
-          notes: `Anfrage über smart-signals.de\n\nName: ${name}\nE-Mail: ${email}\nProdukt: ${produkt}\n\nBeschreibung:\n${beschreibung}`,
-        })
-        .select("id")
-        .single();
-
-      // 2. Kontakt + Activity anlegen, falls der Account durchging
-      if (!accountError && accountData) {
-        await supabaseCrm.from("account_contacts").insert({
-          account_id: accountData.id,
-          account_name_cache: firmenname,
-          full_name: name || email,
-          email,
-          phone: telefon || null,
-          source: "smart-signals.de",
-          is_primary: true,
-        });
-
-        await supabaseCrm.from("account_activities").insert({
-          account_id: accountData.id,
-          kind: "note",
-          title: "Anmeldung über Smart Signals Website",
-          body: `Eingegangene Daten:\nName: ${name}\nE-Mail: ${email}\nTelefon: ${telefon}\nProdukt: ${produkt}\nBeschreibung: ${beschreibung}`,
-        });
-      } else {
-        console.error("CRM Account creation failed:", accountError);
-      }
-    } catch (e) {
-      console.error("CRM Sync failed", e);
-    }
   }
 
   return NextResponse.json({ ok: true });
