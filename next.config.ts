@@ -41,14 +41,13 @@ const nextConfig: NextConfig = {
         destination: "/partner",
         permanent: true,
       },
-      // Die Wiesn-Aktion heisst nach aussen /wiesn2026 (Instagram-Link).
-      // Kurzform bleibt tippbar. Bewusst nicht permanent: naechstes Jahr
-      // zeigt /wiesn auf die dann aktuelle Aktion.
-      {
-        source: "/wiesn",
-        destination: "/wiesn2026",
-        permanent: false,
-      },
+      // Die Wiesn-Aktion 2026 ist vorbei (Seite, Formular und Danke-Seite
+      // entfernt). Alte Links aus Instagram und Mails landen auf der Startseite.
+      // Bewusst nicht permanent: naechstes Jahr kann /wiesn wieder eine Aktion sein.
+      { source: "/wiesn", destination: "/", permanent: false },
+      { source: "/wiesn2026", destination: "/", permanent: false },
+      { source: "/wiesn2026/:pfad*", destination: "/", permanent: false },
+      { source: "/danke", destination: "/", permanent: false },
     ];
   },
 };
