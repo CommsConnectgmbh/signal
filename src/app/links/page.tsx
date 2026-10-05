@@ -11,8 +11,7 @@
 // auf die Startseite, neun Tage lang war nicht messbar, ob ueberhaupt jemand
 // scannte. Das hier ist die Gegenmassnahme, sie kostet nichts.
 //
-// Reihenfolge ist Absicht: Was gerade laeuft steht oben. Nach dem 19.09.
-// faellt die Wiesn-Zeile automatisch raus, damit niemand ins Leere klickt.
+// Reihenfolge ist Absicht: Was gerade laeuft steht oben (aktuell keine Aktion).
 
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -26,8 +25,6 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-const WIESN_BIS = new Date("2026-09-19T23:59:59+02:00");
-
 function marker(slot: string) {
   return `utm_source=instagram&utm_medium=bio&utm_campaign=links&utm_content=${slot}`;
 }
@@ -38,18 +35,8 @@ function mitMarker(url: string, slot: string) {
 type Zeile = { titel: string; unter: string; url: string; slot: string; bild?: string };
 
 export default function Links() {
-  const jetzt = new Date();
-  const wiesnLaeuft = jetzt <= WIESN_BIS;
-
-  const oben: Zeile[] = wiesnLaeuft
-    ? [{
-        titel: "Wiesn 2026: Platz am Tisch",
-        unter: "26.09. in der Käfer Wiesn-Schänke. Anmeldung bis 19.09.",
-        url: "/wiesn2026",
-        slot: "wiesn",
-        bild: "/images/icons/wiesn.png",
-      }]
-    : [];
+  // Laufende Aktionen kommen hier hinein und stehen hervorgehoben oben.
+  const oben: Zeile[] = [];
 
   const produktZeilen: Zeile[] = produkte
     .filter((p) => p.status === "live")
