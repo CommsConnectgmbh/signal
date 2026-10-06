@@ -223,8 +223,19 @@ export default function PortalLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="lg:ml-64 min-h-screen bg-[#050A14] p-4 pt-16 lg:p-8">
-        {children}
+      <main className="lg:ml-64 min-h-screen bg-[#050A14] p-4 pt-16 lg:p-8 flex flex-col">
+        <div className="flex-1">{children}</div>
+
+        {/* Legal-Footer */}
+        <footer className="mt-8 pt-6 border-t border-[#1E293B] text-xs text-[#64748B]">
+          <a href="/impressum" className="hover:text-[#D4A843] transition-colors">
+            Impressum
+          </a>
+          <span className="px-2">·</span>
+          <a href="/datenschutz" className="hover:text-[#D4A843] transition-colors">
+            Datenschutz
+          </a>
+        </footer>
       </main>
     </div>
   );
