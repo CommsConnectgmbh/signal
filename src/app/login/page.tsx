@@ -93,7 +93,7 @@ export default function LoginPage() {
     "w-full bg-[#111D33] border border-[#1E293B] text-[#F1F5F9] placeholder-[#64748B] rounded-lg px-4 py-3 focus:border-[#D4A843] focus:outline-none transition-colors";
 
   return (
-    <div className="min-h-screen bg-[#050A14] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#050A14] flex flex-col items-center justify-center gap-6 px-4 py-10">
       <div className="w-full max-w-md bg-[#0A1628] border border-[#1E293B] rounded-xl p-8">
         {/* Logo */}
         <img
@@ -261,6 +261,17 @@ export default function LoginPage() {
           </form>
         )}
       </div>
+
+      {/* Legal-Footer */}
+      <footer className="text-center text-xs text-[#64748B]">
+        <a href="/impressum" className="hover:text-[#D4A843] transition-colors">
+          Impressum
+        </a>
+        <span className="px-2">·</span>
+        <a href="/datenschutz" className="hover:text-[#D4A843] transition-colors">
+          Datenschutz
+        </a>
+      </footer>
     </div>
   );
 }
