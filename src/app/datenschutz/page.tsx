@@ -28,7 +28,7 @@ export default function DatenschutzPage() {
             <p>Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.&nbsp;B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.</p>
 
             <h4>Wofür nutzen wir Ihre Daten?</h4>
-            <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</p>
+            <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Eine Analyse Ihres Nutzerverhaltens findet nicht statt: Diese Website setzt keine Analyse-, Tracking- oder Marketing-Dienste und keine Tracking-Cookies ein.</p>
 
             <h4>Welche Rechte haben Sie bezüglich Ihrer Daten?</h4>
             <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</p>
@@ -89,6 +89,19 @@ export default function DatenschutzPage() {
             <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
             <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist.</p>
             <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
+
+            <h3>Kontakt- und Partneranfragen: eingesetzte Dienste</h3>
+            <p>Angaben aus dem Kontaktformular (/kontaktanfrage) und der Partneranmeldung (Name, Firma, E-Mail, Telefon, Produkt, Beschreibung) übermitteln wir serverseitig an zwei Stellen: Sie werden als Kontakt und Notiz in unserem CRM gespeichert, und wir erhalten eine E-Mail mit Ihren Angaben sowie der IP-Adresse und Browser-Kennung (User-Agent) Ihrer Anfrage zur Missbrauchsabwehr. Sie erhalten eine Bestätigung per E-Mail.</p>
+            <p>Für den E-Mail-Versand setzen wir Resend ein (Resend, Inc., 2261 Market Street #5039, San Francisco, CA 94114, USA; DPF-zertifiziert, Auftragsverarbeitungsvertrag mit Standardvertragsklauseln). Unser CRM betreiben wir bei Supabase (Supabase Inc., USA; Speicherort der Daten: Rechenzentrum Frankfurt am Main, EU).</p>
+
+            <h3>Widerruf von Produktinformationen</h3>
+            <p>Über die Seite /widerruf können Sie eine erteilte Einwilligung in Produktinformationen per E-Mail widerrufen. Wir vermerken den Widerruf dazu an Ihrem Kontakt in unserem CRM (Supabase, siehe oben).</p>
+
+            <h3>Partner-Portal</h3>
+            <p>Für das Partner-Portal (/login, /portal) verarbeiten wir Ihre Zugangsdaten (E-Mail-Adresse, Passwort als Hash) sowie Ihre Partner-, Deal- und Provisionsdaten zur Durchführung der Partnerschaft (Art. 6 Abs. 1 lit. b DSGVO). Anmeldung und Datenhaltung laufen über Supabase (Supabase Inc., USA; Speicherort der Daten: Rechenzentrum Frankfurt am Main, EU). Nach der Anmeldung speichert Ihr Browser ein technisch notwendiges Sitzungs-Token; dafür ist nach § 25 Abs. 2 Nr. 2 TDDDG keine Einwilligung erforderlich.</p>
+
+            <h3>Schriftarten</h3>
+            <p>Die auf dieser Website verwendeten Schriftarten werden lokal von unserem eigenen Server ausgeliefert. Es findet keine Verbindung zu Google Fonts statt.</p>
 
             <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
             <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
