@@ -39,6 +39,19 @@ export function cut(value: string | null | undefined, max: number): string | nul
 }
 
 /**
+ * Wert nur vollstaendig oder gar nicht: Laengeres als max wird verworfen, nie
+ * gekuerzt. Ein abgeschnittener Host (oder Pfad) wuerde beim Messpunkt anders
+ * ausgewertet als der vollstaendige Wert: aus
+ * "<lange Subdomains>.max.mustermann.example.org" bliebe nach dem Kuerzen eine
+ * personenbezogene Subdomain als scheinbare Domain stehen.
+ */
+export function ganz(value: string | null | undefined, max: number): string | null {
+  if (typeof value !== "string") return null;
+  const t = value.trim();
+  return t.length > 0 && t.length <= max ? t : null;
+}
+
+/**
  * Nur der Host des Verweises. Der volle Verweis kann bei fremden Seiten
  * Suchbegriffe und Pfade enthalten, die wir weder brauchen noch speichern
  * wollen. Eigene Hosts (auch Subdomains von smart-signals.de) sind als Quelle
@@ -58,7 +71,8 @@ export function referrerHost(referer: string | null | undefined): string | null 
     ) {
       return null;
     }
-    return cut(host, 200);
+    // Hoechstens 253 Zeichen (laengster gueltiger Hostname), nie gekuerzt.
+    return ganz(host, 253);
   } catch {
     return null;
   }
@@ -88,7 +102,7 @@ export function eigenerHerkunftsPfad(
     const url = new URL(referer);
     const host = url.host.toLowerCase();
     if (!EIGENE_HOSTS.has(host) && host !== (selbst ?? "").toLowerCase()) return null;
-    return cut(url.pathname, 200);
+    return ganz(url.pathname, 200);
   } catch {
     return null;
   }

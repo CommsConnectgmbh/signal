@@ -123,3 +123,21 @@ describe("UTM ohne E-Mail-Adressen", () => {
     expect(utmAus(new URLSearchParams("utm_source=newsletter&utm_campaign=max@example.org"))).toEqual({ utm_source: "newsletter" });
   });
 });
+
+describe("sendWebHit: nie gekuerzt (Grenzfall Astra)", () => {
+  const GRENZFALL = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccc.max.mustermann.example.org";
+  it("langer Host geht vollstaendig raus, zu langer gar nicht; zu langer Pfad nur als /:andere", async () => {
+    const f = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", f);
+    const env = { token: "test-token", url: "http://mock/web-hit" };
+    await sendWebHit({ kind: "view", path: "/", referrer_host: GRENZFALL }, env);
+    await sendWebHit({ kind: "view", path: "/", referrer_host: "x".repeat(254) }, env);
+    await sendWebHit({ kind: "cta", path: "/" + "a".repeat(200), from_path: "/" + "b".repeat(200), ziel: "kontakt" }, env);
+    expect(f).toHaveBeenCalledTimes(3);
+    const b = f.mock.calls.map((c) => JSON.parse(c[1].body));
+    expect(b[0].referrer_host).toBe(GRENZFALL);
+    expect(b[1]).not.toHaveProperty("referrer_host");
+    expect(b[2].path).toBe("/:andere");
+    expect(b[2]).not.toHaveProperty("from_path");
+  });
+});

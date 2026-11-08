@@ -8,7 +8,7 @@
 // sich dort aus dem Token, nie aus dem Body. Ohne WEB_HIT_TOKEN passiert hier
 // nichts, auch kein Netzaufruf.
 
-import { classifyClient, cut, isPrefetch, LAUF_HEADER, type ClientKind } from "./classify";
+import { classifyClient, cut, ganz, isPrefetch, LAUF_HEADER, type ClientKind } from "./classify";
 
 export const WEB_HIT_URL_DEFAULT = "https://cbdlcaspqssxfectpvil.supabase.co/functions/v1/web-hit";
 
@@ -144,9 +144,9 @@ export async function sendWebHit(
 
   const body: WebHit = {
     ...hit,
-    path: cut(hit.path, 200) ?? "/",
-    referrer_host: cut(hit.referrer_host, 200),
-    from_path: cut(hit.from_path, 200),
+    path: ganz(hit.path, 200) ?? "/:andere",
+    referrer_host: ganz(hit.referrer_host, 253),
+    from_path: ganz(hit.from_path, 200),
     ziel: cut(hit.ziel, 40),
   };
   // Leere Felder gar nicht erst schicken.

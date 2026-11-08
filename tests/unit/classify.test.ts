@@ -7,6 +7,7 @@ import {
   LAUF_HEADER,
   LAUF_MARKE,
   referrerHost,
+  ganz,
 } from "@/lib/analytics/classify";
 
 const CHROME =
@@ -101,5 +102,24 @@ describe("eigenerHerkunftsPfad", () => {
   });
   it("Host der Anfrage zaehlt als eigen (lokal, Vorschau)", () => {
     expect(eigenerHerkunftsPfad("http://localhost:3040/unternehmen", "localhost:3040")).toBe("/unternehmen");
+  });
+});
+
+describe("nie gekuerzt (Grenzfall Astra)", () => {
+  const GRENZFALL = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccc.max.mustermann.example.org";
+  const ZU_LANG = "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.example.org";
+  it("langer gueltiger Host wird vollstaendig weitergegeben, nicht abgeschnitten", () => {
+    expect(GRENZFALL.length).toBeGreaterThan(200);
+    expect(referrerHost(`https://${GRENZFALL}/profil`)).toBe(GRENZFALL);
+  });
+  it("Host laenger als 253 Zeichen wird verworfen", () => {
+    expect(ZU_LANG.length).toBeGreaterThan(253);
+    expect(referrerHost(`https://${ZU_LANG}/`)).toBeNull();
+  });
+  it("ganz(): ganz oder gar nicht", () => {
+    expect(ganz("abc", 3)).toBe("abc");
+    expect(ganz("abcd", 3)).toBeNull();
+    expect(ganz("  ", 3)).toBeNull();
+    expect(ganz(null, 3)).toBeNull();
   });
 });
