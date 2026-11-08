@@ -16,6 +16,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { produkte } from "@/lib/produkte";
+import { produktPing, tuerHref } from "@/lib/tuer";
+import { CookieSettingsLink } from "@/components/CookieSettingsLink";
 
 export const metadata: Metadata = {
   title: "Smart Signals: alle Produkte auf einen Blick",
@@ -32,7 +34,7 @@ function mitMarker(url: string, slot: string) {
   return url + (url.includes("?") ? "&" : "?") + marker(slot);
 }
 
-type Zeile = { titel: string; unter: string; url: string; slot: string; bild?: string };
+type Zeile = { titel: string; unter: string; url: string; slot: string; bild?: string; ping?: string };
 
 export default function Links() {
   // Laufende Aktionen kommen hier hinein und stehen hervorgehoben oben.
@@ -46,13 +48,16 @@ export default function Links() {
       url: p.url,
       slot: p.slug,
       bild: `/images/icons/${p.slug}.png`,
+      // Direkter Link bleibt, der Klick wird per ping an die Tuer gemeldet.
+      ping: produktPing(p.slug),
     }));
 
   const unten: Zeile[] = [
     {
       titel: "Partner werden",
       unter: "Du empfiehlst, wir schließen ab und rechnen ab.",
-      url: "/#anmeldung",
+      // Ueber die Klick-Tuer: zaehlt den Klick, leitet auf /#anmeldung.
+      url: tuerHref("partner"),
       slot: "partner",
       bild: "/images/icons/partner.png",
     },
@@ -65,6 +70,7 @@ export default function Links() {
       <a
         key={z.slot}
         href={ziel}
+        ping={z.ping}
         {...(intern ? {} : { target: "_blank", rel: "noopener" })}
         className={[
           "flex items-center gap-4 rounded-2xl border px-5 py-4 transition-colors",
@@ -126,6 +132,7 @@ export default function Links() {
         <a href="/impressum" className="underline hover:text-text-secondary">Impressum</a>
         {" · "}
         <a href="/datenschutz" className="underline hover:text-text-secondary">Datenschutz</a>
+        <CookieSettingsLink trenner=" · " className="underline hover:text-text-secondary" />
       </p>
        </div>
       </main>

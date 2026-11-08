@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { TuerLink } from "@/components/TuerLink";
+import { JOBHANDY_URL, tuerHref } from "@/lib/tuer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -8,8 +10,6 @@ import Footer from "@/components/Footer";
 // zu einem fremden Angebot können wir nicht verantworten, und sie veralten,
 // ohne dass es hier jemand merkt.
 
-const JOBHANDY_URL =
-  "https://www.jobhandy.io/?utm_source=smart-signals.de&utm_medium=referral";
 
 export const metadata = {
   title: "Mitarbeitervorteile",
@@ -75,6 +75,7 @@ export default function MitarbeiterVorteilePage() {
               Dieses Programm betreiben wir nicht selbst. Anbieter ist{" "}
               <a
                 href={JOBHANDY_URL}
+                ping={tuerHref("jobhandy")}
                 target="_blank"
                 rel="noopener"
                 className="text-brand hover:text-brand-hover underline underline-offset-2"
@@ -86,6 +87,7 @@ export default function MitarbeiterVorteilePage() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <a
                 href={JOBHANDY_URL}
+                ping={tuerHref("jobhandy")}
                 target="_blank"
                 rel="noopener"
                 className="inline-flex items-center justify-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
@@ -96,12 +98,12 @@ export default function MitarbeiterVorteilePage() {
                   <polyline points="7 7 17 7 17 17" />
                 </svg>
               </a>
-              <Link
-                href="/kontaktanfrage"
+              <TuerLink
+                ziel="kontakt"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Über uns Kontakt herstellen
-              </Link>
+              </TuerLink>
             </div>
           </div>
         </section>
@@ -192,18 +194,19 @@ export default function MitarbeiterVorteilePage() {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href={JOBHANDY_URL}
+                ping={tuerHref("jobhandy")}
                 target="_blank"
                 rel="noopener"
                 className="inline-flex items-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
               >
                 Zu JobHandy
               </a>
-              <Link
-                href="/kontaktanfrage"
+              <TuerLink
+                ziel="kontakt"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Kontakt aufnehmen
-              </Link>
+              </TuerLink>
             </div>
           </div>
         </section>

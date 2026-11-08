@@ -1,7 +1,14 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { DseMessung, DseZweckSatz } from "@/components/DseMessung";
+import { werbeIdsAusEnv } from "@/lib/consent/ids";
+
+// Abschnitt 5 (Reichweitenmessung, Analyse und Werbung): src/components/DseMessung.tsx.
+// Die Abschnitte zu Google Analytics, Google Ads, Meta und LinkedIn erscheinen nur,
+// wenn die jeweilige ID zur Build-Zeit gesetzt ist (NEXT_PUBLIC_*).
 
 export default function DatenschutzPage() {
+  const ids = werbeIdsAusEnv();
   return (
     <>
       <Navbar />
@@ -28,7 +35,7 @@ export default function DatenschutzPage() {
             <p>Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.&nbsp;B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.</p>
 
             <h4>Wofür nutzen wir Ihre Daten?</h4>
-            <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Eine Analyse Ihres Nutzerverhaltens findet nicht statt: Diese Website setzt keine Analyse-, Tracking- oder Marketing-Dienste und keine Tracking-Cookies ein.</p>
+            <DseZweckSatz ids={ids} />
 
             <h4>Welche Rechte haben Sie bezüglich Ihrer Daten?</h4>
             <p>Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</p>
@@ -105,6 +112,8 @@ export default function DatenschutzPage() {
 
             <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
             <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+            <DseMessung ids={ids} />
           </div>
         </article>
       </main>

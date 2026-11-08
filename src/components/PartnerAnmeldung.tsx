@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { trackFormular } from "@/lib/consent/tags";
 
 // Einzige Client-Insel der Startseite. Der Rest ist Server-Komponente, damit
 // Inhalt und LCP nicht an der Hydration haengen.
@@ -36,6 +37,8 @@ export default function PartnerAnmeldung() {
       });
       if (!res.ok) throw new Error("request failed");
       setSubmitted(true);
+      // Conversion nur mit Einwilligung (sonst No-op), ohne Formularinhalte.
+      trackFormular("partner");
     } catch {
       setError(
         "Die Anmeldung konnte nicht gesendet werden. Bitte versuch es erneut oder schreib an info@smart-signals.de."

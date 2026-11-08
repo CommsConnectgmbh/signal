@@ -16,6 +16,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { CookieSettingsLink } from "@/components/CookieSettingsLink";
 
 
 function Inhalt() {
@@ -116,6 +117,7 @@ export default function WiderrufPage() {
           <Link href="/impressum" className="underline hover:text-white">Impressum</Link>
           {" · "}
           <Link href="/datenschutz" className="underline hover:text-white">Datenschutz</Link>
+          <CookieSettingsLink trenner=" · " className="underline hover:text-white" />
         </p>
       </footer>
     </div>

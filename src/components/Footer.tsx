@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { produkte } from "@/lib/produkte";
+import { produktPing } from "@/lib/tuer";
+import { TuerLink } from "./TuerLink";
+import { CookieSettingsLink } from "./CookieSettingsLink";
 
 export default function Footer() {
   return (
@@ -21,7 +24,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {produkte.map((p) => (
                 <li key={p.slug}>
-                  <a href={p.url} target="_blank" rel="noopener"
+                  <a href={p.url} target="_blank" rel="noopener" ping={produktPing(p.slug)}
                     className="text-sm text-text-secondary hover:text-brand transition-colors">
                     {p.name}
                   </a>
@@ -40,8 +43,8 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/produkte" className="text-sm text-text-secondary hover:text-brand transition-colors">Alle Produkte</Link></li>
               <li><Link href="/unternehmen" className="text-sm text-text-secondary hover:text-brand transition-colors">Über uns</Link></li>
-              <li><Link href="/#anmeldung" className="text-sm text-text-secondary hover:text-brand transition-colors">Partner werden</Link></li>
-              <li><Link href="/kontaktanfrage" className="text-sm text-text-secondary hover:text-brand transition-colors">Kontakt</Link></li>
+              <li><TuerLink ziel="partner" className="text-sm text-text-secondary hover:text-brand transition-colors">Partner werden</TuerLink></li>
+              <li><TuerLink ziel="kontakt" className="text-sm text-text-secondary hover:text-brand transition-colors">Kontakt</TuerLink></li>
             </ul>
           </div>
 
@@ -50,7 +53,8 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/datenschutz" className="text-sm text-text-secondary hover:text-brand transition-colors">Datenschutzerklärung</Link></li>
               <li><Link href="/impressum" className="text-sm text-text-secondary hover:text-brand transition-colors">Impressum</Link></li>
-              <li><Link href="/login" className="text-sm text-text-secondary hover:text-brand transition-colors">Partner-Login</Link></li>
+              <li><TuerLink ziel="login" className="text-sm text-text-secondary hover:text-brand transition-colors">Partner-Login</TuerLink></li>
+              <CookieSettingsLink listenpunkt className="text-sm text-text-secondary hover:text-brand transition-colors" />
             </ul>
           </div>
         </div>

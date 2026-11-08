@@ -59,6 +59,8 @@ export default function PipelinePage() {
   };
 
   useEffect(() => {
+    // Laden nach dem Mount (bestehendes Muster, mit eslint-config-next 16 als Fehler gemeldet).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchDeals();
   }, []);
 

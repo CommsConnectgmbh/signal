@@ -8,9 +8,11 @@
 // 2. eine Bestätigung an den Absender, die sagt, was als Nächstes passiert
 //    (Templates in src/lib/bestaetigungsmail.ts).
 
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { bestaetigungsmail } from "@/lib/bestaetigungsmail";
+import { kontaktGesendetHit } from "@/lib/analytics/kontakt";
+import { sendWebHit } from "@/lib/analytics/web-hit";
 
 export const runtime = "nodejs";
 
@@ -292,6 +294,12 @@ export async function POST(req: Request) {
   } catch {
     console.error("Bestaetigung an den Absender fehlgeschlagen");
   }
+
+  // Reichweitenmessung: eine angekommene Anfrage als Klick auf das Ziel
+  // "kontakt_gesendet". Ohne Formularinhalte, ohne IP, ohne User-Agent; nur
+  // Einstufung und Ausgangsseite (Kontaktformular oder Partneranmeldung auf
+  // der Startseite). after(): die Antwort wartet nie auf die Messung.
+  after(() => sendWebHit(kontaktGesendetHit(req.headers)));
 
   return NextResponse.json({ ok: true });
 }

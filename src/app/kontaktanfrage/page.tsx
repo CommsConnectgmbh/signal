@@ -4,6 +4,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { kontaktProduktOptionen } from "@/lib/produkte";
+import { trackFormular } from "@/lib/consent/tags";
 
 export default function KontaktanfragePage() {
   const [form, setForm] = useState({
@@ -41,6 +42,8 @@ export default function KontaktanfragePage() {
       });
       if (!res.ok) throw new Error("request failed");
       setSubmitted(true);
+      // Conversion nur mit Einwilligung (sonst No-op), ohne Formularinhalte.
+      trackFormular("kontakt");
     } catch {
       setError(
         "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder schreiben Sie an info@smart-signals.de."

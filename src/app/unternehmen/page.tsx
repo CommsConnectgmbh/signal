@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TuerLink } from "@/components/TuerLink";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { produkte } from "@/lib/produkte";
@@ -134,12 +135,12 @@ export default function UnternehmenPage() {
               >
                 Produkte ansehen
               </Link>
-              <Link
-                href="/kontaktanfrage"
+              <TuerLink
+                ziel="kontakt"
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-base font-semibold text-text-primary border border-border hover:border-brand hover:text-brand transition-colors"
               >
                 Kontakt aufnehmen
-              </Link>
+              </TuerLink>
             </div>
           </div>
         </section>
