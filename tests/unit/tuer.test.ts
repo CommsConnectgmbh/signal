@@ -96,6 +96,18 @@ describe("Klick-Tuer /start (GET)", () => {
     expect(Object.fromEntries(loc.searchParams)).toEqual({ utm_source: "li", utm_campaign: "herbst" });
   });
 
+  it("UTM nie zu einer anderen Website (Produktseiten, Partner), auch keine frei gewaehlten Werte", async () => {
+    for (const ziel of ["belegify", "obacht", "talents", "conduit", "simvi", "tagesteller", "dealbuddy", "jobhandy"]) {
+      const res = await run(`?ziel=${ziel}&utm_source=newsletter&utm_campaign=max-mustermann-0170123456`);
+      const loc = res.headers.get("location")!;
+      expect(loc, ziel).not.toContain("max-mustermann");
+      expect(loc, ziel).not.toContain("utm_source=newsletter");
+    }
+    // Ziele auf diesem Host bekommen sie weiterhin.
+    const res = await run("?ziel=kontakt&utm_source=newsletter");
+    expect(new URL(res.headers.get("location")!).searchParams.get("utm_source")).toBe("newsletter");
+  });
+
   it("Ziel mit eigenen Kampagnenmarkern behaelt sie", async () => {
     const res = await run("?ziel=jobhandy&utm_source=li");
     expect(res.headers.get("location")).toBe(ZIELE.jobhandy);

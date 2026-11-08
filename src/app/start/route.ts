@@ -32,11 +32,14 @@ export function GET(req: NextRequest) {
   const utm = utmAus(params);
 
   // Eigene Ziele relativ zur aktuellen Adresse (bleibt auf dem Host), fremde
-  // so wie hinterlegt. UTM der Tuer-Adresse reist mit, ausser das Ziel traegt
-  // schon eigene Kampagnenmarker (Partnerlink mit Referral-UTM).
+  // so wie hinterlegt. UTM der Tuer-Adresse reist nur in Ziele auf diesem
+  // Host, nie zu einer anderen Website (Produktseiten, Partner JobHandy):
+  // frei gewaehlte Werte wie utm_campaign=max-mustermann-0170123456 wuerden
+  // sonst Personenangaben an eine andere Stelle tragen.
   const url = new URL(ZIELE[ziel], req.url);
-  const eigeneUtm = [...url.searchParams.keys()].some((k) => k.startsWith("utm_"));
-  if (!eigeneUtm) for (const [k, v] of Object.entries(utm)) url.searchParams.set(k, v);
+  if (url.origin === new URL(req.url).origin) {
+    for (const [k, v] of Object.entries(utm)) url.searchParams.set(k, v);
+  }
 
   const referer = req.headers.get("referer");
   const hit: WebHit = {
