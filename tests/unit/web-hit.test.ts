@@ -117,3 +117,9 @@ describe("sendWebHit", () => {
     await expect(p).resolves.toBeUndefined();
   });
 });
+
+describe("UTM ohne E-Mail-Adressen", () => {
+  it("Wert mit @ wird nicht gesendet", () => {
+    expect(utmAus(new URLSearchParams("utm_source=newsletter&utm_campaign=max@example.org"))).toEqual({ utm_source: "newsletter" });
+  });
+});

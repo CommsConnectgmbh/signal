@@ -211,3 +211,39 @@ describe("Bereiche ohne Tags", () => {
     expect(ohneTags("/loginhilfe")).toBe(false);
   });
 });
+
+describe("Gegencheck-Faelle", () => {
+  const consent = (statistik: boolean, marketing: boolean) => ({ v: 1, statistik, marketing, ts: "" });
+
+  it("erst Statistik, dann zusaetzlich Marketing: Consent-Update und AW-config werden nachgezogen", () => {
+    reset();
+    ladeTags(consent(true, false), ALLE, window);
+    ladeTags(consent(true, true), ALLE, window);
+    const dl = ((window as unknown as { dataLayer: IArguments[] }).dataLayer).map((a) => Array.from(a));
+    expect(dl.filter((a) => a[0] === "config").map((a) => a[1])).toEqual(["G-TEST000000", "AW-1234567890"]);
+    expect(dl.filter((a) => a[0] === "consent").map((a) => a[1])).toEqual(["default", "update", "update"]);
+    expect(dl.at(-2)).toEqual(["consent", "update", { analytics_storage: "granted", ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted" }]);
+    // gtag.js nur einmal
+    expect(fremdScripte().filter((s) => s.includes("gtag/js"))).toHaveLength(1);
+    // erneuter gleicher Aufruf: nichts Neues
+    ladeTags(consent(true, true), ALLE, window);
+    expect(((window as unknown as { dataLayer: unknown[] }).dataLayer)).toHaveLength(dl.length);
+  });
+
+  it("gesperrter Speicher: Widerruf laedt trotzdem neu", async () => {
+    const set = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("gesperrt");
+    });
+    const reload = vi.fn();
+    const orig = window.location;
+    Object.defineProperty(window, "location", { configurable: true, value: { ...orig, reload } });
+    await mount(ALLE);
+    await act(async () => knopf("Alle akzeptieren").click());
+    expect(fremdScripte().length).toBeGreaterThan(0);
+    await act(async () => window.dispatchEvent(new Event("cc-consent-oeffnen")));
+    await act(async () => knopf("Nur notwendige").click());
+    expect(reload).toHaveBeenCalledTimes(1);
+    Object.defineProperty(window, "location", { configurable: true, value: orig });
+    set.mockRestore();
+  });
+});

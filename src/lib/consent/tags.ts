@@ -18,7 +18,7 @@ type Fenster = Window & {
   lintrk?: any;
   _linkedin_partner_id?: string;
   _linkedin_data_partner_ids?: string[];
-  __ccTags?: { google?: boolean; meta?: boolean; linkedin?: boolean };
+  __ccTags?: { google?: boolean; googleIds?: string[]; meta?: boolean; linkedin?: boolean };
 };
 
 export const GTAG_SRC = "https://www.googletagmanager.com/gtag/js";
@@ -44,8 +44,16 @@ export function ladeTags(consent: Consent, ids: WerbeIds, w: Window = window): v
   const ga4 = consent.statistik ? ids.ga4 : undefined;
   const gads = consent.marketing ? ids.gads : undefined;
 
+  const consentUpdate = {
+    analytics_storage: consent.statistik ? "granted" : "denied",
+    ad_storage: consent.marketing ? "granted" : "denied",
+    ad_user_data: consent.marketing ? "granted" : "denied",
+    ad_personalization: consent.marketing ? "granted" : "denied",
+  };
+
   if ((ga4 || gads) && !geladen.google) {
     geladen.google = true;
+    geladen.googleIds = [];
     win.dataLayer = win.dataLayer || [];
     // gtag erwartet das arguments-Objekt, kein Array.
     win.gtag = function gtag() {
@@ -58,16 +66,27 @@ export function ladeTags(consent: Consent, ids: WerbeIds, w: Window = window): v
       ad_personalization: "denied",
       analytics_storage: "denied",
     });
-    win.gtag("consent", "update", {
-      analytics_storage: consent.statistik ? "granted" : "denied",
-      ad_storage: consent.marketing ? "granted" : "denied",
-      ad_user_data: consent.marketing ? "granted" : "denied",
-      ad_personalization: consent.marketing ? "granted" : "denied",
-    });
+    win.gtag("consent", "update", consentUpdate);
     win.gtag("js", new Date());
-    if (ga4) win.gtag("config", ga4);
-    if (gads) win.gtag("config", gads);
+    for (const id of [ga4, gads]) {
+      if (id) {
+        win.gtag("config", id);
+        geladen.googleIds.push(id);
+      }
+    }
     script(doc, `${GTAG_SRC}?id=${encodeURIComponent((ga4 ?? gads)!)}`);
+  } else if (geladen.google && win.gtag) {
+    // Spaeter erweiterte Einwilligung (etwa erst Statistik, dann zusaetzlich
+    // Marketing): Consent nachziehen und nur die neu erlaubte ID konfigurieren.
+    // Eine Einschraenkung kommt hier nie an, die laedt die Seite neu.
+    const neu = [ga4, gads].filter((id): id is string => Boolean(id) && !geladen.googleIds?.includes(id!));
+    if (neu.length) {
+      win.gtag("consent", "update", consentUpdate);
+      for (const id of neu) {
+        win.gtag("config", id);
+        geladen.googleIds?.push(id);
+      }
+    }
   }
 
   if (consent.marketing && ids.metaPixel && !geladen.meta) {

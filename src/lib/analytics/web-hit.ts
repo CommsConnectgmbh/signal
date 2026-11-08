@@ -49,7 +49,10 @@ export function klickTyp(params: URLSearchParams): KlickTyp | null {
  */
 function clean(v: string | null): string | null {
   if (!v) return null;
-  return cut(v.replace(/[^\w.:/@ +-]/g, ""), 80);
+  // Eine E-Mail-Adresse als Kampagnenwert (etwa aus einem weitergeleiteten
+  // Newsletter-Link) wird gar nicht erst gesendet.
+  if (v.includes("@")) return null;
+  return cut(v.replace(/[^\w.:/ +-]/g, ""), 80);
 }
 
 /** Die UTM-Parameter der Adresse, sonst nichts aus der Query. */

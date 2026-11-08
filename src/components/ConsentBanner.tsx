@@ -100,9 +100,9 @@ function Banner({ ids }: { ids: WerbeIds }) {
   }, []);
 
   function entscheide(statistik: boolean, marketing: boolean) {
-    // Vorherige Wahl aus dem Speicher, nicht aus dem State: so zaehlt auch eine
-    // Einwilligung, die in einem anderen Tab erteilt wurde.
-    const vorher = leseConsent(window.localStorage);
+    // Vorherige Wahl aus dem Speicher (zaehlt auch eine Einwilligung aus einem
+    // anderen Tab), ersatzweise aus dem State, falls der Speicher gesperrt ist.
+    const vorher = leseConsent(window.localStorage) ?? aktuell;
     const neu = schreibeConsent(window.localStorage, {
       statistik: statistik && hatStatistik(ids),
       marketing: marketing && hatMarketing(ids),
