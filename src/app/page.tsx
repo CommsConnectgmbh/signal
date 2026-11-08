@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { TuerLink } from "@/components/TuerLink";
+import { produktPing } from "@/lib/tuer";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -336,6 +337,7 @@ export default function HomePage() {
                 <a
                   key={p.slug}
                   href={p.url}
+                  ping={produktPing(p.slug)}
                   target="_blank"
                   rel="noopener"
                   style={{ animationDelay: `${Math.min(i, 4) * 70}ms` }}
@@ -493,9 +495,9 @@ export default function HomePage() {
             </div>
             <p className="mt-8 text-sm text-text-secondary">
               Schon Partner?{" "}
-              <Link href="/login" className="font-semibold text-brand hover:text-brand-hover transition-colors">
+              <TuerLink ziel="login" className="font-semibold text-brand hover:text-brand-hover transition-colors">
                 Zum Partner-Login
-              </Link>
+              </TuerLink>
             </p>
           </div>
         </section>

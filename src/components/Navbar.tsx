@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { produkte } from "@/lib/produkte";
+import { produktPing } from "@/lib/tuer";
+import { TuerLink } from "./TuerLink";
 
 const navLinks = [
   { label: "Startseite", href: "/" },
@@ -11,8 +13,8 @@ const navLinks = [
     label: "Produkte",
     href: "/produkte",
     dropdown: [
-      ...produkte.map((p) => ({ label: p.name, href: p.url, extern: true })),
-      { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile", extern: false },
+      ...produkte.map((p) => ({ label: p.name, href: p.url, extern: true, ping: produktPing(p.slug) })),
+      { label: "Mitarbeitervorteile", href: "/mitarbeitervorteile", extern: false, ping: undefined },
     ],
   },
   { label: "Unternehmen", href: "/unternehmen" },
@@ -50,7 +52,7 @@ export default function Navbar() {
                     {link.dropdown.map((item) => (
                       <li key={item.href}>
                         {item.extern ? (
-                          <a href={item.href} target="_blank" rel="noopener"
+                          <a href={item.href} target="_blank" rel="noopener" ping={item.ping}
                             className="flex items-center justify-between gap-2 rounded-md px-4 py-2.5 text-sm text-text-secondary hover:bg-surface hover:text-text-primary">
                             {item.label}
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="text-text-muted">
@@ -79,10 +81,10 @@ export default function Navbar() {
           )}
         </ul>
         <div className="flex items-center gap-4">
-          <Link href="/#anmeldung"
+          <TuerLink ziel="partner"
             className="hidden items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-hover md:inline-flex">
             Partner werden
-          </Link>
+          </TuerLink>
           <button className="relative h-6 w-6 md:hidden" onClick={() => setMobileOpen((p) => !p)}
             aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"} aria-expanded={mobileOpen}>
             <span className={`absolute left-0 block h-0.5 w-6 bg-text-primary transition-all ${mobileOpen ? "top-3 rotate-45" : "top-1"}`} />
@@ -116,7 +118,7 @@ export default function Navbar() {
                   {link.dropdown.map((item) => (
                     <li key={item.href}>
                       {item.extern ? (
-                        <a href={item.href} target="_blank" rel="noopener" className="block py-2 text-sm text-text-secondary">
+                        <a href={item.href} target="_blank" rel="noopener" ping={item.ping} className="block py-2 text-sm text-text-secondary">
                           {item.label}
                         </a>
                       ) : (
@@ -138,10 +140,10 @@ export default function Navbar() {
             )
           )}
           <li className="pt-2">
-            <Link href="/#anmeldung" onClick={() => setMobileOpen(false)}
+            <TuerLink ziel="partner" onClick={() => setMobileOpen(false)}
               className="block rounded-full bg-accent px-5 py-2.5 text-center text-sm font-semibold text-white">
               Partner werden
-            </Link>
+            </TuerLink>
           </li>
         </ul>
       </div>

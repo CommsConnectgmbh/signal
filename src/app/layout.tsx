@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ConsentBanner } from "@/components/ConsentBanner";
 
 // next/font/google self-hostet die Schriften zur Build-Zeit auf der eigenen Domain
 // (kein direkter Browser-Request an fonts.googleapis.com / fonts.gstatic.com).
@@ -140,7 +141,11 @@ export default function RootLayout({
             wenn er ihn auch wieder aufloesen kann. */}
         <script dangerouslySetInnerHTML={{ __html: REVEAL_SCRIPT }} />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        {/* Erscheint nur, wenn mindestens eine Werbe-ID gesetzt ist. */}
+        <ConsentBanner />
+      </body>
     </html>
   );
 }

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { TuerLink } from "@/components/TuerLink";
+import { produktPing } from "@/lib/tuer";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FadeInSection from "@/components/FadeInSection";
@@ -90,6 +92,7 @@ export default function ProduktePage() {
                         <p className="mt-3 text-sm text-text-secondary leading-relaxed">{p.beschreibung}</p>
                         <a
                           href={p.url}
+                          ping={produktPing(p.slug)}
                           target="_blank"
                           rel="noopener"
                           className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover transition-colors"
@@ -155,6 +158,7 @@ export default function ProduktePage() {
                 <a
                   key={p.slug}
                   href={p.url}
+                  ping={produktPing(p.slug)}
                   target="_blank"
                   rel="noopener"
                   className="rounded-2xl border border-border bg-white p-6 hover:shadow-md transition-shadow"
@@ -191,12 +195,12 @@ export default function ProduktePage() {
               Schreiben Sie uns, womit Sie sich gerade herumschlagen. Wenn keines
               unserer Produkte passt, sagen wir das auch.
             </p>
-            <Link
-              href="/kontaktanfrage"
+            <TuerLink
+              ziel="kontakt"
               className="mt-8 inline-flex items-center gap-2 bg-accent text-white font-semibold px-8 py-3.5 rounded-full text-base hover:bg-accent-hover transition-colors"
             >
               Anfrage stellen
-            </Link>
+            </TuerLink>
           </div>
         </section>
 

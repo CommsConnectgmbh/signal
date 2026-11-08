@@ -6,7 +6,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api", "/login", "/portal"],
+        // /start ist die Klick-Tuer (Weiterleitung), keine Seite.
+        disallow: ["/api", "/login", "/portal", "/start"],
       },
     ],
     sitemap: "https://smart-signals.de/sitemap.xml",
